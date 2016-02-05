@@ -29,6 +29,7 @@ public class CurrentProject {
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
     private static Vector projectListeners = new Vector();
+    private static boolean wasDeleted = false;
 
         
     static {
@@ -90,6 +91,14 @@ public class CurrentProject {
         notifyListenersAfter();
         Context.put("LAST_OPENED_PROJECT_ID", project.getID());
     }
+    
+    public static void setWasDeleted() {
+    	wasDeleted = true;
+    }
+    
+    public static boolean getWasDeleted() {
+    	return wasDeleted;
+    }
 
     public static void addProjectListener(ProjectListener pl) {
         projectListeners.add(pl);
@@ -113,7 +122,11 @@ public class CurrentProject {
     }
 
     public static void save() {
-        Storage storage = CurrentStorage.get();
+        if (wasDeleted) {
+        	return;
+        }
+    	
+    	Storage storage = CurrentStorage.get();
 
         storage.storeNoteList(_notelist, _project);
         storage.storeTaskList(_tasklist, _project); 

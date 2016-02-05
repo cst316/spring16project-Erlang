@@ -176,7 +176,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			new ImageIcon(
 				net.sf.memoranda.ui.AppFrame.class.getResource(
 					"resources/icons/removeproject.png")));
-		ppDeleteProject.setEnabled(false);
+		ppDeleteProject.setEnabled(true);
 
 		ppOpenProject.setFont(new java.awt.Font("Dialog", 1, 11));
 
@@ -269,7 +269,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 							ProjectsTablePanel.PROJECT_ID)
 						.toString()
 						.equals(CurrentProject.get().getID());
-				ppDeleteProject.setEnabled(enabled);
+				ppDeleteProject.setEnabled(true);
 				ppOpenProject.setEnabled(enabled);				
 				ppProperties.setEnabled(true);
 			}
@@ -337,9 +337,13 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	}
 
 	void ppOpenProject_actionPerformed(ActionEvent e) {
-		CurrentProject.set(prjTablePanel.getSelectedProject());
+		ppOpenProject(prjTablePanel.getSelectedProject());
+	}
+	
+	void ppOpenProject(Project aProject) {
+		CurrentProject.set(aProject);
 		prjTablePanel.updateUI();
-		ppDeleteProject.setEnabled(false);
+		ppDeleteProject.setEnabled(true);
 		ppOpenProject.setEnabled(false);
 	}
 
@@ -380,25 +384,30 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		if (n != JOptionPane.YES_OPTION)
 			return;
 
-		for (int i = 0;
-			i < prjTablePanel.projectsTable.getSelectedRows().length;
-			i++) {
+		for (int i = 0; i < prjTablePanel.projectsTable.getSelectedRows().length; i++) {
 			prj =
 				(net.sf.memoranda.Project) prjTablePanel
 					.projectsTable
 					.getModel()
-					.getValueAt(
-					prjTablePanel.projectsTable.getSelectedRows()[i],
-					ProjectsTablePanel.PROJECT);
-			toremove.add(prj.getID());
+					.getValueAt(prjTablePanel.projectsTable.getSelectedRows()[i],ProjectsTablePanel.PROJECT);
+		    toremove.add(prj.getID());
 		}
 		for (int i = 0; i < toremove.size(); i++) {
 			ProjectManager.removeProject((String) toremove.get(i));
+			if (toremove.get(i).equals(CurrentProject.get().getID())) {
+				CurrentProject.setWasDeleted();
+			}
 		}
 		CurrentStorage.get().storeProjectManager();
 		prjTablePanel.projectsTable.clearSelection();
 		prjTablePanel.updateUI();
 		setMenuEnabled(false);
+		if (CurrentProject.getWasDeleted()) {
+			if (ProjectManager.getAllProjectsNumber() == 0) {
+				ppCreateDefaultProject();
+			}
+			ppOpenProject((Project)ProjectManager.getAllProjects().get(0));
+		}
 	}
 
 	void ppProperties_actionPerformed(ActionEvent e) {
@@ -451,9 +460,19 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	}
 
 	void setMenuEnabled(boolean enabled) {
-		ppDeleteProject.setEnabled(enabled);
+		ppDeleteProject.setEnabled(true);
 		ppOpenProject.setEnabled(enabled);
 		ppProperties.setEnabled(enabled);		
+	}
+	
+	void ppCreateDefaultProject () {
+		String theTitle = "Default";
+		CalendarDate theStartDate = new CalendarDate();
+		CalendarDate theEndDate = new CalendarDate(theStartDate.getDay(),theStartDate.getMonth(),theStartDate.getYear()+1);
+		ProjectManager.createProject(theTitle, theStartDate, theEndDate);
+		/*if (dlg.freezeChB.isSelected())
+        prj.freeze();*/
+        CurrentStorage.get().storeProjectManager();
 	}
 
 }
