@@ -38,6 +38,7 @@ public class WorkPanel extends JPanel {
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
+	public JButton pspB = new JButton();///////added 1.30.16
 	JButton currentB = null;
 	Border border1;
 
@@ -172,6 +173,37 @@ public class WorkPanel extends JPanel {
 		notesB.setSelected(true);
 		this.setPreferredSize(new Dimension(1073, 300));
 
+		
+		/////////////////////added 1.30.16
+		pspB.setBackground(Color.white);
+		pspB.setMaximumSize(new Dimension(60, 80));
+		pspB.setMinimumSize(new Dimension(30, 30));
+
+		pspB.setFont(new java.awt.Font("Dialog", 1, 10));
+		pspB.setPreferredSize(new Dimension(50, 50));
+		pspB.setBorderPainted(false);
+		pspB.setContentAreaFilled(false);
+		pspB.setFocusPainted(false);
+		pspB.setHorizontalTextPosition(SwingConstants.CENTER);
+		pspB.setText(Local.getString("PSP"));
+		pspB.setVerticalAlignment(SwingConstants.TOP);
+		pspB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		pspB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pspB_actionPerformed(e);
+			}
+		});
+		pspB.setIcon(
+			new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource(
+					"resources/icons/events.png")));
+		pspB.setOpaque(false);
+		pspB.setMargin(new Insets(0, 0, 0, 0));
+		pspB.setSelected(true);
+		///////////////////////
+		
+		
+		
 		filesB.setSelected(true);
 		filesB.setMargin(new Insets(0, 0, 0, 0));
 		filesB.setIcon(
@@ -184,6 +216,8 @@ public class WorkPanel extends JPanel {
 				filesB_actionPerformed(e);
 			}
 		});
+		
+		
 		filesB.setFont(new java.awt.Font("Dialog", 1, 10));
 		filesB.setVerticalAlignment(SwingConstants.TOP);
 		filesB.setText(Local.getString("Resources"));
@@ -205,6 +239,9 @@ public class WorkPanel extends JPanel {
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
+		//////////////////added 1.30.16
+		toolBar.add(pspB, null);
+		//////////////////////////////
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
@@ -214,6 +251,8 @@ public class WorkPanel extends JPanel {
 		panel.setBorder(null);
 		dailyItemsPanel.setBorder(null);
 		filesPanel.setBorder(null);
+		
+		
 
 	}
 
@@ -227,6 +266,10 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			//////////////added 1.30.16
+			else if (pan.equals("PSP"))
+				pspB_actionPerformed(null);
+			////////////////
 		}
 	}
 
@@ -264,6 +307,14 @@ public class WorkPanel extends JPanel {
 		Context.put("CURRENT_PANEL", "FILES");
 	}
 
+	/////////////////////////////added 1.30.16
+	public void pspB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "PSP");
+		setCurrentButton(pspB);
+		Context.put("CURRENT_PANEL", "PSP");
+	}
+	//////////////////////////////////
+	
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);
 		currentB.setOpaque(false);

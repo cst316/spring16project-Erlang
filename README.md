@@ -15,6 +15,9 @@ Enjoy!
 Dr. Gary
 
 
-CHANGES-tdriskil
+slack.com -> teamerlangcst316
 CHANGE - rsofiov testing 2
-CHANGE - sgarci33
+git status
+git add file.name
+git commit -m "message"
+git push 
