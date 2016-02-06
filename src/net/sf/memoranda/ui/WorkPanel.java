@@ -196,12 +196,10 @@ public class WorkPanel extends JPanel {
 		pspB.setIcon(
 			new ImageIcon(
 				net.sf.memoranda.ui.AppFrame.class.getResource(
-					"resources/icons/events.png")));
+					"resources/icons/notes.png")));
 		pspB.setOpaque(false);
 		pspB.setMargin(new Insets(0, 0, 0, 0));
 		pspB.setSelected(true);
-		///////////////////////
-		
 		
 		
 		filesB.setSelected(true);
@@ -239,9 +237,7 @@ public class WorkPanel extends JPanel {
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
-		//////////////////added 1.30.16
 		toolBar.add(pspB, null);
-		//////////////////////////////
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
@@ -266,10 +262,9 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
-			//////////////added 1.30.16
 			else if (pan.equals("PSP"))
 				pspB_actionPerformed(null);
-			////////////////
+		
 		}
 	}
 
@@ -307,13 +302,15 @@ public class WorkPanel extends JPanel {
 		Context.put("CURRENT_PANEL", "FILES");
 	}
 
-	/////////////////////////////added 1.30.16
+	
 	public void pspB_actionPerformed(ActionEvent e) {
-		cardLayout1.show(panel, "PSP");
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("PSP");
 		setCurrentButton(pspB);
 		Context.put("CURRENT_PANEL", "PSP");
 	}
-	//////////////////////////////////
+
+	
 	
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);
