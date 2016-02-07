@@ -96,6 +96,7 @@ public class DailyItemsPanel extends JPanel {
     JTabbedPane tasksTabbedPane = new JTabbedPane();
     JTabbedPane eventsTabbedPane = new JTabbedPane();
 	JTabbedPane agendaTabbedPane = new JTabbedPane();
+	JTabbedPane pspTabbedPane = new JTabbedPane();/////////
     Border border2;
 
 	String CurrentPanel;
@@ -206,6 +207,7 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
+        editorsPanel.add(editorPanel, "PSP");//////////Added on 2.5.16
         
         splitPane.add(mainPanel, JSplitPane.RIGHT);
         splitPane.add(controlPanel, JSplitPane.LEFT);
@@ -301,6 +303,7 @@ public class DailyItemsPanel extends JPanel {
         mainTabsPanel.add(tasksTabbedPane, "TASKSTAB");
         mainTabsPanel.add(notesControlPane, "NOTESTAB");
 		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
+		mainTabsPanel.add(pspTabbedPane, "PSPATAB");
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
         mainPanel.setBorder(null);
     }

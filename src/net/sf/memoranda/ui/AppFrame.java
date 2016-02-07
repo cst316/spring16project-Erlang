@@ -105,7 +105,7 @@ public class AppFrame extends JFrame {
 
     public Action minimizeAction = new AbstractAction("Close the window") {
         public void actionPerformed(ActionEvent e) {
-            doMinimize();
+            doExit();
         }
     };
 
@@ -127,6 +127,7 @@ public class AppFrame extends JFrame {
                         new AbstractAction(Local.getString("Import multiple notes")) {
 
                         public void actionPerformed(ActionEvent e) {
+ 
                                 ppImport_actionPerformed(e);
                         }
                 };
@@ -342,7 +343,7 @@ public class AppFrame extends JFrame {
                 InputEvent.ALT_MASK));
 
         jMenuEdit.setText(Local.getString("Edit"));
-
+        
         jMenuEditUndo.setText(Local.getString("Undo"));
         jMenuEditUndo.setToolTipText(Local.getString("Undo"));
         jMenuEditRedo.setText(Local.getString("Redo"));
@@ -664,10 +665,13 @@ public class AppFrame extends JFrame {
         System.exit(0);
     }
 
-    public void doMinimize() {
+    /*public void doExit() {
+    	System.out.println("do minimize");
         exitNotify();
         App.closeWindow();
-    }
+    	
+    	doExit();
+    }*/
 
     //Help | About action performed
     public void jMenuHelpAbout_actionPerformed(ActionEvent e) {
@@ -682,15 +686,24 @@ public class AppFrame extends JFrame {
 
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-            if (Configuration.get("ON_CLOSE").equals("exit"))
-                doExit();
-            else
-                doMinimize();
+            if (Configuration.get("ON_CLOSE").equals("exit")){
+            	doExit();System.out.println("701");
+            }
+                
+            	
+            else{
+            	System.out.println("707");
+            	 doExit();
+            }
+               
+            //WINDOW_CLOSING
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
+        	System.out.println("713");
             super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
-            doMinimize();
+                    WindowEvent.WINDOW_ICONIFIED));
+            System.out.println("716");
+            //doMinimize();
         }
         else
             super.processWindowEvent(e);
