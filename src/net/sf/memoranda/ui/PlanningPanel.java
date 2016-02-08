@@ -90,6 +90,7 @@ public class PlanningPanel extends JPanel {
 	DailyItemsPanel parentPanel = null;
 
 	public PlanningPanel(DailyItemsPanel parent) {
+        this.setPreferredSize(new Dimension(1000, 1000));
 		try {
 			parentPanel = parent;
 			jbInit();

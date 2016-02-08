@@ -43,13 +43,11 @@ public class PSPPanel extends JPanel {
  */
 	private void initializeTabs(){
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-	
 	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
 	
-	//this.add(pspTabs, BorderLayout.CENTER);
 	this.add(pspTabs);
 	
-	pspTabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+
 	
 	}
 	
