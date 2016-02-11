@@ -687,22 +687,18 @@ public class AppFrame extends JFrame {
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             if (Configuration.get("ON_CLOSE").equals("exit")){
-            	doExit();System.out.println("701");
             }
                 
             	
             else{
-            	System.out.println("707");
             	 doExit();
             }
                
             //WINDOW_CLOSING
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-        	System.out.println("713");
             super.processWindowEvent(new WindowEvent(this,
                     WindowEvent.WINDOW_ICONIFIED));
-            System.out.println("716");
             //doMinimize();
         }
         else
