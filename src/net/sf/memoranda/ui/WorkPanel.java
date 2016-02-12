@@ -196,7 +196,8 @@ public class WorkPanel extends JPanel {
 		pspB.setIcon(
 			new ImageIcon(
 				net.sf.memoranda.ui.AppFrame.class.getResource(
-					"resources/icons/notes.png")));
+						"resources/icons/PSP.png")));
+						//	"resources/icons/notes.png")));
 		pspB.setOpaque(false);
 		pspB.setMargin(new Insets(0, 0, 0, 0));
 		pspB.setSelected(true);
