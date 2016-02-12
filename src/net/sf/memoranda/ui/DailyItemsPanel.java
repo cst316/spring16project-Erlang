@@ -60,7 +60,7 @@ public class DailyItemsPanel extends JPanel {
     JPanel editorsPanel = new JPanel();
     CardLayout cardLayout1 = new CardLayout();
     EditorPanel editorPanel = new EditorPanel(this);/*Contains the text editing toolbar*/
-  //  PSPPanel pspPanel = new PSPPanel(this);	/*Contains PSP Panel Documents*/
+    PSPPanel pspPanel = new PSPPanel(this);	/*Contains PSP Panel Documents*/
     JLabel currentDateLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
     TaskPanel tasksPanel = new TaskPanel(this);
@@ -208,7 +208,7 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
-   //     editorsPanel.add(pspPanel, "PSP");//////////Added on 2.5.16
+        editorsPanel.add(pspPanel, "PSP");//////////Added on 2.5.16
         
         splitPane.add(mainPanel, JSplitPane.RIGHT);
         splitPane.add(controlPanel, JSplitPane.LEFT);
