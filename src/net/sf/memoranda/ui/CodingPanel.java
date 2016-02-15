@@ -20,10 +20,12 @@ public class CodingPanel extends JPanel {
 	
 	
 	public CodingPanel(){
-		//this.setPreferredSize(new Dimension(1000, 1000));
+		this.setPreferredSize(new Dimension(1000, 1000));
 		
 		defectLog defect1 = new defectLog();
 		this.add(defect1);
+		defectLog defect2 = new defectLog();
+		this.add(defect2);
 		
 	}
 	
@@ -37,9 +39,10 @@ public class CodingPanel extends JPanel {
 		50 Interface	100 Environment*/
 		
 		public defectLog(){
-			//setPreferredSize(new Dimension(1000, 1000));
-			//setLayout(null);
+			setPreferredSize(new Dimension(1000, 250));
+			setLayout(null);
 				//window to enter description of defect
+			
 			JTextPane description_textPane = new JTextPane();
 			description_textPane.setBounds(60, 147, 854, 94);
 			add(description_textPane);
