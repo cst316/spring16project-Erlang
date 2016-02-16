@@ -953,6 +953,11 @@ public class AppFrame extends JFrame {
                 }
             
             protected void repExport_actionPerformed(ActionEvent e) {
+            	ReportDialog repDlg = new ReportDialog(App.getFrame(), Local.getString("Report Dialog"));
+            	Dimension frmSize = App.getFrame().getSize();
+                Point loc = App.getFrame().getLocation();
+                repDlg.setLocation((frmSize.width - repDlg.getSize().width) / 2 + loc.x, (frmSize.height - repDlg.getSize().height) / 2 + loc.y);
+                repDlg.setVisible(true);
             	ReportSettings theReportSettings = new ReportSettings();
             	theReportSettings.setWithProjectID(true);
             	theReportSettings.setWithProjectDates(true);
