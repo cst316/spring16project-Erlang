@@ -78,11 +78,21 @@ public class PlanningPanel extends JPanel {
 	BorderLayout borderLayout2 = new BorderLayout();
 
 	JToolBar titleBar = new JToolBar();
+	
+	JToolBar authorBar = new JToolBar();
+	
+	JToolBar dateBar = new JToolBar();
 
 	JLabel titleLabel = new JLabel();
+	
+	JLabel authorLabel = new JLabel();
+	
+	JLabel dateLabel = new JLabel();
 
 	public JTextField titleField = new JTextField();
-
+	
+	JTextField authorField = new JTextField();
+	
 	JButton newB = new JButton();
 
 	JButton previewB = new JButton();
@@ -310,8 +320,10 @@ public class PlanningPanel extends JPanel {
 
 		jPanel1.setLayout(borderLayout2);
 		titleLabel.setFont(new java.awt.Font("Dialog", 1, 10));
-		titleLabel.setText(Local.getString("Title") + "  ");
-		titleField.setText("");
+		titleLabel.setText(Local.getString("Program") + "  ");
+		titleField.setText("Enter name of program here");
+		authorLabel.setFont(new java.awt.Font("Dialog", 1, 10));
+		authorLabel.setText(Local.getString("Programmer") + "  ");
 		editorToolBar.setFloatable(false);
 		editor.editToolbar.setFloatable(false);
 		titleBar.setFloatable(false);
