@@ -4,13 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,7 +34,6 @@ public class DesignPanel extends JPanel{
 	private Point iPoint, fPoint;			// initial and final points, used for mouse position
 	
 	private DesignListener listener;
-	private ImageIcon textI, circleI, rectangleI, lineI;	//Icons for buttons
 	private SketchToolsPanel  buttonPanel;	
 	private Sketch sketch;
 	
@@ -60,7 +63,6 @@ public class DesignPanel extends JPanel{
 	 */
 	private class SketchToolsPanel extends JPanel{
 		
-		private JButton text, circle, rectangle, line, undo, redo;			
 		private GridBagLayout gridbag = new GridBagLayout();
 		private GridBagConstraints c = new GridBagConstraints();
 		private JComboBox penSizes, penColors;									// Drop Down Menu for drawing size and colors
@@ -71,56 +73,27 @@ public class DesignPanel extends JPanel{
 			setLayout(gridbag);
 			  penSizes =new JComboBox(sizes);
 		      penColors = new JComboBox(colors);
-			c.weightx = -5;
-			//labels the JButtons with name of function 
-	        text = new JButton(DesignTools.TEXT.getTitle());
-	        circle = new JButton(DesignTools.CIRCLE.getTitle());
-	        rectangle = new JButton(DesignTools.RECTANGLE.getTitle());
-	        line = new JButton(DesignTools.LINE.getTitle());
-	        
-	        undo = new JButton("Undo");
-	        redo = new JButton("Redo"); 
-	        
-	        text.addMouseListener(listener);
-	        circle.addMouseListener(listener);
-	        rectangle.addMouseListener(listener);
-	        line.addMouseListener(listener);
-	        penSizes.addMouseListener(listener);
+			  c.weightx = -5;
+
+			penSizes.addMouseListener(listener);
 	        penColors.addMouseListener(listener);
-	        undo.addMouseListener(listener);
-	        redo.addMouseListener(listener);     
-	        
-	        c.ipadx = 20;// adjust internal padding until image icons replace text
-	        gridbag.setConstraints(text, c);
-	        c.ipadx = 17;
-	        gridbag.setConstraints(circle, c);
-	        c.ipadx = 0;
-	        gridbag.setConstraints(rectangle, c);
-	        c.ipadx = 20;
-	        gridbag.setConstraints(line, c);
-	        c.ipadx = 0;
-	        
-	        add(undo);
-	        add(redo);
+
+	        gridbag.setConstraints(DesignTools.TEXT.getButton(), c);
+	        gridbag.setConstraints(DesignTools.CIRCLE.getButton(), c);
+	        gridbag.setConstraints(DesignTools.RECTANGLE.getButton(), c);
+	        gridbag.setConstraints(DesignTools.LINE.getButton(), c);
+
 	        add(penSizes);
 	        add(penColors);
-	        add(text);
-	        add(circle);
-	        add(rectangle);
-	        add(line);
+	        
+	      // Iterate through the enum Jbuttons, add them to this component
+	      // and a listener to the button
+	        for(DesignTools tool : DesignTools.values()){
+	        	this.add(tool.getButton());
+	        	tool.getButton().addMouseListener(listener);
+	        }
 		}
-		public JButton getTextButton(){
-			return text;
-		}
-		public JButton getCircleButton(){
-			return circle;
-		}
-		public JButton getRectangleButton(){
-			return rectangle;
-		}
-		public JButton getLineButton(){
-			return line;
-		}
+
 		public JComboBox getPenSizes() {
 			return penSizes;
 		}
@@ -130,7 +103,7 @@ public class DesignPanel extends JPanel{
 		
 	}
 	/**
-	 * This inner class panel will be used to sketch the design
+	 * This inner class panel will be used to sketch the user's design
 	 * @author Carlos
 	 * @version 1.0
 	 */
@@ -143,31 +116,32 @@ public class DesignPanel extends JPanel{
 			this.setOpaque(true);
 			w=h=x=y=0;
 			
-		}// needs implementation to draw on the go, and leaving the previous drawing on board
+		}// need implementation to draw multiple shapes at a time
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			Graphics2D g2 = (Graphics2D) g;
 			int check = 0;
-			g.setColor(Color.RED);
+			g2.setColor(Color.RED);
+			
 		if(iPoint != null){
 			if (DesignTools.RECTANGLE.isActive()) {
-				check = checkCondition(); // checks initial and final point axis'
-				call(check);			 //arranges points based on condition
-				g.drawRect(x, y, w, h);
+				check = checkCondition(); 	// checks initial and final point axis'
+				call(check);			 	//arranges points based on condition drawn
+				g2.draw(new RoundRectangle2D.Double(x, y, w, h, 10, 10));
             }
 			else if (DesignTools.CIRCLE.isActive()) {
-                g.setColor(Color.RED);
+                g2.setColor(Color.RED);
                 check = checkCondition(); // checks initial and final point axis'
 				call(check);			 //arranges points based on condition
-				g.drawOval(x, y, w, h);
+				g2.draw(new Ellipse2D.Double(x, y, w, h));
             }
 			else if (DesignTools.LINE.isActive()) {
-                g.setColor(Color.RED);
-                g.drawLine(iPoint.x, iPoint.y, fPoint.x, fPoint.y);
-                
+                g2.setColor(Color.RED);
+                g2.drawLine(x, y, w, h);
             }//STRING NEEDS IMPLEMENTATION FOR USER INPUT to write on the fly.
 			else if (DesignTools.TEXT.isActive()) {
-                g.setColor(Color.RED);
-                //g.drawString("HELLO",iPoint.x, iPoint.y);
+                g2.setColor(Color.RED);
+                //g2.drawString("HELLO",iPoint.x, iPoint.y);
             }
 		}
 			
@@ -251,19 +225,21 @@ public class DesignPanel extends JPanel{
 				iPoint = e.getPoint();
 				System.out.println("Initial Point: " + iPoint.toString());
 			}//sets Text to selected
-			else if(e.getSource() == buttonPanel.getTextButton()){
+			else if(e.getSource() == DesignTools.TEXT.getButton()){
 				DesignTools.textSelected();
 			}//sets Circle to selected
-			else if(e.getSource() == buttonPanel.getCircleButton()){
+			else if(e.getSource() == DesignTools.CIRCLE.getButton()){
 				DesignTools.circleSelected();
 			}//sets Rectangle to selected
-			else if(e.getSource() == buttonPanel.getRectangleButton()){
+			else if(e.getSource() == DesignTools.RECTANGLE.getButton()){
 				DesignTools.rectangleSelected();
 			}//sets Line to selected
+			else if(e.getSource() == DesignTools.LINE.getButton()){
+				DesignTools.lineSelected();
+			}
 			else if(e.getSource() == buttonPanel.getPenSizes()){
 				 JComboBox cb = (JComboBox)e.getSource();
-			       String newSelection = (String)cb.getSelectedItem();
-			       System.out.println(newSelection);	
+			      // String newSelection = (String)cb.getSelectedItem();
 			
 			}
 		}
@@ -272,6 +248,7 @@ public class DesignPanel extends JPanel{
 		public void mouseReleased(MouseEvent e) {
 			if(e.getSource() == sketch){
 				fPoint = e.getPoint();
+				repaint();
 				System.out.println("Finish Point: " + fPoint.toString());
 			}
 		}
