@@ -958,21 +958,6 @@ public class AppFrame extends JFrame {
                 Point loc = App.getFrame().getLocation();
                 repDlg.setLocation((frmSize.width - repDlg.getSize().width) / 2 + loc.x, (frmSize.height - repDlg.getSize().height) / 2 + loc.y);
                 repDlg.setVisible(true);
-            	ReportSettings theReportSettings = new ReportSettings();
-            	theReportSettings.setWithProjectID(true);
-            	theReportSettings.setWithProjectDates(true);
-            	theReportSettings.setWithProjectStatus(true);
-            	theReportSettings.setWithProjectDescription(true);
-            	theReportSettings.setWithTasks(true);
-            	theReportSettings.setWithTaskIDs(true);
-            	theReportSettings.setWithTaskDates(true);
-            	theReportSettings.setWithTaskProgress(true);
-            	theReportSettings.setWithTaskPriority(true);
-            	theReportSettings.setWithTaskStatus(true);
-            	theReportSettings.setWithTaskText(true);
-            	theReportSettings.setWithTaskSubTasks(true);
-            	Report theReport = ReportGenerator.generateReport(theReportSettings);
-            	ReportExporter.exportReport(theReport, "test_export");
 //            	System.out.println(theReport.getProjectString());
 //            	System.out.println(theReport.getTasksString());
             }
