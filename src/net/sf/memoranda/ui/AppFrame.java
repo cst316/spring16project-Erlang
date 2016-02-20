@@ -128,7 +128,7 @@ public class AppFrame extends JFrame {
         };
         
         public Action exportReportAction =
-                new AbstractAction(Local.getString("Export report") + "...") {
+                new AbstractAction(Local.getString("Export current project report ") + "...") {
 
                 public void actionPerformed(ActionEvent e) {
                 	    repExport_actionPerformed(e);
@@ -958,8 +958,6 @@ public class AppFrame extends JFrame {
                 Point loc = App.getFrame().getLocation();
                 repDlg.setLocation((frmSize.width - repDlg.getSize().width) / 2 + loc.x, (frmSize.height - repDlg.getSize().height) / 2 + loc.y);
                 repDlg.setVisible(true);
-//            	System.out.println(theReport.getProjectString());
-//            	System.out.println(theReport.getTasksString());
             }
             
             protected void ppImport_actionPerformed(ActionEvent e) {

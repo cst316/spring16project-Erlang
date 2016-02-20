@@ -133,7 +133,7 @@ public class ReportDialog extends JDialog {
         dialogTitlePanel.setBorder(border4);
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("Export Project Report"));
+        header.setText(Local.getString("Export HTML Project Report"));
         header.setIcon(new ImageIcon(net.sf.memoranda.ui.TaskDialog.class.getResource(
             "resources/icons/reports.png")));
         
