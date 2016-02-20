@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,32 +32,35 @@ import net.sf.memoranda.ui.treetable.DesignTools;
  *
  */
 public class DesignPanel extends JPanel{
-	
-	private Point iPoint, fPoint;			// initial and final points, used for mouse position
+	private Point iPoint, fPoint;				// initial and final points, used for mouse position
 	
 	private DesignListener listener;
-	private SketchToolsPanel  buttonPanel;	
+	private SketchToolsPanel  toolsPanel;	
 	private Sketch sketch;
-	
+	private int w,h,x,y;
+
 	public DesignPanel(){
+		
 		this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(1000, 1000));
-      
 		this.setBackground(Color.WHITE);
         this.setOpaque(true);
+		w=h=x=y=0;
+		
         iPoint = null;
         fPoint = null;
         listener = new DesignListener();
         
-        buttonPanel = new SketchToolsPanel();		//contains the buttons
-        sketch = new Sketch();			//where the user will draw
+        toolsPanel = new SketchToolsPanel();		//contains the design/drawing tools
+        sketch = new Sketch();						//where the user will draw
        
         sketch.addMouseListener(listener);
      
-        this.add(buttonPanel,BorderLayout.NORTH);
-
+        this.add(toolsPanel,BorderLayout.NORTH);
         this.add(sketch,BorderLayout.CENTER);        
 	}
+
+	
 	/**
 	 * This inner class will be used to stage the sketch tools for drawing the design
 	 * @author Carlos
@@ -63,31 +68,30 @@ public class DesignPanel extends JPanel{
 	 */
 	private class SketchToolsPanel extends JPanel{
 		
-		private GridBagLayout gridbag = new GridBagLayout();
-		private GridBagConstraints c = new GridBagConstraints();
+	//	private GridBagLayout gridbag = new GridBagLayout();
+		//private GridBagConstraints c = new GridBagConstraints();
 		private JComboBox penSizes, penColors;									// Drop Down Menu for drawing size and colors
 		private String[] colors = {"Green", "Red","Black","Blue"};				// contains color options
 		private String[] sizes = {"1","2","3","4","5","6","7", "8", "9", "10"};	// contains pen size options
 		
 		SketchToolsPanel(){
-			setLayout(gridbag);
-			  penSizes =new JComboBox(sizes);
-		      penColors = new JComboBox(colors);
-			  c.weightx = -5;
+			//setLayout(gridbag);
+			 penSizes =new JComboBox(sizes);
+		     penColors = new JComboBox(colors);
 
 			penSizes.addMouseListener(listener);
 	        penColors.addMouseListener(listener);
-
-	        gridbag.setConstraints(DesignTools.TEXT.getButton(), c);
-	        gridbag.setConstraints(DesignTools.CIRCLE.getButton(), c);
-	        gridbag.setConstraints(DesignTools.RECTANGLE.getButton(), c);
-	        gridbag.setConstraints(DesignTools.LINE.getButton(), c);
+	       
+	        //need to fix button aligment, bring closer together
+	  //     gridbag.setConstraints(DesignTools.TEXT.getButton(), c);
+	    //    gridbag.setConstraints(DesignTools.CIRCLE.getButton(), c);
+	      //  gridbag.setConstraints(DesignTools.RECTANGLE.getButton(), c);
+	        //gridbag.setConstraints(DesignTools.LINE.getButton(), c);
 
 	        add(penSizes);
 	        add(penColors);
 	        
-	      // Iterate through the enum Jbuttons, add them to this component
-	      // and a listener to the button
+	        // Iterate through the enum Jbuttons, add them to this component and a listener to the button
 	        for(DesignTools tool : DesignTools.values()){
 	        	this.add(tool.getButton());
 	        	tool.getButton().addMouseListener(listener);
@@ -100,7 +104,6 @@ public class DesignPanel extends JPanel{
 		public JComboBox getPenColors() {
 			return penColors;
 		}
-		
 	}
 	/**
 	 * This inner class panel will be used to sketch the user's design
@@ -108,50 +111,92 @@ public class DesignPanel extends JPanel{
 	 * @version 1.0
 	 */
 	private class Sketch extends JPanel{
-		private int w,h,x,y;
-
+		//may need a hash table instead of aray list for position of ++shapes
+		private ArrayList <Shape> shapes;			// All shapes drawn on the pane.
+		
+		//private RoundRectangle2D rect;
 		private Sketch(){
 			super();
 			setBackground(Color.white);
-			this.setOpaque(true);
-			w=h=x=y=0;
-			
-		}// need implementation to draw multiple shapes at a time
+			setOpaque(true);
+			shapes = new ArrayList<Shape>(5);
+		}
+		
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-			int check = 0;
 			g2.setColor(Color.RED);
+			drawShape();
 			
-		if(iPoint != null){
-			if (DesignTools.RECTANGLE.isActive()) {
-				check = checkCondition(); 	// checks initial and final point axis'
-				call(check);			 	//arranges points based on condition drawn
-				g2.draw(new RoundRectangle2D.Double(x, y, w, h, 10, 10));
-            }
-			else if (DesignTools.CIRCLE.isActive()) {
-                g2.setColor(Color.RED);
-                check = checkCondition(); // checks initial and final point axis'
-				call(check);			 //arranges points based on condition
-				g2.draw(new Ellipse2D.Double(x, y, w, h));
-            }
-			else if (DesignTools.LINE.isActive()) {
-                g2.setColor(Color.RED);
-                g2.drawLine(x, y, w, h);
-            }//STRING NEEDS IMPLEMENTATION FOR USER INPUT to write on the fly.
-			else if (DesignTools.TEXT.isActive()) {
-                g2.setColor(Color.RED);
-                //g2.drawString("HELLO",iPoint.x, iPoint.y);
-            }
+			//This for each loop will iterate through an ArrayList and redraw each shape.
+			for(Shape shape : shapes){
+				g2.draw(shape);
+			}
 		}
+		
+		/**
+		 * This method will take the inputs of each user mouse click and release then create the 
+		 * relative shapes at to its location and add them to an ArrayList.
+		 */
+		public void drawShape(){
+			if(iPoint != null){
+				int check = 0;
+				switch(DesignTools.getInUse()){
+				case RECTANGLE:
+					check = checkCondition(); 	// checks initial and final point axis'
+					call(check);			 	//arranges points based on condition drawn
+					RoundRectangle2D rect = new RoundRectangle2D.Double(x, y, w, h, 10, 10);
+					addShape(rect);					
+					break;
+				case CIRCLE:
+					check = checkCondition(); 	// checks initial and final point axis'
+					sketch.call(check);			 	//arranges points based on condition
+					Ellipse2D ell = new Ellipse2D.Double(x,y,w,h);
+					addShape(ell);
+					break;
+				case LINE:
+					Line2D line = new Line2D.Double(iPoint.x, iPoint.y, fPoint.x, fPoint.y);
+					sketch.addShape(line);
+					break;
+				}
+				iPoint = null;	//explicitly prevent redrawing if not null
+				fPoint = null;	
+			}
+		}
+		private void updateLocation(Shape shape){
 			
 		}
+		/**
+		 * This method will add the newly drawn Rectangle to the shapes ArrayList
+		 * @param shape to be added to the ArrayList of shapes
+		 */
+		private void addRectangle(RoundRectangle2D rect){
+			shapes.add(rect);
+		}
+		/**
+		 * This method will delete the shape that was drawn onto the Sketch, into the ArrayList
+		 * @param shape to be deleted from the ArrayList of shapes
+		 */
+		private void deleteShape(Shape shape){
+			shapes.remove(shape);
+		}
+		/**
+		 * This method will add the newly drawn Ellipse to the shapes ArrayList
+		 * @param ellipse
+		 */
+		private void addEllipse(Ellipse2D ellipse){
+			shapes.add(ellipse);
+		}
+		private void addShape(Shape shape){
+			shapes.add(shape);
+		}
+		
 	
 		/**
 		 * This method is used to check the conditions of the iPoint and fPoints of user click on scrren
 		 * @return the case condition of iPoint and fPoint values
 		 */
-		private int checkCondition(){
+		public int checkCondition(){
 			int condition = 0;
 		//situation1(Quadrant2 -> Quadrant 4)	
             if(iPoint.x < fPoint.x && iPoint.y < fPoint.y)
@@ -164,24 +209,25 @@ public class DesignPanel extends JPanel{
             	condition = 3;
         //situation4 (Quadrant 1 -> Quadrant 3)
             else if(iPoint.x > fPoint.x && iPoint.y < fPoint.y)
-                   	condition = 4;
+                condition = 4;
             
 			return condition;
 		}
 		/**
-		 * This method is used to arrange the initial and final point values to draw the correct shape
-		 * regardless of direction drawn
+		 * This method is used to arrange the initial and final point values (primarily for rectangle and ellipse)
+		 * to draw the correct shape regardless of direction drawn
 		 * @param selection the case used to arrange the values of iPoint and fPoint
 		 * @return void
 		 */
-		private void call(int selection){
+		public void call(int selection){
 			
 			switch(selection){
 			case 1:
 				 x = iPoint.x;
 				 y = iPoint.y;
 				 w = fPoint.x-iPoint.x; 
-				 h = fPoint.y-iPoint.y;
+				 h = fPoint.y-iPoint.y; 
+
 				break;
 			case 2:
 				x = iPoint.x;
@@ -205,7 +251,7 @@ public class DesignPanel extends JPanel{
 		}	
 	}
 	/**
-	 * This listener detects the users mouse activity and enables drawing of shapes
+	 * This listener detects the users mouse activity and enables drawing and selection of shapes
 	 * @author Carlos
 	 * @version 1.0
 	 */
@@ -236,22 +282,29 @@ public class DesignPanel extends JPanel{
 			}//sets Line to selected
 			else if(e.getSource() == DesignTools.LINE.getButton()){
 				DesignTools.lineSelected();
-			}
-			else if(e.getSource() == buttonPanel.getPenSizes()){
+			}//sets Select to Selected
+			else if(e.getSource() == DesignTools.SELECT.getButton()){
+				DesignTools.SELECT.selectSelected();
+			}//if pensize jcombo box is selected (needs implementation)
+			else if(e.getSource() == toolsPanel.getPenSizes()){
 				 JComboBox cb = (JComboBox)e.getSource();
-			      // String newSelection = (String)cb.getSelectedItem();
-			
+			}//if pencolors jcombo box is selected (needs implementation)
+			else if(e.getSource() == toolsPanel.getPenColors()){
+				JComboBox cb = (JComboBox)e.getSource();
 			}
+			
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if(e.getSource() == sketch){
-				fPoint = e.getPoint();
-				repaint();
-				System.out.println("Finish Point: " + fPoint.toString());
-			}
+  				fPoint = e.getPoint();
+  				repaint();
+  				System.out.println("Finish Point: " + fPoint.toString());
+  			}
 		}
+			
+	
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
