@@ -3,11 +3,12 @@
  */
 package net.sf.memoranda;
 
-import java.util.Collection;
+import javax.swing.text.Document;
 
 import net.sf.memoranda.Report;
 import net.sf.memoranda.ReportSettings;
-import net.sf.memoranda.date.CalendarDate;;
+import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.util.CurrentStorage;
 
 /**
  * @author ty124
@@ -19,7 +20,18 @@ public class ReportGenerator
 	{
 		Report theReport = new Report();
 		theReport.setProjectString( generateProjectString( aReportSettings ) ); 
-		theReport.setTasksString(generateTasksString( aReportSettings ));
+		if( aReportSettings.isWithTasks() )
+		{
+			theReport.setTasksString(generateTasksString( aReportSettings ));
+		}
+		if( aReportSettings.isWithNotes() )
+		{
+			theReport.setNotesString(generateNotesString());
+		}
+		if( aReportSettings.isWithResources() )
+		{
+			theReport.setResourcesString(generateResourcesString());
+		}
 		return theReport;
 	}
 	
@@ -82,7 +94,7 @@ public class ReportGenerator
 		for( int i = 0; i < theTopLevelTasks.length; i++ )
 		{
 			Task theTask = (Task)theTopLevelTasks[i];
-			theTasksStringBuilder.append(generateSingleTaskString(aReportSettings, theTask));
+			theTasksStringBuilder.append(generateSingleTaskString(aReportSettings, theTask, false));
 			if( aReportSettings.isWithTaskSubTasks() )
 			{
 				
@@ -90,8 +102,8 @@ public class ReportGenerator
 				for( int j = 0; j < theSubTasks.length; j++ )
 				{
 					Task theSubTask = (Task)theSubTasks[j];
-					theTasksStringBuilder.append( "<b>" + theTask.getText()+" Sub Task - </b>");
-					theTasksStringBuilder.append(generateSingleTaskString(aReportSettings, theSubTask));
+					theTasksStringBuilder.append( "&nbsp&nbsp&nbsp&nbsp<b>" + theTask.getText()+" Sub Task - </b>");
+					theTasksStringBuilder.append(generateSingleTaskString(aReportSettings, theSubTask, true));
 				}
 			}
 		}
@@ -99,17 +111,25 @@ public class ReportGenerator
 		return theTasksStringBuilder.toString();
 	}
 	
-	private static String generateSingleTaskString( ReportSettings aReportSettings, Task aTask )
+	private static String generateSingleTaskString( ReportSettings aReportSettings, Task aTask, boolean isSubTask )
 	{
 		StringBuilder theTaskStringBuilder = new StringBuilder();
 		theTaskStringBuilder.append( "<b>" + aTask.getText() + ":</b><br>\n" );
 		if( aReportSettings.isWithTaskIDs() )
 		{
+			if( isSubTask )
+			{
+				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+			}
 			theTaskStringBuilder.append("<b>ID:</b> "+ aTask.getID() + "<br>\n" );
 		}
 		
 		if( aReportSettings.isWithTaskDates() )
 		{
+			if( isSubTask )
+			{
+				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+			}
 			theTaskStringBuilder.append( "<b>Start Date:</b> " + aTask.getStartDate().toString() + " " +
                                           "<b>End Date:</b> " + aTask.getEndDate() + "<br>\n" );
 		}
@@ -135,10 +155,18 @@ public class ReportGenerator
 				thePriorityString = "Highest";
 				break;
 			}
+			if( isSubTask )
+			{
+				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+			}
 			theTaskStringBuilder.append( "<b>The Priority:</b>" + thePriorityString + "<br>\n" );
 		}
 		if( aReportSettings.isWithTaskProgress() )
 		{
+			if( isSubTask )
+			{
+				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+			}
 			theTaskStringBuilder.append( "<b>The Progress:</b> " +aTask.getProgress() + "<br>\n");
 		}
 		if( aReportSettings.isWithTaskStatus() )
@@ -171,10 +199,77 @@ public class ReportGenerator
 			default:
 				//do nothing
 			}
+			if( isSubTask )
+			{
+				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+			}
 			theTaskStringBuilder.append( "<b>Status:</b> "+ theStatusString + "<br>\n" );
 		}
 		theTaskStringBuilder.append("<br>\n");
 		return theTaskStringBuilder.toString();
+	}
+	
+	private static String generateNotesString() 
+	{
+		StringBuilder theNotesStringBuilder = new StringBuilder();
+		theNotesStringBuilder.append("<h2>Notes:</h2>\n<p>");
+		Object [] theNotes = CurrentProject.getNoteList().getAllNotes().toArray();
+		int theNotesLength = theNotes.length;
+		if( theNotesLength > 0 )
+		{
+			for( int i = 0; i < theNotes.length; i++ )
+			{
+				Note theNote = (Note)theNotes[i];
+				theNotesStringBuilder.append("<b>"+(i+1)+")</b> "+theNote.getDate()+" -- "+ theNote.getTitle() +":<br>\n");
+	            Document doc = CurrentStorage.get().openNote(theNote);
+	            try {
+	                String txt = doc.getText(0, doc.getLength());
+	                theNotesStringBuilder.append(txt+"<br>\n");
+	            }
+	            catch (Exception ex) {
+	                ex.printStackTrace();
+	                theNotesStringBuilder.append("Failed Getting Note"+"<br>\n");
+	            }
+				
+			}
+		}
+		else
+		{
+			theNotesStringBuilder.append("No Notes/n");
+		}
+		theNotesStringBuilder.append("<br>\n");
+		return theNotesStringBuilder.toString();
+	}
+	
+	private static String generateResourcesString() 
+	{
+		StringBuilder theResourcesStringBuilder = new StringBuilder();
+		theResourcesStringBuilder.append("<h2>Resources:</h2>\n<p>");
+		Object [] theResources = CurrentProject.getResourcesList().getAllResources().toArray();
+		int theRescLength = theResources.length;
+		if( theRescLength > 0 )
+		{
+			for( int i = 0; i < theRescLength; i++ )
+			{
+				Resource theResource = (Resource)theResources[i];
+				theResourcesStringBuilder.append("<b>"+(i+1)+")</b> ");
+				if( theResource.isInetShortcut() )
+				{
+					theResourcesStringBuilder.append("Internet Resource:");
+				}
+				else
+				{
+				    theResourcesStringBuilder.append("Local File:");
+				}
+				theResourcesStringBuilder.append(theResource.getPath()+"<br>\n");
+			}
+		}
+		else 
+		{
+			theResourcesStringBuilder.append("No Resources\n");
+		}
+		theResourcesStringBuilder.append("<br>\n");
+		return theResourcesStringBuilder.toString();
 	}
 }
 

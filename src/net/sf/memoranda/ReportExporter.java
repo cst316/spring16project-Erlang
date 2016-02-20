@@ -43,6 +43,8 @@ public class ReportExporter {
 		StringBuilder theStringBuilder = new StringBuilder();
 		String theProjectString = aReport.getProjectString();
 		String theTasksString = aReport.getTasksString();
+		String theNotesString = aReport.getNotesString();
+		String theResourcesString = aReport.getResourcesString();
 		if( theProjectString == null )
 		{
 			theStringBuilder.append("<p>Error Exporting Report</p>");
@@ -54,6 +56,14 @@ public class ReportExporter {
 		if( theTasksString != null)
 		{
 			theStringBuilder.append(theTasksString);
+		}
+		if( theNotesString != null )
+		{
+			theStringBuilder.append(theNotesString);
+		}
+		if( theResourcesString != null )
+		{
+			theStringBuilder.append(theResourcesString);
 		}
 		out.println( theStringBuilder.toString() );
 		out.close();

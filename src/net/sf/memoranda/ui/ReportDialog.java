@@ -238,11 +238,11 @@ public class ReportDialog extends JDialog {
         theConsts.gridy = 6;
         theConsts.gridwidth = 2;
         theConsts.insets = new Insets(0,0,0,0);
-        jPanel3.add(resourcesCBox , theConsts);
+        jPanel3.add( notesCBox, theConsts);
         theConsts.gridx = 2;
         theConsts.gridy = 6;
         theConsts.anchor = GridBagConstraints.PAGE_END;
-        jPanel3.add(notesCBox, theConsts);
+        jPanel3.add(resourcesCBox, theConsts);
         
         //set default state of check-boxes
         prjIDCBox.setSelected(true);
