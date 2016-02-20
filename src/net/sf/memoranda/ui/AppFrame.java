@@ -40,6 +40,10 @@ import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
+import net.sf.memoranda.Report;
+import net.sf.memoranda.ReportExporter;
+import net.sf.memoranda.ReportGenerator;
+import net.sf.memoranda.ReportSettings;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
@@ -123,6 +127,14 @@ public class AppFrame extends JFrame {
                 }
         };
         
+        public Action exportReportAction =
+                new AbstractAction(Local.getString("Export report") + "...") {
+
+                public void actionPerformed(ActionEvent e) {
+                	    repExport_actionPerformed(e);
+                }
+        };
+        
         public Action importNotesAction =
                         new AbstractAction(Local.getString("Import multiple notes")) {
 
@@ -144,6 +156,7 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
+    JMenuItem jMenuFileExportReport = new JMenuItem(exportReportAction);
     JMenuItem jMenuFileImportPrj = new JMenuItem(importNotesAction);
     JMenuItem jMenuFileImportNote = new JMenuItem(importOneNoteAction);
     JMenuItem jMenuFileExportNote = new JMenuItem(
@@ -453,6 +466,7 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileUnpackPrj);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileExportPrj);
+        jMenuFile.add(jMenuFileExportReport);
         jMenuFile.add(jMenuFileExportNote);
         jMenuFile.add(jMenuFileImportNote);
         jMenuFile.add(jMenuFileImportPrj);
@@ -687,22 +701,18 @@ public class AppFrame extends JFrame {
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             if (Configuration.get("ON_CLOSE").equals("exit")){
-            	doExit();System.out.println("701");
             }
                 
             	
             else{
-            	System.out.println("707");
             	 doExit();
             }
                
             //WINDOW_CLOSING
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-        	System.out.println("713");
             super.processWindowEvent(new WindowEvent(this,
                     WindowEvent.WINDOW_ICONIFIED));
-            System.out.println("716");
             //doMinimize();
         }
         else
@@ -728,6 +738,7 @@ public class AppFrame extends JFrame {
         this.jMenuInsert.setEnabled(enabled);
         this.jMenuFileNewNote.setEnabled(enabled);
         this.jMenuFileExportNote.setEnabled(enabled);
+        this.jMenuFileExportReport.setEnabled(true);
     }
 
     public void doPrjPack() {
@@ -940,6 +951,26 @@ public class AppFrame extends JFrame {
                  ProjectExporter.export(CurrentProject.get(), chooser.getSelectedFile(), enc, xhtml, 
                                  dlg.splitChB.isSelected(), true, nument, dlg.titlesAsHeadersChB.isSelected(), false); 
                 }
+            
+            protected void repExport_actionPerformed(ActionEvent e) {
+            	ReportSettings theReportSettings = new ReportSettings();
+            	theReportSettings.setWithProjectID(true);
+            	theReportSettings.setWithProjectDates(true);
+            	theReportSettings.setWithProjectStatus(true);
+            	theReportSettings.setWithProjectDescription(true);
+            	theReportSettings.setWithTasks(true);
+            	theReportSettings.setWithTaskIDs(true);
+            	theReportSettings.setWithTaskDates(true);
+            	theReportSettings.setWithTaskProgress(true);
+            	theReportSettings.setWithTaskPriority(true);
+            	theReportSettings.setWithTaskStatus(true);
+            	theReportSettings.setWithTaskText(true);
+            	theReportSettings.setWithTaskSubTasks(true);
+            	Report theReport = ReportGenerator.generateReport(theReportSettings);
+            	ReportExporter.exportReport(theReport, "test_export");
+//            	System.out.println(theReport.getProjectString());
+//            	System.out.println(theReport.getTasksString());
+            }
             
             protected void ppImport_actionPerformed(ActionEvent e) {
             

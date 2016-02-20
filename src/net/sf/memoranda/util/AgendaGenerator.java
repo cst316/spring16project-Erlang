@@ -89,7 +89,7 @@ public class AgendaGenerator {
 			}
 			s += "\n</ul>\n";
 		}
-
+		s += "<p><br><br></p><hr>";
 		//        Util.debug("html for project " + p.getTitle() + " is\n" + s); 
 		return s;
 	}
@@ -270,14 +270,14 @@ public class AgendaGenerator {
 	static String generateProjectInfo(Project p, CalendarDate date, Collection expandedTasks) {
 		String s = "<h2><a href=\"memoranda:project#"
 				+ p.getID()
-				+ "\">"
+				+ "\"><b>"
 				+ p.getTitle()
-				+ "</a></h2>\n"
+				+ "</b></a></h2>\n"
 				+ "<table border=\"0\" width=\"100%\" cellpadding=\"2\" bgcolor=\"#EFEFEF\"><tr><td>" 
 				+ Local.getString("Start date")+": <i>"+p.getStartDate().getMediumDateString()+"</i>\n";
 		if (p.getEndDate() != null)
 			s += "<br>" + Local.getString("End date")+": <i>"+p.getEndDate().getMediumDateString()
-			+"</i>\n";        
+			+"</i>\n";     
 		return s + generateTasksInfo(p, date,expandedTasks);        
 	}
 
