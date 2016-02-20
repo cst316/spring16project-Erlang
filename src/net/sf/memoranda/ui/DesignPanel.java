@@ -196,7 +196,7 @@ public class DesignPanel extends JPanel{
 		 * This method is used to check the conditions of the iPoint and fPoints of user click on scrren
 		 * @return the case condition of iPoint and fPoint values
 		 */
-		public int checkCondition(){
+		private int checkCondition(){
 			int condition = 0;
 		//situation1(Quadrant2 -> Quadrant 4)	
             if(iPoint.x < fPoint.x && iPoint.y < fPoint.y)
@@ -219,7 +219,7 @@ public class DesignPanel extends JPanel{
 		 * @param selection the case used to arrange the values of iPoint and fPoint
 		 * @return void
 		 */
-		public void call(int selection){
+		private void call(int selection){
 			
 			switch(selection){
 			case 1:
