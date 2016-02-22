@@ -30,9 +30,14 @@ public class PSPPanel extends JPanel {
 	 * @param parent used to initialize planning panel tab
 	 */
 	public PSPPanel(DailyItemsPanel parent){
+		super(new BorderLayout());
 		planPanel = new PlanningPanel(parent);
-		this.setLayout(new FlowLayout());
+		StopWatch watch = new StopWatch();
+		this.setLayout(new BorderLayout());
 		this.initializeTabs();
+		this.add(pspTabs, BorderLayout.WEST);
+		this.add(watch, BorderLayout.CENTER);
+		
 	}
 /**
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Planning,
@@ -45,7 +50,7 @@ public class PSPPanel extends JPanel {
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
 	
-	this.add(pspTabs);
+	
 	
 
 	
