@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 
-
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 /**
  * initializes the PSPPanel to display different PSP Panes
  * @author Carlos
@@ -22,6 +24,10 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
+	//Object rowSummary[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3"},
+      //      { "Row2-Column1", "Row2-Column2", "Row2-Column3"} };
+	//Object columnSummary[] = { "Plan", "Actual", "To Date"};
+	
 		//PlanPanel planPanel = new PlanPanel();	//create unique panel later		
 	ImageIcon web = new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
@@ -35,6 +41,8 @@ public class PSPPanel extends JPanel {
 		this.setLayout(new FlowLayout());
 		this.initializeTabs();
 	}
+	
+	
 /**
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Planning,
  * Design, and Defect form management for the convenience of Software Engineering Students
@@ -46,13 +54,31 @@ public class PSPPanel extends JPanel {
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
 	pspTabs.addTab("Summary", web, summaryPanel, "tables");
-	
+	showSummay();
+
 	this.add(pspTabs);
 	
-
+	}	
 	
+	public void showSummay(){
+		//JButton b = new JButton("Click for import info");
+		
+		//Tables tableSummary = new Tables();
+		Tables tableSummary = new Tables();
+		
+		//	summaryPanel.add(b);
+	//   b.setSize(50,250);
+	//    b.setVisible(true);
+	 //  JScrollPane scrollPane = new JScrollPane(tableSummary);
+	 //   summaryPanel.setAutoResizeMode(tableSummary.AUTO_RESIZE_OFF);
+	 //   summaryPanel.setColumnSelectionAllowed(true);
+	   // summaryPanel.add(tableSummary);
+		// summaryPanel.setLayout(new BorderLayout());
+		summaryPanel.add(tableSummary, BorderLayout.CENTER);
+		summaryPanel.setSize(800,200);
+		summaryPanel.setVisible(true);
+	   
 	}
 	
 	
-
 }
