@@ -52,7 +52,9 @@ public class PlanningPanel extends JPanel {
 	GridBagConstraints g = new GridBagConstraints();
 
 	JPanel jPanel1 = new JPanel();
-
+	
+	JPanel jPanel2 = new JPanel();
+	
 	public HTMLEditor editor = null;
 
 	JButton importB = new JButton();
@@ -178,12 +180,49 @@ public class PlanningPanel extends JPanel {
 		if (!Configuration.get("DISABLE_L10N").equals("yes"))
 			net.sf.memoranda.ui.htmleditor.util.Local.setMessages(Local
 					.getMessages());
-
-		editor = new HTMLEditor();
-
-		//this.setLayout(borderLayout1);
 		
-		/*newB.setAction(newAction);
+		g.anchor = GridBagConstraints.NORTHWEST;
+		g.fill = GridBagConstraints.HORIZONTAL;
+		jPanel1.setLayout(gridLayout);
+		titleBar.setLayout(gridLayout);
+		editorToolBar.setLayout(gridLayout);
+		
+		editor = new HTMLEditor();
+		
+		titleLabel.setFont(new java.awt.Font("Dialog", 1, 10));
+		titleLabel.setText(Local.getString("Program") + "  ");
+		g.gridx = 0;
+		g.gridy = 0;
+		titleBar.add(titleLabel, g);
+		
+		titleField.setText("Enter name of program here");
+		g.gridx = 1;
+		titleBar.add(titleField, g);
+		
+		authorLabel.setFont(new java.awt.Font("Dialog", 1, 10));
+		authorLabel.setText(Local.getString("Programmer") + "  ");
+		g.gridx = 0;
+		g.gridy = 0;
+		authorBar.add(authorLabel, g);
+		
+		authorField.setText("Your name");
+		g.gridx = 1;
+		authorBar.add(authorField, g);
+		
+		g.gridx = 0;
+		g.gridy = 0;
+		titleBar.setFloatable(false);
+		jPanel1.add(titleBar, g);
+		
+		g.gridy = 1;
+		authorBar.setFloatable(false);
+		jPanel1.add(authorBar, g);
+		
+		jPanel2.setLayout(gridLayout);
+		
+		this.setLayout(gridLayout);
+		
+		newB.setAction(newAction);
 		newB.setMaximumSize(new Dimension(24, 24));
 		newB.setMinimumSize(new Dimension(24, 24));
 		newB.setPreferredSize(new Dimension(24, 24));
@@ -323,47 +362,65 @@ public class PlanningPanel extends JPanel {
 		 * printB.setText("");
 		 */
 
-		jPanel1.setLayout(gridLayout);;
-		titleLabel.setFont(new java.awt.Font("Dialog", 1, 10));
-		titleLabel.setText(Local.getString("Program") + "  ");
-		titleField.setText("Enter name of program here");
-		authorLabel.setFont(new java.awt.Font("Dialog", 1, 10));
-		authorLabel.setText(Local.getString("Programmer") + "  ");
-		//editorToolBar.setFloatable(false);
-		//editor.editToolbar.setFloatable(false);
-		titleBar.setFloatable(false);
-		this.add(jPanel1, BorderLayout.CENTER);
-		/*editorToolBar.add(newB, null);
+		editorToolBar.setFloatable(false);
+		editor.editToolbar.setFloatable(false);
+		//this.add(jPanel1, BorderLayout.CENTER);
+		g.gridx = 0;
+		g.gridy = 0;
+		editorToolBar.add(newB, g);
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(historyBackB, null);
-		editorToolBar.add(historyForwardB, null);
+		g.gridx = 1;
+		editorToolBar.add(historyBackB, g);
+		g.gridx = 2;
+		editorToolBar.add(historyForwardB, g);
+		g.gridx = 3;
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(undoB, null);
-		editorToolBar.add(redoB, null);
+		g.gridx = 4;
+		editorToolBar.add(undoB, g);
+		g.gridx = 5;
+		editorToolBar.add(redoB, g);
+		g.gridx = 6;
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(cutB, null);
-		editorToolBar.add(copyB, null);
-		editorToolBar.add(pasteB, null);
+		editorToolBar.add(cutB, g);
+		g.gridx = 7;
+		editorToolBar.add(copyB, g);
+		g.gridx = 8;
+		editorToolBar.add(pasteB, g);
+		g.gridx = 9;
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(insDateB, null);
-		editorToolBar.add(insTimeB, null);
+		editorToolBar.add(insDateB, g);
+		g.gridx = 10;
+		editorToolBar.add(insTimeB, g);
+		g.gridx = 11;
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(importB, null);
-		editorToolBar.add(exportB, null);
+		editorToolBar.add(importB, g);
+		g.gridx = 12;
+		editorToolBar.add(exportB, g);
+		g.gridx = 13;
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(previewB, null);*/
-		// editorToolBar.add(printB, null);
+		editorToolBar.add(previewB, g);
+		//editorToolBar.add(printB, null);
+		
+		g.gridx = 0;
+		g.gridy = 0;
+		jPanel2.add(editorToolBar, g);
 		
 		//jPanel1.add(editorToolBar, BorderLayout.NORTH);
-		//jPanel1.add(editor, BorderLayout.CENTER);
-		this.add(titleBar, BorderLayout.NORTH);
+		jPanel1.setPreferredSize(new Dimension(500,250));
+		this.add(jPanel1, g);
+		g.gridy = 1;
+		jPanel2.setPreferredSize(new Dimension(8,100));
+		this.add(jPanel2, g);
+		g.gridy = 2;
+		editor.setPreferredSize(new Dimension(750, 500));
+		this.add(editor, g); 
 
-		titleBar.add(titleLabel, null);
-		titleBar.add(titleField, null);
+		//titleBar.add(titleLabel, null);
+		//titleBar.add(titleField, null);
 		initCSS();
 		//editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
-		// editor.editor.enableInputMethods(false);
-		// editor.editor.getInputContext().selectInputMethod(Locale.getDefault());
+		//editor.editor.enableInputMethods(false);
+		//editor.editor.getInputContext().selectInputMethod(Locale.getDefault());
 		titleField.addKeyListener(new KeyListener() {
 
 			public void keyPressed(KeyEvent ke) {
