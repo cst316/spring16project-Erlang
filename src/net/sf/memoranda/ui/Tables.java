@@ -4,12 +4,14 @@ import javax.swing.JTable;
 
 public class Tables extends JTable{
 	
-	public Tables(){
+	
+	
+	public Tables(Object rowData[][], Object columnNames[] ){
 	//	JTable table = new JTable();
-		Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3"},
-                { "Row2-Column1", "Row2-Column2", "Row2-Column3"} };
-		Object columnNames[] = { "Column One", "Column Two", "Column Three"};
-		new JTable(rowData, columnNames);
+		
+		super(rowData, columnNames);
+		
+		
 		
 	}
 	

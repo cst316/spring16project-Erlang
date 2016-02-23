@@ -24,9 +24,9 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
-	//Object rowSummary[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3"},
-      //      { "Row2-Column1", "Row2-Column2", "Row2-Column3"} };
-	//Object columnSummary[] = { "Plan", "Actual", "To Date"};
+	Object rowSummary[][] = { { " ","Row1-Column1", "Row1-Column2", "Row1-Column3"},
+            {" ", "Row2-Column1", "Row2-Column2", "Row2-Column3"} };
+	Object columnSummary[] = { " ", "Plan", "Actual", "To Date"};
 	
 		//PlanPanel planPanel = new PlanPanel();	//create unique panel later		
 	ImageIcon web = new ImageIcon(
@@ -61,21 +61,24 @@ public class PSPPanel extends JPanel {
 	}	
 	
 	public void showSummay(){
-		//JButton b = new JButton("Click for import info");
+	//	JButton b = new JButton("Click for import info");
 		
 		//Tables tableSummary = new Tables();
-		Tables tableSummary = new Tables();
+		Tables tableSummary = new Tables(rowSummary, columnSummary);
 		
 		//	summaryPanel.add(b);
-	//   b.setSize(50,250);
-	//    b.setVisible(true);
-	 //  JScrollPane scrollPane = new JScrollPane(tableSummary);
+	  // b.setSize(50,250);
+	   // b.setVisible(true);
+	 // JScrollPane scrollPane = new JScrollPane(tableSummary);
 	 //   summaryPanel.setAutoResizeMode(tableSummary.AUTO_RESIZE_OFF);
 	 //   summaryPanel.setColumnSelectionAllowed(true);
-	   // summaryPanel.add(tableSummary);
-		// summaryPanel.setLayout(new BorderLayout());
+		summaryPanel.setLayout(new BorderLayout());
+		summaryPanel.add(tableSummary.getTableHeader(), BorderLayout.PAGE_START);
 		summaryPanel.add(tableSummary, BorderLayout.CENTER);
-		summaryPanel.setSize(800,200);
+	   summaryPanel.add(tableSummary);
+		// summaryPanel.setLayout(new BorderLayout());
+	//	summaryPanel.add(tableSummary, BorderLayout.CENTER);
+		summaryPanel.setSize(1000,1500);
 		summaryPanel.setVisible(true);
 	   
 	}
