@@ -237,7 +237,7 @@ public class ReportGenerator
 		{
 			theNotesStringBuilder.append("No Notes/n");
 		}
-		theNotesStringBuilder.append("<br>\n");
+		theNotesStringBuilder.append("</p>\n");
 		return theNotesStringBuilder.toString();
 	}
 	
@@ -266,9 +266,9 @@ public class ReportGenerator
 		}
 		else 
 		{
-			theResourcesStringBuilder.append("No Resources\n");
+			theResourcesStringBuilder.append("No Resources<br>\n");
 		}
-		theResourcesStringBuilder.append("<br>\n");
+		theResourcesStringBuilder.append("</p>\n");
 		return theResourcesStringBuilder.toString();
 	}
 }
