@@ -25,7 +25,46 @@ public class PSPPanel extends JPanel {
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
 	Object rowSummary[][] = { { " ","Row1-Column1", "Row1-Column2", "Row1-Column3"},
-            {" ", "Row2-Column1", "Row2-Column2", "Row2-Column3"} };
+            {"Summary ", "Row2-Column1", "Row2-Column2", "Row2-Column3"},
+            {"Minute/LOC ", " ", " ", " "}, 
+            {"LOC/Hour ", " ", " ", " "},
+            {"Defect/KLOC ", " ", " ", " "},
+            {"Yield ", " ", " ", " "},
+            {"A/FR ", " ", " ", " "},
+            {"Program size (LOC) ", " ", " ", " "},
+            {"Total New & Change ", " ", " ", " "},
+            {"Maximum Size ", " ", " ", " "},
+            {"Minimum Size ", " ", " ", " "},
+            {" ", " ", " ", " "},
+            {"Timein Phase (min.) ", " ", " ", " "},
+            {"Planning ", " ", " ", " "},
+            {"Design ", " ", " ", " "},
+            {"Code ", " ", " ", " "},
+            {"Code Review ", " ", " ", " "},
+            {"Compile ", " ", " ", " "},
+            {"Test ", " ", " ", " "},
+            {"Postmortem ", " ", " ", " "},
+            {"  Total ", " ", " ", " "},
+            {"Maximum Size ", " ", " ", " "},
+            {"Minimum Size ", " ", " ", " "},
+            {" ", " ", " ", " "},
+            {"Defect Injected ", " ", " ", " "},
+            {"Planning ", " ", " ", " "},
+            {"Design ", " ", " ", " "},
+            {"Code ", " ", " ", " "},
+            {"Code Review ", " ", " ", " "},
+            {"Compile ", " ", " ", " "},
+            {"Test ", " ", " ", " "},
+            {"  Total", " ", " ", " "}, 
+            {" ", " ", " ", " "},
+            {"Defect Removed ", " ", " ", " "},
+            {"Planning ", " ", " ", " "},
+            {"Design ", " ", " ", " "},
+            {"Code ", " ", " ", " "},
+            {"Code Review ", " ", " ", " "},
+            {"Compile ", " ", " ", " "},
+            {"Test ", " ", " ", " "},
+            {"  Total ", " ", " ", " "}};
 	Object columnSummary[] = { " ", "Plan", "Actual", "To Date"};
 	
 		//PlanPanel planPanel = new PlanPanel();	//create unique panel later		
@@ -69,7 +108,8 @@ public class PSPPanel extends JPanel {
 		//	summaryPanel.add(b);
 	  // b.setSize(50,250);
 	   // b.setVisible(true);
-	 // JScrollPane scrollPane = new JScrollPane(tableSummary);
+	  //JScrollPane scrollPane = new JScrollPane(tableSummary);
+	
 	 //   summaryPanel.setAutoResizeMode(tableSummary.AUTO_RESIZE_OFF);
 	 //   summaryPanel.setColumnSelectionAllowed(true);
 		summaryPanel.setLayout(new BorderLayout());
@@ -80,6 +120,7 @@ public class PSPPanel extends JPanel {
 	//	summaryPanel.add(tableSummary, BorderLayout.CENTER);
 		summaryPanel.setSize(1000,1500);
 		summaryPanel.setVisible(true);
+		
 	   
 	}
 	
