@@ -25,50 +25,50 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
-	Object rowSummary[][] = { { " "," ", " ", " "},
-            {"Summary ", " ", " ", " "},
-            {"Minute/LOC ", " ", " ", " "}, 
-            {"LOC/Hour ", " ", " ", " "},
-            {"Defect/KLOC ", " ", " ", " "},
-            {"Yield ", " ", " ", " "},
-            {"A/FR ", " ", " ", " "},
-            {"Program size (LOC) ", " ", " ", " "},
-            {"Total New & Change ", " ", " ", " "},
-            {"Maximum Size ", " ", " ", " "},
-            {"Minimum Size ", " ", " ", " "},
-            {" ", " ", " ", " "},
-            {"Timein Phase (min.) ", " ", " ", " "},
-            {"Planning ", " ", " ", " "},
-            {"Design ", " ", " ", " "},
-            {"Code ", " ", " ", " "},
-            {"Code Review ", " ", " ", " "},
-            {"Compile ", " ", " ", " "},
-            {"Test ", " ", " ", " "},
-            {"Postmortem ", " ", " ", " "},
-            {"  Total ", " ", " ", " "},
-            {"Maximum Size ", " ", " ", " "},
-            {"Minimum Size ", " ", " ", " "},
-            {" ", " ", " ", " "},
-            {"Defect Injected ", " ", " ", " "},
-            {"Planning ", " ", " ", " "},
-            {"Design ", " ", " ", " "},
-            {"Code ", " ", " ", " "},
-            {"Code Review ", " ", " ", " "},
-            {"Compile ", " ", " ", " "},
-            {"Test ", " ", " ", " "},
-            {"  Total", " ", " ", " "}, 
-            {" ", " ", " ", " "},
-            {"Defect Removed ", " ", " ", " "},
-            {"Planning ", " ", " ", " "},
-            {"Design ", " ", " ", " "},
-            {"Code ", " ", " ", " "},
-            {"Code Review ", " ", " ", " "},
-            {"Compile ", " ", " ", " "},
-            {"Test ", " ", " ", " "},
-            {"  Total ", " ", " ", " "}};
-	Object columnSummary[] = { " ", "Plan", "Actual", "To Date"};
+	Object rowSummary[][] = { { " "," ", " ", " "," "},
+            {"Summary ", " ", " ", " "," "},
+            {"Minute/LOC ", " ", " ", " "," "}, 
+            {"LOC/Hour ", " ", " ", " "," "},
+            {"Defect/KLOC ", " ", " ", " "," "},
+            {"Yield ", " ", " ", " "," "},
+            {"A/FR ", " ", " ", " "," "},
+            {"Program size (LOC) ", " ", " ", " "," "},
+            {"Total New & Change ", " ", " ", " "," "},
+            {"Maximum Size ", " ", " ", " "," "},
+            {"Minimum Size ", " ", " ", " "," "},
+            {" ", " ", " ", " "," "},
+            {"Timein Phase (min.)","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"Postmortem ", " ", " ", " "," "},
+            {"  Total ", " ", " ", " "," "},
+            {"Maximum Size ", " ", " ", " "," "},
+            {"Minimum Size ", " ", " ", " "," "},
+            {" ", " ", " ", " "," "},
+            {"Defect Injected ","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"  Total", " ", " ", " "," "}, 
+            {" ", " ", " ", " "," "},
+            {"Defect Removed ","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"  Total ", " ", " ", " "," "}};
+	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
 	
-		//PlanPanel planPanel = new PlanPanel();	//create unique panel later		
+			
 	ImageIcon web = new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
 			.getResource("resources/icons/web.png"));
@@ -100,38 +100,25 @@ public class PSPPanel extends JPanel {
 	
 	}	
 	
+	
+	/**
+	 * Method creates a table on the summary tab 
+	 */
 	public void showSummay(){
+		/*  Future button to import data
 		JButton b = new JButton("Click for import info");
 			summaryPanel.add(b);
 		   b.setSize(50,250);
 		    b.setVisible(true);
-		
+		  */
+
 	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
 	  JScrollPane scrollPane = new JScrollPane(tableSummary);
 	  JPanel panel = new JPanel();
-	//  JFrame frame = new JFrame();
 	  panel.add(scrollPane);
 	  summaryPanel.add(new JScrollPane(panel));
-	  summaryPanel.setSize(1000,1500);
-	  summaryPanel.setVisible(true);
-	 //   summaryPanel.setAutoResizeMode(tableSummary.AUTO_RESIZE_OFF);
-	 //   summaryPanel.setColumnSelectionAllowed(true);
-		//////summaryPanel.setLayout(new BorderLayout());
-		/////summaryPanel.add(tableSummary.getTableHeader(), BorderLayout.PAGE_START);
-		/////summaryPanel.add(tableSummary, BorderLayout.CENTER);
-	   /////summaryPanel.add(tableSummary);
-		// summaryPanel.setLayout(new BorderLayout());
-	//	summaryPanel.add(tableSummary, BorderLayout.CENTER);
-		//summaryPanel.setSize(1000,1500);
-		//summaryPanel.setVisible(true);
-		
-		 
-		   
-		    
-		    
-		   
-		
-	   
+	  scrollPane.setSize(500,1500);
+	  summaryPanel.setVisible(true);	
 	}
 	
 	
