@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -24,8 +25,8 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
-	Object rowSummary[][] = { { " ","Row1-Column1", "Row1-Column2", "Row1-Column3"},
-            {"Summary ", "Row2-Column1", "Row2-Column2", "Row2-Column3"},
+	Object rowSummary[][] = { { " "," ", " ", " "},
+            {"Summary ", " ", " ", " "},
             {"Minute/LOC ", " ", " ", " "}, 
             {"LOC/Hour ", " ", " ", " "},
             {"Defect/KLOC ", " ", " ", " "},
@@ -100,26 +101,35 @@ public class PSPPanel extends JPanel {
 	}	
 	
 	public void showSummay(){
-	//	JButton b = new JButton("Click for import info");
+		JButton b = new JButton("Click for import info");
+			summaryPanel.add(b);
+		   b.setSize(50,250);
+		    b.setVisible(true);
 		
-		//Tables tableSummary = new Tables();
-		Tables tableSummary = new Tables(rowSummary, columnSummary);
-		
-		//	summaryPanel.add(b);
-	  // b.setSize(50,250);
-	   // b.setVisible(true);
-	  //JScrollPane scrollPane = new JScrollPane(tableSummary);
-	
+	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
+	  JScrollPane scrollPane = new JScrollPane(tableSummary);
+	  JPanel panel = new JPanel();
+	//  JFrame frame = new JFrame();
+	  panel.add(scrollPane);
+	  summaryPanel.add(new JScrollPane(panel));
+	  summaryPanel.setSize(1000,1500);
+	  summaryPanel.setVisible(true);
 	 //   summaryPanel.setAutoResizeMode(tableSummary.AUTO_RESIZE_OFF);
 	 //   summaryPanel.setColumnSelectionAllowed(true);
-		summaryPanel.setLayout(new BorderLayout());
-		summaryPanel.add(tableSummary.getTableHeader(), BorderLayout.PAGE_START);
-		summaryPanel.add(tableSummary, BorderLayout.CENTER);
-	   summaryPanel.add(tableSummary);
+		//////summaryPanel.setLayout(new BorderLayout());
+		/////summaryPanel.add(tableSummary.getTableHeader(), BorderLayout.PAGE_START);
+		/////summaryPanel.add(tableSummary, BorderLayout.CENTER);
+	   /////summaryPanel.add(tableSummary);
 		// summaryPanel.setLayout(new BorderLayout());
 	//	summaryPanel.add(tableSummary, BorderLayout.CENTER);
-		summaryPanel.setSize(1000,1500);
-		summaryPanel.setVisible(true);
+		//summaryPanel.setSize(1000,1500);
+		//summaryPanel.setVisible(true);
+		
+		 
+		   
+		    
+		    
+		   
 		
 	   
 	}
