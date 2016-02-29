@@ -5,21 +5,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -33,7 +27,6 @@ import net.sf.memoranda.ui.treetable.DesignTools;
  */
 public class DesignPanel extends JPanel{
 	private Point iPoint, fPoint;				// initial and final points, used for mouse position
-	
 	private DesignListener listener;
 	private SketchToolsPanel  toolsPanel;	
 	private Sketch sketch;
@@ -111,22 +104,27 @@ public class DesignPanel extends JPanel{
 	 * @version 1.0
 	 */
 	private class Sketch extends JPanel{
-		//may need a hash table instead of aray list for position of ++shapes
-		private ArrayList <Shape> shapes;			// All shapes drawn on the pane.
-		
-		//private RoundRectangle2D rect;
+		private Vector <Shape> shapes;			// All shapes drawn on the pane.
+		private boolean shapeSelected;				// Used to determine if shape is selected to be moved.
+		private Point lastPoint;					// The previous position of shape
+		private int mouseX, mouseY;
+		private Shape shape;
+
 		private Sketch(){
 			super();
 			setBackground(Color.white);
 			setOpaque(true);
-			shapes = new ArrayList<Shape>(5);
+			shapes = new Vector<Shape>(10);
+			shapeSelected = false;
+			addMouseMotionListener(listener);
+
 		}
 		
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(Color.RED);
-			drawShape();
+			drawShape(); 		// want to draw only when rectangle, ellipse, or line is selected
 			
 			//This for each loop will iterate through an ArrayList and redraw each shape.
 			for(Shape shape : shapes){
@@ -134,6 +132,10 @@ public class DesignPanel extends JPanel{
 			}
 		}
 		
+		public Vector<Shape> getShapes() {
+			return shapes;
+		}
+
 		/**
 		 * This method will take the inputs of each user mouse click and release then create the 
 		 * relative shapes at to its location and add them to an ArrayList.
@@ -158,40 +160,32 @@ public class DesignPanel extends JPanel{
 					Line2D line = new Line2D.Double(iPoint.x, iPoint.y, fPoint.x, fPoint.y);
 					sketch.addShape(line);
 					break;
+				case SELECT:
+					System.out.println("SELECT CASE");
+					break;
 				}
-				iPoint = null;	//explicitly prevent redrawing if not null
-				fPoint = null;	
+			//	iPoint = null;	//explicitly prevent redrawing if not null
+			//	fPoint = null;	
 			}
 		}
-		private void updateLocation(Shape shape){
-			
-		}
-		/**
-		 * This method will add the newly drawn Rectangle to the shapes ArrayList
-		 * @param shape to be added to the ArrayList of shapes
-		 */
-		private void addRectangle(RoundRectangle2D rect){
-			shapes.add(rect);
-		}
+		
+
 		/**
 		 * This method will delete the shape that was drawn onto the Sketch, into the ArrayList
 		 * @param shape to be deleted from the ArrayList of shapes
 		 */
-		private void deleteShape(Shape shape){
+		private void removeShape(Shape shape){
 			shapes.remove(shape);
 		}
+		
 		/**
-		 * This method will add the newly drawn Ellipse to the shapes ArrayList
-		 * @param ellipse
+		 * This method will add the newly drawn Shape to the shapes ArrayList
+		 * @param shape the newly drawn shape to add to an ArrayList
 		 */
-		private void addEllipse(Ellipse2D ellipse){
-			shapes.add(ellipse);
-		}
 		private void addShape(Shape shape){
 			shapes.add(shape);
 		}
 		
-	
 		/**
 		 * This method is used to check the conditions of the iPoint and fPoints of user click on scrren
 		 * @return the case condition of iPoint and fPoint values
@@ -249,7 +243,52 @@ public class DesignPanel extends JPanel{
 				break;
 			}
 		}	
+		
+		/**
+		 * This method will be used to relocate the selected shape after clicked and dragged
+		 * it is only called when the mouse cursor is within a qualified shapes boundaries
+		 * @param the shape that is being moved
+		 * @param e MouseDragged
+		 */
+		public void updateLocation(Shape shape, MouseEvent e){
+			//get last point, erase last position
+			Point tmp = e.getPoint();
+
+			x = tmp.x;
+			y = tmp.y;
+		
+			if(shape.getClass() == Ellipse2D.Double.class){
+				System.out.println("ITS AN ELLIPSE");
+				//removeShape(shape);							//attempt to remove last shape(selected)
+				addShape(new Ellipse2D.Double(x, y, w, h));
+			}
+			repaint();			
+		}
+		public int getMouseX() {
+			return mouseX;
+		}
+
+		public int getMouseY() {
+			return mouseY;
+		}
+
+		public void setMouseX(int mouseX) {
+			this.mouseX = mouseX;
+		}
+
+		public void setMouseY(int mouseY) {
+			this.mouseY = mouseY;
+		}
+		public Shape getShape() {
+			return shape;
+		}
+	
+		public void setShape(Shape shape) {
+			this.shape = shape;
+		}
+
 	}
+
 	/**
 	 * This listener detects the users mouse activity and enables drawing and selection of shapes
 	 * @author Carlos
@@ -262,7 +301,7 @@ public class DesignPanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
@@ -284,8 +323,9 @@ public class DesignPanel extends JPanel{
 				DesignTools.lineSelected();
 			}//sets Select to Selected
 			else if(e.getSource() == DesignTools.SELECT.getButton()){
-				DesignTools.SELECT.selectSelected();
-			}//if pensize jcombo box is selected (needs implementation)
+				DesignTools.SELECT.selectSelected();	
+			}
+			//if pensize jcombo box is selected (needs implementation)
 			else if(e.getSource() == toolsPanel.getPenSizes()){
 				 JComboBox cb = (JComboBox)e.getSource();
 			}//if pencolors jcombo box is selected (needs implementation)
@@ -293,6 +333,23 @@ public class DesignPanel extends JPanel{
 				JComboBox cb = (JComboBox)e.getSource();
 			}
 			
+			if(DesignTools.SELECT.isActive()){
+					for(Shape shape : sketch.getShapes()){
+						if(shape.contains(e.getPoint().x, e.getPoint().y)){	// if press is within a shape's boundary
+		//					sketch.setMouseX(e.getPoint().x);
+			//				sketch.setMouseY(e.getPoint().y);
+			//				int x1 = sketch.getMouseX();
+			//				int y1 = sketch.getMouseY();
+							sketch.setShape(shape);
+							sketch.shapeSelected = true;	//flag for said-shape is ready to move
+							System.out.println("Mouse Pressed Coordinates : ("+sketch.getMouseX()
+							+","+sketch.getMouseY()+")");
+				//			if(x1 >= x && x1 <= x+w && y1 >= y && y  <=y+1){
+				//				sketch.updateLocation(sketch.getShape(), e);
+				//			}
+						}
+					}
+			}
 		}
 
 		@Override
@@ -300,34 +357,50 @@ public class DesignPanel extends JPanel{
 			if(e.getSource() == sketch){
   				fPoint = e.getPoint();
   				repaint();
-  				System.out.println("Finish Point: " + fPoint.toString());
+  			//	System.out.println("Finish Point: " + fPoint.toString());
+  				sketch.shapeSelected= false;
+  				int x1 = e.getX();
+  				int y1 = e.getY();
+  				System.out.println("Released at location : ("+x1+", "+y1+")");
+  			//	if(x1 >= x && x1 <= x+w && y1 >= y && y  <=y+1){
+  			//		sketch.updateLocation(sketch.getShape(), e);
+  			//	}
   			}
 		}
-			
 	
-
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//System.out.println("Mouse Entered Sketch");
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			//System.out.println("Mouse Exited Sketch");
-			//repaint();
+			
 			
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			//TODO
+			Shape draggedShape;
+			//Check if SELECT is active, if so iterate through on mouse presses to see which shape
+			//is currently being pressed on to later move position.
+			
+			if(DesignTools.SELECT.isActive()){
+				//if(!sketch.shapeSelected){					
+					for(Shape shape : sketch.getShapes()){
+						if(shape.contains(iPoint.x,iPoint.y)){
+							//sketch.lastPoint = e.getPoint();
+							sketch.shapeSelected = true;	//flag for said-shape is ready to move
+							sketch.updateLocation(shape,e); 	
+						}
+					}
+			}
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-		//	fPoint = e.getPoint();			
+			// TODO Auto-generated method stub
+			
 		}
-	
-	}	
+	}
 }
