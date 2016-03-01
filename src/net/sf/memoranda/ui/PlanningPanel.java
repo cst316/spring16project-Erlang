@@ -88,7 +88,7 @@ public class PlanningPanel extends JPanel {
 	
 	JToolBar authorBar = new JToolBar();
 	
-	JToolBar dateBar = new JToolBar();
+	//JToolBar dateBar = new JToolBar();
 
 	JLabel titleLabel = new JLabel();
 	
@@ -182,7 +182,8 @@ public class PlanningPanel extends JPanel {
 					.getMessages());
 		
 		g.anchor = GridBagConstraints.NORTHWEST;
-		g.fill = GridBagConstraints.HORIZONTAL;
+		g.fill = GridBagConstraints.BOTH;
+		g.weightx = 1;
 		jPanel1.setLayout(gridLayout);
 		titleBar.setLayout(gridLayout);
 		editorToolBar.setLayout(gridLayout);
@@ -209,6 +210,9 @@ public class PlanningPanel extends JPanel {
 		g.gridx = 1;
 		authorBar.add(authorField, g);
 		
+		dateLabel.setFont(new java.awt.Font("Dialog", 1, 10));
+		dateLabel.setText(Local.getString("Date: ") + CurrentDate.get().getFullDateString());
+		
 		g.gridx = 0;
 		g.gridy = 0;
 		titleBar.setFloatable(false);
@@ -217,6 +221,9 @@ public class PlanningPanel extends JPanel {
 		g.gridy = 1;
 		authorBar.setFloatable(false);
 		jPanel1.add(authorBar, g);
+		
+		g.gridy = 2;
+		jPanel1.add(dateLabel, g);
 		
 		jPanel2.setLayout(gridLayout);
 		
