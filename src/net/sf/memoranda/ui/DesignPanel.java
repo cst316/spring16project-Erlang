@@ -8,8 +8,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Iterator;
 import java.util.Vector;
@@ -31,6 +34,9 @@ public class DesignPanel extends JPanel{
 	private SketchToolsPanel  toolsPanel;	
 	private Sketch sketch;
 	private int w,h,x,y;
+	private Shape prevShape;
+	private double xOffset, yOffset;
+	boolean pressedSwitch;
 
 	public DesignPanel(){
 		
@@ -50,7 +56,9 @@ public class DesignPanel extends JPanel{
         sketch.addMouseListener(listener);
      
         this.add(toolsPanel,BorderLayout.NORTH);
-        this.add(sketch,BorderLayout.CENTER);        
+        this.add(sketch,BorderLayout.CENTER); 
+        
+        pressedSwitch = false;
 	}
 
 	
@@ -253,16 +261,17 @@ public class DesignPanel extends JPanel{
 		public void updateLocation(Shape shape, MouseEvent e){
 			//get last point, erase last position
 			Point tmp = e.getPoint();
-
 			x = tmp.x;
 			y = tmp.y;
 		
-			if(shape.getClass() == Ellipse2D.Double.class){
-				System.out.println("ITS AN ELLIPSE");
-				//removeShape(shape);							//attempt to remove last shape(selected)
-				addShape(new Ellipse2D.Double(x, y, w, h));
-			}
-			repaint();			
+//			if(shape.getClass() == Ellipse2D.Double.class){
+//				System.out.println("ITS AN ELLIPSE");
+//				//removeShape(shape);							//attempt to remove last shape(selected)
+//				addShape(new Ellipse2D.Double(x, y, w, h));
+//			}
+			sketch.removeShape(shape);
+			sketch.addShape(new Ellipse2D.Double((x - xOffset), (y - yOffset), w, h));
+			sketch.repaint();			
 		}
 		public int getMouseX() {
 			return mouseX;
@@ -347,6 +356,12 @@ public class DesignPanel extends JPanel{
 				//			if(x1 >= x && x1 <= x+w && y1 >= y && y  <=y+1){
 				//				sketch.updateLocation(sketch.getShape(), e);
 				//			}
+							if (!pressedSwitch) {
+								Rectangle2D testRect = shape.getBounds2D();
+								yOffset = e.getY() - testRect.getY();
+								xOffset = e.getX() - testRect.getX();
+								pressedSwitch = true;
+							}
 						}
 					}
 			}
@@ -356,7 +371,7 @@ public class DesignPanel extends JPanel{
 		public void mouseReleased(MouseEvent e) {
 			if(e.getSource() == sketch){
   				fPoint = e.getPoint();
-  				repaint();
+  				sketch.repaint();
   			//	System.out.println("Finish Point: " + fPoint.toString());
   				sketch.shapeSelected= false;
   				int x1 = e.getX();
@@ -366,6 +381,11 @@ public class DesignPanel extends JPanel{
   			//		sketch.updateLocation(sketch.getShape(), e);
   			//	}
   			}
+			if (pressedSwitch) {
+				yOffset = 0;
+				xOffset = 0;
+				pressedSwitch = false;
+			}
 		}
 	
 		@Override
@@ -388,7 +408,7 @@ public class DesignPanel extends JPanel{
 			if(DesignTools.SELECT.isActive()){
 				//if(!sketch.shapeSelected){					
 					for(Shape shape : sketch.getShapes()){
-						if(shape.contains(iPoint.x,iPoint.y)){
+						if(shape.contains(e.getX(),e.getY())){
 							//sketch.lastPoint = e.getPoint();
 							sketch.shapeSelected = true;	//flag for said-shape is ready to move
 							sketch.updateLocation(shape,e); 	
