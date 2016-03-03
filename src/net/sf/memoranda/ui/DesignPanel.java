@@ -116,7 +116,7 @@ public class DesignPanel extends JPanel{
 		private boolean shapeSelected;				// Used to determine if shape is selected to be moved.
 		private Point lastPoint;					// The previous position of shape
 		private int mouseX, mouseY;
-		private Shape shape;
+		private Shape shapeDragged;
 
 		private Sketch(){
 			super();
@@ -289,11 +289,11 @@ public class DesignPanel extends JPanel{
 			this.mouseY = mouseY;
 		}
 		public Shape getShape() {
-			return shape;
+			return shapeDragged;
 		}
 	
 		public void setShape(Shape shape) {
-			this.shape = shape;
+			this.shapeDragged = shape;
 		}
 
 	}
@@ -317,7 +317,8 @@ public class DesignPanel extends JPanel{
 		public void mousePressed(MouseEvent e) {
 			if(e.getSource() == sketch){
 				iPoint = e.getPoint();
-				System.out.println("Initial Point: " + iPoint.toString());
+				System.out.println("Mouse Pressed Coordinates : ("+e.getX()
+				+","+e.getY()+")");
 			}//sets Text to selected
 			else if(e.getSource() == DesignTools.TEXT.getButton()){
 				DesignTools.textSelected();
@@ -345,17 +346,7 @@ public class DesignPanel extends JPanel{
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
 						if(shape.contains(e.getPoint().x, e.getPoint().y)){	// if press is within a shape's boundary
-		//					sketch.setMouseX(e.getPoint().x);
-			//				sketch.setMouseY(e.getPoint().y);
-			//				int x1 = sketch.getMouseX();
-			//				int y1 = sketch.getMouseY();
 							sketch.setShape(shape);
-							sketch.shapeSelected = true;	//flag for said-shape is ready to move
-							System.out.println("Mouse Pressed Coordinates : ("+sketch.getMouseX()
-							+","+sketch.getMouseY()+")");
-				//			if(x1 >= x && x1 <= x+w && y1 >= y && y  <=y+1){
-				//				sketch.updateLocation(sketch.getShape(), e);
-				//			}
 							if (!pressedSwitch) {
 								Rectangle2D testRect = shape.getBounds2D();
 								yOffset = e.getY() - testRect.getY();
@@ -370,16 +361,12 @@ public class DesignPanel extends JPanel{
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if(e.getSource() == sketch){
-  				fPoint = e.getPoint();
+  				fPoint = e.getPoint();				//used in to draw Shapes on final position
   				sketch.repaint();
   			//	System.out.println("Finish Point: " + fPoint.toString());
-  				sketch.shapeSelected= false;
-  				int x1 = e.getX();
-  				int y1 = e.getY();
-  				System.out.println("Released at location : ("+x1+", "+y1+")");
-  			//	if(x1 >= x && x1 <= x+w && y1 >= y && y  <=y+1){
-  			//		sketch.updateLocation(sketch.getShape(), e);
-  			//	}
+  				System.out.println("Mouse Released Coordinates : ("+e.getX()
+				+","+e.getY()+")");
+  				
   			}
 			if (pressedSwitch) {
 				yOffset = 0;
@@ -401,7 +388,8 @@ public class DesignPanel extends JPanel{
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			Shape draggedShape;
+			System.out.println("Mouse Dragged Coordinates : ("+e.getX()
+			+","+e.getY()+")");
 			//Check if SELECT is active, if so iterate through on mouse presses to see which shape
 			//is currently being pressed on to later move position.
 			
@@ -410,7 +398,7 @@ public class DesignPanel extends JPanel{
 					for(Shape shape : sketch.getShapes()){
 						if(shape.contains(e.getX(),e.getY())){
 							//sketch.lastPoint = e.getPoint();
-							sketch.shapeSelected = true;	//flag for said-shape is ready to move
+						//	sketch.shapeSelected = true;	//flag for said-shape is ready to move
 							sketch.updateLocation(shape,e); 	
 						}
 					}
