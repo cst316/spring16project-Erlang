@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda team: http://memoranda.sf.net
  */
 package net.sf.memoranda.util;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
