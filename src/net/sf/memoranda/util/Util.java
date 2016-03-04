@@ -14,9 +14,10 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 
-import java.util.Random;
+
 import javax.swing.JFileChooser;
 
 import net.sf.memoranda.date.CalendarDate;

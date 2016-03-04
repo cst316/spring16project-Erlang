@@ -107,7 +107,8 @@ public class ResourcesPanel extends JPanel {
             public void valueChanged(ListSelectionEvent e) {
                 boolean enbl = (resourcesTable.getRowCount() > 0) && (resourcesTable.getSelectedRow() > -1);
 
-                removeResB.setEnabled(enbl); ppRemoveRes.setEnabled(enbl);
+                removeResB.setEnabled(enbl); 
+                ppRemoveRes.setEnabled(enbl);
                 ppRun.setEnabled(enbl);
             }
         });

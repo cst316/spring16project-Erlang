@@ -54,7 +54,8 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 		current = (Task) value;
 		this.table = table;
 		this.isSelected = isSelected;
-		row = r; column = c;
+		row = r; 
+		column = c;
 		return this;
 	}
 	

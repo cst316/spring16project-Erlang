@@ -351,8 +351,10 @@ public class TaskPanel extends JPanel {
         taskTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 boolean enbl = (taskTable.getRowCount() > 0)&&(taskTable.getSelectedRow() > -1);
-                editTaskB.setEnabled(enbl);ppEditTask.setEnabled(enbl);
-                removeTaskB.setEnabled(enbl);ppRemoveTask.setEnabled(enbl);
+                editTaskB.setEnabled(enbl);
+                ppEditTask.setEnabled(enbl);
+                removeTaskB.setEnabled(enbl);
+                ppRemoveTask.setEnabled(enbl);
 				
 				ppCompleteTask.setEnabled(enbl);
 				completeTaskB.setEnabled(enbl);

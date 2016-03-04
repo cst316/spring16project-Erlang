@@ -70,7 +70,8 @@ public class TaskCalcDialog extends JDialog {
 		generalPanel.add(label2, gbc);
 
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1; gbc.gridy = 3;
+		gbc.gridx = 1; 
+		gbc.gridy = 3;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		compactDatesChB.setText(Local.getString("Compact task dates based on sub task dates"));

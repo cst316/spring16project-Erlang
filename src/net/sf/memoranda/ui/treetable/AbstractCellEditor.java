@@ -16,7 +16,9 @@ public class AbstractCellEditor implements CellEditor {
     public Object getCellEditorValue() { 
     	return null; 
     }
-    public boolean isCellEditable(EventObject e) { return true; }
+    public boolean isCellEditable(EventObject e) { 
+    	return true; 
+    }
     public boolean shouldSelectCell(EventObject anEvent) { 
     	return false; 
     }
