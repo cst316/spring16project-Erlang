@@ -23,6 +23,10 @@ public class PSPPanel extends JPanel {
 	
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
+
+	CodingPanel codingPanel = new CodingPanel();
+	
+
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
@@ -67,6 +71,7 @@ public class PSPPanel extends JPanel {
             {"Test ", " ", " ", " "," "},
             {"  Total ", " ", " ", " "," "}};
 	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
+
 	
 			
 	ImageIcon web = new ImageIcon(
@@ -93,8 +98,13 @@ public class PSPPanel extends JPanel {
 	private void initializeTabs(){
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
+
+	pspTabs.addTab("Coding", web, codingPanel," Document your code");
+	
+
 	pspTabs.addTab("Summary", web, summaryPanel, "tables");
 	showSummay();
+
 
 	this.add(pspTabs);
 	
