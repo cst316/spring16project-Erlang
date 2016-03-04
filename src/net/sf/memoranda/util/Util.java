@@ -13,16 +13,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Iterator;
+import java.util.Set;
 
+import java.util.Random;
 import javax.swing.JFileChooser;
 
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.ui.App;
 import net.sf.memoranda.ui.AppFrame;
 import net.sf.memoranda.ui.ExceptionDialog;
-import java.util.Random;
+
 
 /**
  *

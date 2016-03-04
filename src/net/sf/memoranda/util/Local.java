@@ -4,8 +4,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Locale;
 import java.io.*;
+import java.util.Locale;
+
 
 import net.sf.memoranda.date.CalendarDate;
 

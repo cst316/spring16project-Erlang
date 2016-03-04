@@ -17,8 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.JOptionPane;
+import javax.swing.event.HyperlinkListener;
+
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventNotificationListener;
@@ -258,7 +259,8 @@ public class AgendaPanel extends JPanel {
 			public void projectWasChanged() {
 				if (isActive)
 					refresh(CurrentDate.get());
-			}});
+			}
+			});
 		EventsScheduler.addListener(new EventNotificationListener() {
 			public void eventIsOccured(net.sf.memoranda.Event ev) {
 				if (isActive)

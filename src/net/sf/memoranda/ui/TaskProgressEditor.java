@@ -5,10 +5,12 @@ import net.sf.memoranda.util.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
-
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.table.*;
+
+
+
 
 /**
  * Editor for task progress
@@ -82,8 +84,12 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 		}
 	}
 	
-	public void addCellEditorListener(CellEditorListener var0){ listeners.add(var0); }
-	public void removeCellEditorListener(CellEditorListener var0){ listeners.remove(var0); }
+	public void addCellEditorListener(CellEditorListener var0){ 
+		listeners.add(var0); 
+	}
+	public void removeCellEditorListener(CellEditorListener var0){ 
+		listeners.remove(var0); 
+	}
 	
 	public void cancelCellEditing(){}
 	public java.lang.Object getCellEditorValue(){
@@ -98,8 +104,12 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 		}
 		return false;
 	}
-	public boolean stopCellEditing(){return true;}
-	public boolean shouldSelectCell(java.util.EventObject var0){return true;}	
+	public boolean stopCellEditing(){
+		return true;
+	}
+	public boolean shouldSelectCell(java.util.EventObject var0){
+		return true;
+	}	
     
 }
 

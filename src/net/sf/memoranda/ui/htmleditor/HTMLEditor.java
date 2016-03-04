@@ -1199,7 +1199,8 @@ public class HTMLEditor extends JPanel {
 						.getAttributes();
 			} catch (Exception ex) {
 				ex.printStackTrace();
-			} else
+			} 
+		else
 			charattrs =
 				document
 					.getCharacterElement(editor.getCaretPosition())

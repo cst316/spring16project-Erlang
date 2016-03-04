@@ -8,8 +8,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.*;
+import java.util.Hashtable;
+
 
 /*$Id: LoadableProperties.java,v 1.4 2004/01/30 12:17:42 alexeya Exp $*/
 public class LoadableProperties extends Hashtable {

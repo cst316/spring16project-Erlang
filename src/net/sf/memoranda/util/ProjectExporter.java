@@ -11,8 +11,9 @@ import net.sf.memoranda.ui.htmleditor.AltHTMLWriter;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.Collections;
+import java.util.regex.Pattern;
+
 
 import javax.swing.text.html.HTMLDocument;
 

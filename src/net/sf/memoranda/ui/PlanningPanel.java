@@ -24,8 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.JTabbedPane;
+import javax.swing.text.html.HTMLDocument;
+
 
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;

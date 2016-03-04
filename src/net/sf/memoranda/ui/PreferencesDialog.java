@@ -1,17 +1,19 @@
 package net.sf.memoranda.ui;
 
 import java.io.File;
+import java.awt.*;
 import java.util.Vector;
 
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.MimeTypesList;
-import java.awt.*;
+
 
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.event.*;
+import javax.swing.border.*;
+
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
 public class PreferencesDialog extends JDialog {
