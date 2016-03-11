@@ -107,7 +107,9 @@ public class DesignPanel extends JPanel{
 	private class Sketch extends JPanel{
 		private Vector <Shape> shapes;			// All shapes drawn on the pane.
 		private int mouseX, mouseY;
+
 		private Shape shapeInUse;
+
 
 		private Sketch(){
 			super();
@@ -275,6 +277,7 @@ public class DesignPanel extends JPanel{
 		public void setMouseY(int mouseY) {
 			this.mouseY = mouseY;
 		}
+
 		public Shape getshapeInUse() {
 			return shapeInUse;
 		}
@@ -305,6 +308,7 @@ public class DesignPanel extends JPanel{
 			if(e.getSource() == sketch){
 				iPoint = e.getPoint();		//used when determining initial position to draw a new shape
   				System.out.println("Pressed at location : ("+e.getX()+", "+e.getY()+")");
+
 			}//sets Text to selected
 			else if(e.getSource() == DesignTools.TEXT.getButton()){
 				DesignTools.textSelected();
