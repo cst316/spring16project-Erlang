@@ -6,6 +6,7 @@ import javax.swing.JButton;
 public enum DesignTools {
 	UNDO("Undo", false, "resources/icons/undo.png"),
 	RED("Redo",false,"resources/icons/redo.png"),
+	DELETE("Delete",false,"resources/icons/delete.png"),
 	TEXT("Text", false,"resources/icons/text.png"),
 	RECTANGLE("Rectangle",false,"resources/icons/rectangle.png"),
 	CIRCLE("Circle",false,"resources/icons/circle.png"),
@@ -50,6 +51,7 @@ public enum DesignTools {
 		RECTANGLE.setActive(false);
 		LINE.setActive(false);
 		SELECT.setActive(true);
+		DELETE.setActive(false);
 		inUse = SELECT;
 	}
 	public static void textSelected(){
@@ -58,6 +60,7 @@ public enum DesignTools {
 		RECTANGLE.setActive(false);
 		LINE.setActive(false);
 		SELECT.setActive(false);
+		DELETE.setActive(false);
 		inUse = TEXT;
 	}
 	public static void circleSelected(){
@@ -66,6 +69,7 @@ public enum DesignTools {
 		RECTANGLE.setActive(false);
 		LINE.setActive(false);
 		SELECT.setActive(false);
+		DELETE.setActive(false);
 		inUse = CIRCLE;
 	}
 	public static void rectangleSelected(){
@@ -74,6 +78,7 @@ public enum DesignTools {
 		RECTANGLE.setActive(true);
 		LINE.setActive(false);
 		SELECT.setActive(false);
+		DELETE.setActive(false);
 		inUse = RECTANGLE;
 	}
 	public static void lineSelected(){
@@ -82,9 +87,18 @@ public enum DesignTools {
 		RECTANGLE.setActive(false);
 		LINE.setActive(true);
 		SELECT.setActive(false);
+		DELETE.setActive(false);
 		inUse = LINE;
 	}
-
+	public static void deleteSelected(){
+		TEXT.setActive(false);
+		CIRCLE.setActive(false);
+		RECTANGLE.setActive(false);
+		LINE.setActive(false);
+		SELECT.setActive(false);
+		DELETE.setActive(true);
+		inUse = LINE;
+	}
 	public JButton getButton() {
 		return button;
 	}
