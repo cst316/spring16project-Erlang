@@ -37,9 +37,10 @@ public class Util {
 	
     public static String generateId() {
         long seed1 = System.currentTimeMillis();
-        while (seed1 == seed) 
+        while (seed1 == seed){ 
         	seed1 = System.currentTimeMillis(); // Make sure we'll don't get the same seed twice		  
-    	seed = seed1;        	
+        }
+        seed = seed1;        	
     	Random r = new Random(seed); 
     	return Integer.toString(r.nextInt(), 16) +
 				"-"+Integer.toString(r.nextInt(65535), 16) +
@@ -87,7 +88,9 @@ public class Util {
     	// Now system-related path-separator is used
 		String p = System.getProperty("user.home") + File.separator 
 			+ ".jnotes2" + File.separator;
-        if (new File(p).isDirectory()) return p;
+        if (new File(p).isDirectory()){
+        	return p;
+        }
         return System.getProperty("user.home") + File.separator 
         	+ ".memoranda" + File.separator;
     }
@@ -156,7 +159,8 @@ public class Util {
 
 			public void actionPerformed(ActionEvent arg0) {
 				for (Iterator i = tempFiles.iterator(); i.hasNext();) 
-					((File)i.next()).delete();				}
+					((File)i.next()).delete();				
+					}
 			});
     }
     

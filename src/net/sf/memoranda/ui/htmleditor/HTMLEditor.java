@@ -77,7 +77,8 @@ public class HTMLEditor extends JPanel {
 	String currentTagName = "BODY";
 	Element currentParaElement = null;
 
-	Border border1, border2;
+	Border border1; 
+	Border border2;
 
 	Class cl = net.sf.memoranda.ui.htmleditor.HTMLEditor.class;
 
@@ -2483,14 +2484,15 @@ public class HTMLEditor extends JPanel {
 				.toString()
 				.toUpperCase();
 		if (elName.equals("IMG")) {
-			String src = "",
-				alt = "",
-				width = "",
-				height = "",
-				hspace = "",
-				vspace = "",
-				border = "",
-				align = "";
+			String src = "";
+			String alt = "";
+			String width = "";
+			String height = "";
+			String hspace = "";
+			String vspace = "";
+			String border = "";
+			String align = "";
+				
 			if (attrs.isDefined(HTML.Attribute.SRC))
 				src = attrs.getAttribute(HTML.Attribute.SRC).toString();
 			if (attrs.isDefined(HTML.Attribute.ALT))
@@ -2527,7 +2529,11 @@ public class HTMLEditor extends JPanel {
 			k = en.nextElement();
 			if (k.toString().equals("a")) {
 				String[] param = attrs.getAttribute(k).toString().split(" ");
-				String href = "", target = "", title = "", name = "";
+				String href = ""; 
+				String target = ""; 
+				String title = ""; 
+				String name = "";
+				
 				for (int i = 0; i < param.length; i++)
 					if (param[i].startsWith("href="))
 						href = param[i].split("=")[1];
@@ -2548,7 +2554,9 @@ public class HTMLEditor extends JPanel {
 			return;
 		}
 
-		String id = "", cls = "", sty = "";
+		String id = ""; 
+		String cls = ""; 
+		String sty = "";
 		AttributeSet pa = pEl.getAttributes();
 		if (pa.getAttribute(HTML.Attribute.ID) != null)
 			id = pa.getAttribute(HTML.Attribute.ID).toString();

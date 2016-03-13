@@ -1022,7 +1022,9 @@ public class AppFrame extends JFrame {
             HashMap<String,String> notesName = new HashMap<String,String>();
                 HashMap<String,String> notesContent = new HashMap<String,String>();
             Builder parser = new Builder();
-            String id="", name="", content = "";
+            String id=""; 
+            String name=""; 
+            String content = "";
             try{
                     Document document = parser.build(f);
                     Element body = document.getRootElement().getFirstChildElement("body");
@@ -1116,7 +1118,9 @@ public class AppFrame extends JFrame {
             HashMap<String,String> notesName = new HashMap<String,String>();
             HashMap<String,String> notesContent = new HashMap<String,String>();
             Builder parser = new Builder();
-            String id="", name="", content = "";
+            String id=""; 
+            String name=""; 
+            String content = "";
             try{
                     Document document = parser.build(f);
                     content = document.getRootElement().getFirstChildElement("body").getValue();

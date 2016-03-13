@@ -27,7 +27,9 @@
 package net.sf.memoranda.ui;
 
 import net.sf.memoranda.Task;
+
 import java.awt.Color;
+
 import java.awt.Graphics;
 import javax.swing.JLabel;
 

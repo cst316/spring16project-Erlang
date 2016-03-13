@@ -4,7 +4,9 @@ package net.sf.memoranda.ui;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.date.CurrentDate;
+
 import java.awt.Color;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.text.DateFormat;
