@@ -1,5 +1,12 @@
 package net.sf.memoranda;
 
+/**
+ * 
+ * @author qbecker
+ *@version 1.0
+ *This class stores a defect object for use in filling out the defect log
+ */
+
 public class Defect {
 	private String projectName;
 	private String date;
@@ -9,6 +16,8 @@ public class Defect {
 	private String fixTime;
 	private String fexRef;
 	private String defectType;
+	
+	public Defect(){}
 	
 	public Defect(String projectName,String date, String inject, String remove,
 			String fixTime, String fexRef, String defectType, int number){
@@ -48,9 +57,8 @@ public class Defect {
 	
 	public void setNumber(int number) {
 		if(number > 0){
-			this.number = 0;
+			this.number = number;
 		}
-		this.number = number;
 		
 	}
 	
