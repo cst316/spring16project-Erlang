@@ -4,8 +4,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public enum DesignTools {
-	UNDO("Undo", false, "resources/icons/undo.png"),
-	RED("Redo",false,"resources/icons/redo.png"),
 	DELETE("Delete",false,"resources/icons/delete.png"),
 	TEXT("Text", false,"resources/icons/text.png"),
 	RECTANGLE("Rectangle",false,"resources/icons/rectangle.png"),

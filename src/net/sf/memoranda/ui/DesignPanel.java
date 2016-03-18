@@ -10,16 +10,11 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -144,7 +139,6 @@ public class DesignPanel extends JPanel{
 	 */
 	private class Sketch extends JPanel{
 		private Vector <Shape> shapes;			// All shapes drawn on the pane.
-		private int mouseX, mouseY;
 		private Sketch(){
 			super();
 			setBackground(Color.white);
@@ -156,10 +150,8 @@ public class DesignPanel extends JPanel{
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-//need implement where it adjusts the individual shape itself, not all shapes in vector
 			g2.setStroke(new BasicStroke(toolsPanel.getPenSizes().getSelectedIndex()+1));
 			g2.setColor(toolsPanel.getColor());
-			//System.out.println(toolsPanel.getPenSizes().getSelectedIndex()+1);
 			drawShape(); 		// want to draw only when rectangle, ellipse, or line is selected
 			
 			//This for each loop will iterate through an ArrayList and redraw each shape.
@@ -300,21 +292,6 @@ public class DesignPanel extends JPanel{
 			}
 			sketch.repaint();			
 		}
-		public int getMouseX() {
-			return mouseX;
-		}
-
-		public int getMouseY() {
-			return mouseY;
-		}
-
-		public void setMouseX(int mouseX) {
-			this.mouseX = mouseX;
-		}
-
-		public void setMouseY(int mouseY) {
-			this.mouseY = mouseY;
-		}
 	}
 
 	/**
@@ -429,9 +406,5 @@ public class DesignPanel extends JPanel{
 			// TODO Auto-generated method stub
 			
 		}
-
-
 	}
-
-
 }
