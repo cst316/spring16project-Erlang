@@ -21,8 +21,11 @@ public class PSPPanel extends JPanel {
 	//Tabs for PSP implementation
 	JTabbedPane pspTabs = new JTabbedPane();
 	JTabbedPane planningTabPane = new JTabbedPane();
+	JTabbedPane developmentTabPane = new JTabbedPane();
 	
 	JPanel planningPanel = new JPanel();
+	JPanel developmentPanel = new JPanel();
+	
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 	CodingPanel codingPanel = new CodingPanel();
@@ -98,9 +101,12 @@ public class PSPPanel extends JPanel {
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 		planningPanel.add(planningTabPane);
 		
+		
+		
 		pspTabs.addTab("Planning", planningPanel);
-		pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
-	    pspTabs.addTab("Coding", web, codingPanel," Document your code");
+		pspTabs.addTab("Development", web, developmentPanel, "Create the project");
+		//pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
+	    //pspTabs.addTab("Coding", web, codingPanel," Document your code");
 	    pspTabs.addTab("Summary", web, summaryPanel, "tables");
 	    showSummay();
 	    
