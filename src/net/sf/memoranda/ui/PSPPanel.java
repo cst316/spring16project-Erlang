@@ -20,13 +20,12 @@ public class PSPPanel extends JPanel {
 	
 	//Tabs for PSP implementation
 	JTabbedPane pspTabs = new JTabbedPane();
+	JTabbedPane planningTabPane = new JTabbedPane();
 	
+	JPanel planningPanel = new JPanel();
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
-
 	CodingPanel codingPanel = new CodingPanel();
-	
-
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
@@ -96,18 +95,16 @@ public class PSPPanel extends JPanel {
  * @version 1.0
  */
 	private void initializeTabs(){
-	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
-
-	pspTabs.addTab("Coding", web, codingPanel," Document your code");
-	
-
-	pspTabs.addTab("Summary", web, summaryPanel, "tables");
-	showSummay();
-
-
-	this.add(pspTabs);
-	
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+		planningTabPane.addTab("Design", web, designPanel,"Sketch a plan");
+		planningPanel.add(planningTabPane);
+		
+		pspTabs.addTab("Planning", planningPanel);
+	    pspTabs.addTab("Coding", web, codingPanel," Document your code");
+	    pspTabs.addTab("Summary", web, summaryPanel, "tables");
+	    showSummay();
+	    
+	    this.add(pspTabs);
 	}	
 	
 	
