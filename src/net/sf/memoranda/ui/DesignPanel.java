@@ -1,5 +1,6 @@
 package net.sf.memoranda.ui;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -67,10 +70,10 @@ public class DesignPanel extends JPanel{
 	 * @author Carlos
 	 * @version 1.0
 	 */
-	private class SketchToolsPanel extends JPanel{
+	private class SketchToolsPanel extends JPanel implements ActionListener{
 		
 		private JComboBox penSizes, penColors;									// Drop Down Menu for drawing size and colors
-		private String[] colors = {"Green", "Red","Black","Blue"};				// contains color options
+		private String[] colors = {"Black","Green", "Red","Blue"};				// contains color options
 		private String[] sizes = {"1","2","3","4","5","6","7", "8", "9", "10"};	// contains pen size options
 		
 		SketchToolsPanel(){
@@ -78,8 +81,8 @@ public class DesignPanel extends JPanel{
 			 penSizes =new JComboBox(sizes);
 		     penColors = new JComboBox(colors);
 
-			penSizes.addMouseListener(listener);
-	        penColors.addMouseListener(listener);
+	        penSizes.addActionListener(this);
+	        penColors.addActionListener(this);	        
 	        
 	        add(penSizes);
 	        add(penColors);
@@ -96,6 +99,41 @@ public class DesignPanel extends JPanel{
 		}
 		public JComboBox getPenColors() {
 			return penColors;
+		}
+		public Color getColor(){
+			int index = penColors.getSelectedIndex();
+			Color color = null;
+			switch(index){
+			case 0:
+				color = Color.black;
+				break;
+			case 1:
+				color = Color.green;
+				break;
+			case 2:
+				color = Color.red;
+				break;
+			case 3:
+				color = Color.blue;
+				break;
+			}
+			
+			return color;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//if pensize jcombo box is selected
+			if(toolsPanel.getPenSizes() == e.getSource()){
+				 JComboBox cb = (JComboBox)e.getSource();
+				 String size = (String)cb.getSelectedItem();
+				 //System.out.println(size);						//Test Verify Print
+			}//if pencolors jcombo box is selected
+			else if(e.getSource() == toolsPanel.getPenColors()){
+				JComboBox cb = (JComboBox)e.getSource();
+				String color = (String)cb.getSelectedItem();
+				// System.out.println(color);						//Test Verify Print
+			}	
 		}
 
 	}
@@ -118,13 +156,17 @@ public class DesignPanel extends JPanel{
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setColor(Color.RED);
+//need implement where it adjusts the individual shape itself, not all shapes in vector
+			g2.setStroke(new BasicStroke(toolsPanel.getPenSizes().getSelectedIndex()+1));
+			g2.setColor(toolsPanel.getColor());
+			//System.out.println(toolsPanel.getPenSizes().getSelectedIndex()+1);
 			drawShape(); 		// want to draw only when rectangle, ellipse, or line is selected
 			
 			//This for each loop will iterate through an ArrayList and redraw each shape.
 			for(Shape shape : shapes){
 				g2.draw(shape);
 			}
+			
 		}
 		
 		public Vector<Shape> getShapes() {
@@ -292,6 +334,7 @@ public class DesignPanel extends JPanel{
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			
 			if(e.getSource() == sketch){
 
 				iPoint = e.getPoint();		//used when determining initial position to draw a new shape
@@ -310,19 +353,11 @@ public class DesignPanel extends JPanel{
 				DesignTools.lineSelected();
 			}//sets Select to Selected
 			else if(e.getSource() == DesignTools.SELECT.getButton()){
-				DesignTools.SELECT.selectSelected();
+				DesignTools.selectSelected();
 			}//sets Delet to Selected
 			else if(e.getSource() == DesignTools.DELETE.getButton()){
-				DesignTools.DELETE.deleteSelected();	
-			}
-			//if pensize jcombo box is selected (needs implementation)
-			else if(e.getSource() == toolsPanel.getPenSizes()){
-				 JComboBox cb = (JComboBox)e.getSource();
-			}//if pencolors jcombo box is selected (needs implementation)
-			else if(e.getSource() == toolsPanel.getPenColors()){
-				JComboBox cb = (JComboBox)e.getSource();
-			}
-			
+				DesignTools.deleteSelected();	
+			}	
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
 						if(shape.contains(e.getPoint().x, e.getPoint().y)){	// if press is within a shape's boundary
