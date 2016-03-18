@@ -96,10 +96,10 @@ public class PSPPanel extends JPanel {
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-		planningTabPane.addTab("Design", web, designPanel,"Sketch a plan");
 		planningPanel.add(planningTabPane);
 		
 		pspTabs.addTab("Planning", planningPanel);
+		pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
 	    pspTabs.addTab("Coding", web, codingPanel," Document your code");
 	    pspTabs.addTab("Summary", web, summaryPanel, "tables");
 	    showSummay();
