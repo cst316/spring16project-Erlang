@@ -22,11 +22,13 @@ public class PSPPanel extends JPanel {
 	JTabbedPane pspTabs = new JTabbedPane();
 	JTabbedPane planningTabPane = new JTabbedPane();
 	JTabbedPane developmentTabPane = new JTabbedPane();
+	JTabbedPane postmortemTabPane = new JTabbedPane(); 
 	
 
 	JPanel planningPanel = new JPanel();
 	JPanel developmentPanel = new JPanel();
 	JPanel postmortemPanel = new JPanel();
+	
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 	CodingPanel codingPanel = new CodingPanel();
@@ -106,10 +108,12 @@ public class PSPPanel extends JPanel {
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
 		developmentPanel.add(developmentTabPane);
 		
+		postmortemTabPane.addTab("Summary", web, summaryPanel, "Tables");
+		postmortemPanel.add(postmortemTabPane);
 
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
-	    pspTabs.addTab("Summary", web, summaryPanel, "tables");		// Summary parent Tab
+	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
 	    
 	    this.add(pspTabs);
