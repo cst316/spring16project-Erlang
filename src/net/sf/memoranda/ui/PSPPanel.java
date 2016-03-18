@@ -92,24 +92,24 @@ public class PSPPanel extends JPanel {
 	
 	
 /**
- * This method initializes tabs for the PSP Panel. Each Tab will resemble Planning,
- * Design, and Defect form management for the convenience of Software Engineering Students
+ * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
+ *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
- * @author Carlos
- * @version 1.0
+ * @author Team Erlang
+ * @version 2.0
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 		planningPanel.add(planningTabPane);
 		
+		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
+		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
+		developmentPanel.add(developmentTabPane);
 		
-		
-		pspTabs.addTab("Planning", web, planningPanel);
-		pspTabs.addTab("Development", web, developmentPanel, "Create the project");
-		pspTabs.addTab("Postmortem", web, postmortemPanel);
-		//pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
-	    //pspTabs.addTab("Coding", web, codingPanel," Document your code");
-	    //pspTabs.addTab("Summary", web, summaryPanel, "tables");
+
+		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
+		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
+	    pspTabs.addTab("Summary", web, summaryPanel, "tables");		// Summary parent Tab
 	    showSummay();
 	    
 	    this.add(pspTabs);
