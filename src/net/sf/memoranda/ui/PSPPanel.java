@@ -33,7 +33,7 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
-	EstimatePanel estimatePanel = null;
+	EstimatePanel estimatePanel = new EstimatePanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
