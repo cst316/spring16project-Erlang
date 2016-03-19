@@ -95,7 +95,7 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(false);
 		DELETE.setActive(true);
-		inUse = LINE;
+		inUse = DELETE;
 	}
 	public JButton getButton() {
 		return button;
