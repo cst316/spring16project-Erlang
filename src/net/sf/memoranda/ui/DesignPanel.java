@@ -29,6 +29,14 @@ import net.sf.memoranda.ui.treetable.DesignTools;
  *
  */
 public class DesignPanel extends JPanel{
+	protected SketchToolsPanel getToolsPanel() {
+		return toolsPanel;
+	}
+
+	protected Sketch getSketch() {
+		return sketch;
+	}
+
 	private Point iPoint, fPoint;				// initial and final points, used for mouse position
 	private DesignListener listener;
 	private SketchToolsPanel  toolsPanel;	
