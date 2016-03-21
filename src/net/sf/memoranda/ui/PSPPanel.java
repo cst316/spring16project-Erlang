@@ -24,7 +24,11 @@ public class PSPPanel extends JPanel {
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 
+	EstimationPanel estimationPanel = null;
+
+
 	CodingPanel codingPanel = new CodingPanel();
+
 	
 
 	SummaryPanel summaryPanel = new SummaryPanel();
@@ -83,6 +87,7 @@ public class PSPPanel extends JPanel {
 	 */
 	public PSPPanel(DailyItemsPanel parent){
 		planPanel = new PlanningPanel(parent);
+		estimationPanel = new EstimationPanel();
 		this.setLayout(new FlowLayout());
 		this.initializeTabs();
 	}
@@ -99,7 +104,11 @@ public class PSPPanel extends JPanel {
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
 	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
 
+	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
+
+
 	pspTabs.addTab("Coding", web, codingPanel," Document your code");
+
 	
 
 	pspTabs.addTab("Summary", web, summaryPanel, "tables");
