@@ -2,7 +2,11 @@
  * This class implements examples shown on the "How to Use Tables" section
  * of "The Java Tutorials". It can be found here:
  * https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * 
+ * EDIT: Did not end up really needing this class myself but I will leave it for now just 
+ * in case someone else might want to. If not, I will delete
  */
+
 
 package net.sf.memoranda.ui;
 
