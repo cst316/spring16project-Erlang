@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,10 +19,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
+import net.sf.memoranda.Estimation;
 import net.sf.memoranda.util.Local;
 
-public class EstimationPanel extends JPanel {
+public class EstimationPanel extends JPanel  {
 	
 	JPanel newEstPanel = new JPanel();
 	JLabel descTitleLabel = new JLabel();
@@ -33,18 +41,33 @@ public class EstimationPanel extends JPanel {
 	JPanel estTablePanel = new JPanel();
 	String[] columnNames = {"Module Description","Estimated Size"};
 	Object[][] data = {};
-	JTable estimationTable = new JTable(data,columnNames);
+	JTable estimationTable = new JTable();
 	JScrollPane estTableSP = null;
 	JLabel tableTitleLabel = new JLabel();
 	JLabel estTotalLabel = new JLabel();
 	final String estTotalPrefix = "Total Estimated Size: ";
 	JButton removeButton = new JButton();
+	DefaultTableModel tableModel;
+	
+	Vector<Estimation> estimations = new Vector<Estimation>();
 	
 	public EstimationPanel() {
 		this.setPreferredSize(new Dimension(1000, 1000));
 		
 		setupNewEstimationPanel();
 		setupEstimationTablePanel();
+		
+		addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addButtonClicked();
+            }
+        });
+		
+		removeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	removeButtonClicked();
+            }
+        });
 	}
 	
 	private void setupNewEstimationPanel() {
@@ -113,6 +136,8 @@ public class EstimationPanel extends JPanel {
 	private void setupEstimationTablePanel() {
 		estTablePanel.setLayout(new GridBagLayout());
 		estTablePanel.setPreferredSize(new Dimension(750, 450));
+		
+		populateTable();
 			
 		GridBagConstraints gbCon = new GridBagConstraints();
 		gbCon.anchor = GridBagConstraints.PAGE_START;
@@ -150,4 +175,49 @@ public class EstimationPanel extends JPanel {
 			
 		this.add(estTablePanel);
 	}
+	
+	private void addButtonClicked() {
+		String theDescription = descriptionTextA.getText();
+		int theLineCount = 0;
+		try{
+			theLineCount = Integer.parseInt( estSizeTextF.getText() );
+	    }catch(NumberFormatException e){
+	        System.out.println( estSizeTextF.getText() + " :could not be parsed to an integer" );
+	        return;
+	    }
+		Estimation theEstimation = new Estimation( theDescription, theLineCount );
+		estimations.addElement(theEstimation);
+		Object[] theRow = { theEstimation.getModuleDescription(), theEstimation.getLineCount() };
+		tableModel.addRow(theRow);
+		descriptionTextA.setText("");
+		estSizeTextF.setText("");
+		updateLineCountTotal();
+	}
+	
+	private void removeButtonClicked() {
+		int theRowIndex = estimationTable.getSelectedRow();
+		if ( theRowIndex >= 0 ) {
+			estimations.remove(theRowIndex);
+		    tableModel.removeRow(theRowIndex);
+		}
+		updateLineCountTotal();
+	}
+	
+	private void populateTable() {
+		/*
+		 * once we have the PSPProcess class we will need to get saved estimations
+		 * and populate the table with those values
+		 */
+		this.tableModel = new DefaultTableModel(this.columnNames, 0);
+		this.estimationTable.setModel(this.tableModel);
+	}
+	
+	private void updateLineCountTotal() {
+		long theLineCountTotal = 0;
+		for ( int i = 0; i < estimations.size(); i++ ) {
+			theLineCountTotal = theLineCountTotal + estimations.get(i).getLineCount();
+		}
+		estTotalLabel.setText( estTotalPrefix + theLineCountTotal );
+	}
+	
 }
