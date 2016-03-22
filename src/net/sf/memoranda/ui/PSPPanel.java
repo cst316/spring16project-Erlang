@@ -31,18 +31,8 @@ public class PSPPanel extends JPanel {
 	
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
-<<<<<<< HEAD
-	CodingPanel codingPanel = new CodingPanel();
-=======
-
 	EstimationPanel estimationPanel = null;
-
-
 	CodingPanel codingPanel = new CodingPanel();
-
-	
-
->>>>>>> master
 	SummaryPanel summaryPanel = new SummaryPanel();
 	EstimatePanel estimatePanel = new EstimatePanel();
 	
@@ -125,14 +115,13 @@ public class PSPPanel extends JPanel {
 		postmortemTabPane.addTab("Summary", web, summaryPanel, "Tables");
 		postmortemPanel.add(postmortemTabPane);
 
-<<<<<<< HEAD
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
 	    
 	    this.add(pspTabs);
-=======
+
 	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
 
 
@@ -146,7 +135,6 @@ public class PSPPanel extends JPanel {
 
 	this.add(pspTabs);
 	
->>>>>>> master
 	}	
 	
 	
