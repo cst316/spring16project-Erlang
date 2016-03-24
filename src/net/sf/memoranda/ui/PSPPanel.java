@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-
 /**
  * initializes the PSPPanel to display different PSP Panes
  * @author Carlos
@@ -25,6 +24,7 @@ public class PSPPanel extends JPanel {
 	JTabbedPane developmentTabPane = new JTabbedPane();
 	JTabbedPane postmortemTabPane = new JTabbedPane(); 
 	
+
 	JPanel planningPanel = new JPanel();
 	JPanel developmentPanel = new JPanel();
 	JPanel postmortemPanel = new JPanel();
@@ -34,6 +34,7 @@ public class PSPPanel extends JPanel {
 	EstimationPanel estimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
+	EstimatePanel estimatePanel = new EstimatePanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -76,13 +77,13 @@ public class PSPPanel extends JPanel {
             {"Compile ", " ", " ", " "," "},
             {"Test ", " ", " ", " "," "},
             {"  Total ", " ", " ", " "," "}};
-	
 	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
-		
+
+	
+			
 	ImageIcon web = new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
 			.getResource("resources/icons/web.png"));
-	
 	/**
 	 * 
 	 * @param parent used to initialize planning panel tab
@@ -94,17 +95,18 @@ public class PSPPanel extends JPanel {
 		this.initializeTabs();
 	}
 	
-    /**
-    * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
-    *  and Post mortem forms management for the convenience of Software Engineering Students
-    * @return void
-    * @author Team Erlang
-    * @version 2.0
-    */
+	
+/**
+ * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
+ *  and Post mortem forms management for the convenience of Software Engineering Students
+ * @return void
+ * @author Team Erlang
+ * @version 2.0
+ */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-		planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");	
 		planningPanel.add(planningTabPane);
+		planningTabPane.addTab("Estimation", web, estimatePanel,"Edit the plan");	
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
@@ -119,7 +121,22 @@ public class PSPPanel extends JPanel {
 	    showSummay();
 	    
 	    this.add(pspTabs);
+
+	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
+
+
+	pspTabs.addTab("Coding", web, codingPanel," Document your code");
+
+	
+
+	pspTabs.addTab("Summary", web, summaryPanel, "tables");
+	showSummay();
+
+
+	this.add(pspTabs);
+	
 	}	
+	
 	
 	/**
 	 * Method creates a table on the summary tab 
@@ -140,5 +157,6 @@ public class PSPPanel extends JPanel {
 	  scrollPane.setSize(500,1500);
 	  summaryPanel.setVisible(true);	
 	}
+	
 	
 }
