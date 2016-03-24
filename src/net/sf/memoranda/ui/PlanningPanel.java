@@ -88,12 +88,13 @@ public class PlanningPanel extends JPanel {
 
 	JButton previewB = new JButton();
 
-	DailyItemsPanel parentPanel = null;
+	//DailyItemsPanel parentPanel = null;
 
 	public PlanningPanel(DailyItemsPanel parent) {
         this.setPreferredSize(new Dimension(1000, 1000));
+		//this.revalidate();
 		try {
-			parentPanel = parent;
+			//parentPanel = parent;
 			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);

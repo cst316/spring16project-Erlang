@@ -128,7 +128,7 @@ public class AppFrame extends JFrame {
         };
         
         public Action exportReportAction =
-                new AbstractAction(Local.getString("Export report") + "...") {
+                new AbstractAction(Local.getString("Export current project report ") + "...") {
 
                 public void actionPerformed(ActionEvent e) {
                 	    repExport_actionPerformed(e);
@@ -953,23 +953,11 @@ public class AppFrame extends JFrame {
                 }
             
             protected void repExport_actionPerformed(ActionEvent e) {
-            	ReportSettings theReportSettings = new ReportSettings();
-            	theReportSettings.setWithProjectID(true);
-            	theReportSettings.setWithProjectDates(true);
-            	theReportSettings.setWithProjectStatus(true);
-            	theReportSettings.setWithProjectDescription(true);
-            	theReportSettings.setWithTasks(true);
-            	theReportSettings.setWithTaskIDs(true);
-            	theReportSettings.setWithTaskDates(true);
-            	theReportSettings.setWithTaskProgress(true);
-            	theReportSettings.setWithTaskPriority(true);
-            	theReportSettings.setWithTaskStatus(true);
-            	theReportSettings.setWithTaskText(true);
-            	theReportSettings.setWithTaskSubTasks(true);
-            	Report theReport = ReportGenerator.generateReport(theReportSettings);
-            	ReportExporter.exportReport(theReport, "test_export");
-//            	System.out.println(theReport.getProjectString());
-//            	System.out.println(theReport.getTasksString());
+            	ReportDialog repDlg = new ReportDialog(App.getFrame(), Local.getString("Report Dialog"));
+            	Dimension frmSize = App.getFrame().getSize();
+                Point loc = App.getFrame().getLocation();
+                repDlg.setLocation((frmSize.width - repDlg.getSize().width) / 2 + loc.x, (frmSize.height - repDlg.getSize().height) / 2 + loc.y);
+                repDlg.setVisible(true);
             }
             
             protected void ppImport_actionPerformed(ActionEvent e) {

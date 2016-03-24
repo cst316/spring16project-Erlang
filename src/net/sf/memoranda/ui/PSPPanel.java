@@ -20,10 +20,21 @@ public class PSPPanel extends JPanel {
 	
 	//Tabs for PSP implementation
 	JTabbedPane pspTabs = new JTabbedPane();
+	JTabbedPane planningTabPane = new JTabbedPane();
+	JTabbedPane developmentTabPane = new JTabbedPane();
+	JTabbedPane postmortemTabPane = new JTabbedPane(); 
+	
+
+	JPanel planningPanel = new JPanel();
+	JPanel developmentPanel = new JPanel();
+	JPanel postmortemPanel = new JPanel();
 	
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
+	EstimationPanel estimationPanel = null;
+	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
+	EstimatePanel estimatePanel = new EstimatePanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -67,6 +78,7 @@ public class PSPPanel extends JPanel {
             {"Test ", " ", " ", " "," "},
             {"  Total ", " ", " ", " "," "}};
 	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
+
 	
 			
 	ImageIcon web = new ImageIcon(
@@ -78,23 +90,48 @@ public class PSPPanel extends JPanel {
 	 */
 	public PSPPanel(DailyItemsPanel parent){
 		planPanel = new PlanningPanel(parent);
+		estimationPanel = new EstimationPanel();
 		this.setLayout(new FlowLayout());
 		this.initializeTabs();
 	}
 	
 	
 /**
- * This method initializes tabs for the PSP Panel. Each Tab will resemble Planning,
- * Design, and Defect form management for the convenience of Software Engineering Students
+ * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
+ *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
- * @author Carlos
- * @version 1.0
+ * @author Team Erlang
+ * @version 2.0
  */
 	private void initializeTabs(){
-	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-	pspTabs.addTab("Design", web, designPanel,"Sketch a plan");
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+		planningPanel.add(planningTabPane);
+		planningTabPane.addTab("Estimation", web, estimatePanel,"Edit the plan");	
+		
+		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
+		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
+		developmentPanel.add(developmentTabPane);
+		
+		postmortemTabPane.addTab("Summary", web, summaryPanel, "Tables");
+		postmortemPanel.add(postmortemTabPane);
+
+		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
+		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
+	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
+	    showSummay();
+	    
+	    this.add(pspTabs);
+
+	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
+
+
+	pspTabs.addTab("Coding", web, codingPanel," Document your code");
+
+	
+
 	pspTabs.addTab("Summary", web, summaryPanel, "tables");
 	showSummay();
+
 
 	this.add(pspTabs);
 	
