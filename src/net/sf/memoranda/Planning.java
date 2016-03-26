@@ -21,11 +21,13 @@ public class Planning {
 		programTitle = theTitle;
 	}
 	
+	public Planning(){}
+	
 	public CurrentDate getDate(){
 		return date;
 	}
 	
-	public String programTitle(){
+	public String getProgramTitle(){
 		return programTitle;
 	}
 	
