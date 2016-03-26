@@ -20,10 +20,10 @@ public class StopWatch extends JPanel {
 	private String timeString;
 	public static final int ONE_SEC = 1000;
 	public static final int TENTH_SEC = 100;
-	private JButton start, stop, reset, select;
+	private JButton start, stop, reset, select, click;
 	private JLabel displayTime;
 	
-	 private String[] tabs = { "Planning", "Design", "estimation", "Coding"};
+	 private String[] tabs = { "Planning", "Design", "Coding", "estimation"};
 	 private JComboBox dropDown = new JComboBox(tabs);
 	 
 	/**
@@ -57,11 +57,16 @@ public class StopWatch extends JPanel {
 		
 		//Select button for selecting tabs 
 		select = new JButton("Select");
-		select.setBounds(25, 150, 80, 25);
+		select.setBounds(150, 150, 80, 25);
 		add(select);
 		
-		dropDown.setBounds(25, 170, 80, 25);
+		dropDown.setBounds(25, 150, 100, 25);
 		add(dropDown);
+		
+		click = new JButton("Click to import info");
+		add(click);
+		click.setBounds(25, 250, 200, 25);
+		click.setVisible(true);
 		
 		
 		myTimer = new Timer(TENTH_SEC, new ActionListener() {

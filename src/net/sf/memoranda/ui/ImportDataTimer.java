@@ -11,14 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-public class ImportDataTimer extends JApplet {
-	private String[] tabs = { "Planning", "Design", "estimation", "Coding"};
+public class ImportDataTimer {
 
-  private JTextField t = new JTextField(15);
-
-  private JComboBox dropDown = new JComboBox();
-
-  private JButton b = new JButton("Select");
+	JButton click;
+	
+	public ImportDataTimer(){
+		  //Future button to import data
+		
+	
 
 
   
@@ -67,3 +67,4 @@ public class ImportDataTimer extends JApplet {
   }
   */
 } ///:~
+}
