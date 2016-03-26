@@ -34,7 +34,6 @@ public class PSPPanel extends JPanel {
 	EstimationPanel estimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
-	EstimatePanel estimatePanel = new EstimatePanel();
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -104,9 +103,10 @@ public class PSPPanel extends JPanel {
  * @version 2.0
  */
 	private void initializeTabs(){
-		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	
+		planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
 		planningPanel.add(planningTabPane);
-		planningTabPane.addTab("Estimation", web, estimatePanel,"Edit the plan");	
+			
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
@@ -121,20 +121,6 @@ public class PSPPanel extends JPanel {
 	    showSummay();
 	    
 	    this.add(pspTabs);
-
-	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
-
-
-	pspTabs.addTab("Coding", web, codingPanel," Document your code");
-
-	
-
-	pspTabs.addTab("Summary", web, summaryPanel, "tables");
-	showSummay();
-
-
-	this.add(pspTabs);
-	
 	}	
 	
 	
