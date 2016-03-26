@@ -32,8 +32,6 @@ public class Defect {
 		}
 
 
-
-
 	public String getProjectName() {
 		
 		return projectName;
@@ -56,9 +54,7 @@ public class Defect {
 	}
 	
 	public void setNumber(int number) {
-		if(number > 0){
-			this.number = number;
-		}
+		this.number = number;
 		
 	}
 	

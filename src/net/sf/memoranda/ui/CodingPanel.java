@@ -1,6 +1,9 @@
 package net.sf.memoranda.ui;
 import java.util.*;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import net.sf.memoranda.Defect;
 
 /**
  * The CodingPanel class' purpose is to display a log Coding, defects and injections.
@@ -13,24 +16,41 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 
+
 public class CodingPanel extends JPanel {
-	
+	Vector<Defect> defects = new Vector<Defect>();
 	
 	public CodingPanel(){
 		this.setPreferredSize(new Dimension(1000, 1000));
 		
-		defectLog defect1 = new defectLog();
+		DefectLog defect1 = new DefectLog();
 		this.add(defect1);
-		defectLog defect2 = new defectLog();
+		DefectLog defect2 = new DefectLog();
 		this.add(defect2);
 		
 	}
 	
 	
-	private class defectLog extends JPanel{
+	private class DefectLog extends JPanel{
+		//buttons
+		JButton submitButton;
+		
+		//text fields
+		JTextField project_TextField; //project text field
+		JTextField date_TextField;
+		JTextField number_TextField;
+		JTextField inject_TextField;
+		JTextField remove_TextField;
+		JTextField fixTime_TextField;
+		JTextField fexRef_TextField;
+		
+		JComboBox defect_ComboBox;
+		
+		
 		/*Defect Types	
 		10 Documentation	60 Checking
 		20 Syntax	70 Data
@@ -38,14 +58,15 @@ public class CodingPanel extends JPanel {
 		40 Assignment	90 System
 		50 Interface	100 Environment*/
 		
-		public defectLog(){
+		 DefectLog(){
 			setPreferredSize(new Dimension(1000, 250));
 			setLayout(null);
-				//window to enter description of defect
+			//window to enter description of defect
 			
 			JTextPane description_textPane = new JTextPane();
 			description_textPane.setBounds(60, 147, 854, 94);
 			add(description_textPane);
+			
 			
 			
 			final String[] defectOptions = {"10 Documentation", "20 Syntax",
@@ -54,17 +75,16 @@ public class CodingPanel extends JPanel {
 					"80 Function", "90 System",
 					"100 Environment"};
 			
-					JTextField project_TextField; //project text field
-					JTextField date_TextField;
-					JTextField number_TextField;
-					JTextField inject_TextField;
-					JTextField remove_TextField;
-					JTextField fixTime_TextField;
-					JTextField fexRef_TextField;
+					
 			
-			
-			
+					//submit button
+					
 				
+					//placing submit button
+					submitButton = new JButton("Submit");
+					submitButton.setBounds(830, 100, 90, 19);
+					add(submitButton);
+					
 					
 					//text fields for use in PSP coding log
 					
@@ -149,19 +169,47 @@ public class CodingPanel extends JPanel {
 					add(lbl_FixRef);
 					
 					
-					
 					JLabel lblDescription = new JLabel("Description:");
 					lblDescription.setBounds(60, 115, 98, 15);
 					add(lblDescription);
+					
+					
+					
+					
+					/*Method to add everything to the defect class for 
+					temporary holding*/
+					
+					
+					
+					submitButton.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							submitButtonClicked();
+							
+						}
+					});
+					
+					
 		}
+		 private void submitButtonClicked() {
+				Defect temp;
+				temp = new Defect();
+				
+				temp.setProjectName(project_TextField.getText());
+				temp.setDate(date_TextField.getText());
+				temp.setNumber(Integer.parseInt(number_TextField.getText()));
+				temp.setInject(inject_TextField.getText());
+				temp.setRemove(remove_TextField.getText());
+				temp.setFixTime(fixTime_TextField.getText());
+				temp.setFexRef(fexRef_TextField.getText());
+				temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
+				defects.addElement(temp);
+			}
 		
-		
-}
-		
-		
-		
+	}
+
+
 	
-	
+
 	
 }
 
