@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+
+import net.sf.memoranda.SummaryObject;
 /**
  * initializes the PSPPanel to display different PSP Panes
  * @author Carlos
@@ -35,6 +37,7 @@ public class PSPPanel extends JPanel {
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	EstimatePanel estimatePanel = new EstimatePanel();
+	
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -142,13 +145,19 @@ public class PSPPanel extends JPanel {
 	 * Method creates a table on the summary tab 
 	 */
 	public void showSummay(){
-		/*  Future button to import data
-		JButton b = new JButton("Click for import info");
+		  //Future button to import data
+		JButton b = new JButton("Click to import info");
 			summaryPanel.add(b);
 		   b.setSize(50,250);
 		    b.setVisible(true);
-		  */
+		  
+		 
+		
+	    
 
+ //SummaryObject
+	  SummaryObject x = new SummaryObject();
+	  x.getDefectInjectedCompile();
 	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
 	  JScrollPane scrollPane = new JScrollPane(tableSummary);
 	  JPanel panel = new JPanel();
@@ -156,6 +165,7 @@ public class PSPPanel extends JPanel {
 	  summaryPanel.add(new JScrollPane(panel));
 	  scrollPane.setSize(500,1500);
 	  summaryPanel.setVisible(true);	
+
 	}
 	
 	
