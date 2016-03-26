@@ -33,6 +33,7 @@ public class PSPPanel extends JPanel {
 		super(new BorderLayout());
 		planPanel = new PlanningPanel(parent);
 		StopWatch watch = new StopWatch();
+		ImportDataTimer testing = new ImportDataTimer();
 		this.setLayout(new BorderLayout());
 		this.initializeTabs();
 		this.add(pspTabs, BorderLayout.WEST);

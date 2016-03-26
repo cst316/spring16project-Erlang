@@ -3,8 +3,7 @@ package net.sf.memoranda.ui;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.JLabel;
-import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -13,8 +12,6 @@ import java.awt.event.ActionEvent;
  * @author qbecker
  *
  */
-
-
 //logic for stopwatch gotten from http://introcs.cs.princeton.edu/java/stdlib/Stopwatch.java.html
 public class StopWatch extends JPanel {
 	private Timer myTimer;
@@ -23,13 +20,19 @@ public class StopWatch extends JPanel {
 	private String timeString;
 	public static final int ONE_SEC = 1000;
 	public static final int TENTH_SEC = 100;
-	private JButton start, stop, reset;
+	private JButton start, stop, reset, select;
 	private JLabel displayTime;
+	
+	 private String[] tabs = { "Planning", "Design", "estimation", "Coding"};
+	 private JComboBox dropDown = new JComboBox(tabs);
+	 
 	/**
 	 * Create the panel.
 	 */
 	public StopWatch() {
 
+		
+		
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
 		timeString = new Double(clockTime).toString();
@@ -52,6 +55,13 @@ public class StopWatch extends JPanel {
 		reset.setBounds(25, 87, 80, 25);
 		add(reset);
 		
+		//Select button for selcting tabs 
+		select = new JButton("Select");
+		select.setBounds(25, 150, 80, 25);
+		add(select);
+		
+		dropDown.setBounds(25, 170, 80, 25);
+		add(dropDown);
 		
 		
 		myTimer = new Timer(TENTH_SEC, new ActionListener() {
@@ -63,6 +73,8 @@ public class StopWatch extends JPanel {
 				
 			    }
 			});
+		
+		
 		
 		
 		//start button action listener
@@ -89,6 +101,9 @@ public class StopWatch extends JPanel {
 				displayTime.setText(timeString);
 			}
 		});
+		
+		
 	}
+	
 	
 }
