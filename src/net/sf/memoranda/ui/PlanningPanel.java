@@ -88,7 +88,7 @@ public class PlanningPanel extends JPanel {
 	
 	JToolBar authorBar = new JToolBar();
 	
-	//JToolBar dateBar = new JToolBar();
+	JToolBar dateBar = new JToolBar();
 
 	JLabel titleLabel = new JLabel();
 	
@@ -182,8 +182,7 @@ public class PlanningPanel extends JPanel {
 					.getMessages());
 		
 		g.anchor = GridBagConstraints.NORTHWEST;
-		g.fill = GridBagConstraints.BOTH;
-		g.weightx = 1;
+		g.fill = GridBagConstraints.HORIZONTAL;
 		jPanel1.setLayout(gridLayout);
 		titleBar.setLayout(gridLayout);
 		editorToolBar.setLayout(gridLayout);
@@ -211,7 +210,10 @@ public class PlanningPanel extends JPanel {
 		authorBar.add(authorField, g);
 		
 		dateLabel.setFont(new java.awt.Font("Dialog", 1, 10));
-		dateLabel.setText(Local.getString("Date: ") + CurrentDate.get().getFullDateString());
+		dateLabel.setText("Date: " + CurrentDate.get().getFullDateString());
+		g.gridx = 0;
+		g.gridy = 0;
+		dateBar.add(dateLabel, g);
 		
 		g.gridx = 0;
 		g.gridy = 0;
@@ -223,9 +225,10 @@ public class PlanningPanel extends JPanel {
 		jPanel1.add(authorBar, g);
 		
 		g.gridy = 2;
-		jPanel1.add(dateLabel, g);
+		dateBar.setFloatable(false);
+		jPanel1.add(dateBar, g);
 		
-		jPanel2.setLayout(gridLayout);
+		//jPanel2.setLayout(gridLayout);
 		
 		this.setLayout(gridLayout);
 		
@@ -369,7 +372,7 @@ public class PlanningPanel extends JPanel {
 		 * printB.setText("");
 		 */
 
-		editorToolBar.setFloatable(false);
+		/*editorToolBar.setFloatable(false);
 		editor.editToolbar.setFloatable(false);
 		//this.add(jPanel1, BorderLayout.CENTER);
 		g.gridx = 0;
@@ -406,21 +409,21 @@ public class PlanningPanel extends JPanel {
 		g.gridx = 13;
 		editorToolBar.addSeparator(new Dimension(8, 24));
 		editorToolBar.add(previewB, g);
-		//editorToolBar.add(printB, null);
+		//editorToolBar.add(printB, null);*/
 		
 		g.gridx = 0;
 		g.gridy = 0;
-		jPanel2.add(editorToolBar, g);
+		//jPanel2.add(editorToolBar, g);
 		
 		//jPanel1.add(editorToolBar, BorderLayout.NORTH);
 		jPanel1.setPreferredSize(new Dimension(500,250));
 		this.add(jPanel1, g);
-		g.gridy = 1;
-		jPanel2.setPreferredSize(new Dimension(8,100));
-		this.add(jPanel2, g);
-		g.gridy = 2;
-		editor.setPreferredSize(new Dimension(750, 500));
-		this.add(editor, g); 
+		//g.gridy = 1;
+		//jPanel2.setPreferredSize(new Dimension(8,100));
+		//this.add(jPanel2, g);
+		//g.gridy = 2;
+		//editor.setPreferredSize(new Dimension(750, 500));
+		//this.add(editor, g); 
 
 		//titleBar.add(titleLabel, null);
 		//titleBar.add(titleField, null);
