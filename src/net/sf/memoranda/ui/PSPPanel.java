@@ -38,8 +38,8 @@ public class PSPPanel extends JPanel {
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Planning,
  * Design, and Defect form management for the convenience of Software Engineering Students
  * @return void
- * @author Carlos
- * @version 1.0
+ * @author Carlos 
+ * @version 1.0 
  */
 	private void initializeTabs(){
 	pspTabs.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
