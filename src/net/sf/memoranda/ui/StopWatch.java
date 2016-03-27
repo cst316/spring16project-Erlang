@@ -58,6 +58,16 @@ public class StopWatch extends JPanel {
 		//Select button for selecting tabs 
 		select = new JButton("Select");
 		select.setBounds(150, 150, 80, 25);
+		select.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Select button was being clicked");
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		add(select);
 		
 		dropDown.setBounds(25, 150, 100, 25);
@@ -66,6 +76,16 @@ public class StopWatch extends JPanel {
 		click = new JButton("Click to import info");
 		add(click);
 		click.setBounds(25, 250, 200, 25);
+		click.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Click button was being clicked");
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		click.setVisible(true);
 		
 		
