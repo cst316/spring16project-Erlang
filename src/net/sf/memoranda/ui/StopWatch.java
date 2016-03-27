@@ -35,7 +35,7 @@ public class StopWatch extends JPanel {
 		
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = new Double(clockTime).toString(1.0);
+		timeString = new Double(clockTime).toString();
 		
 		setLayout(null);
 		displayTime = new JLabel("New label");
@@ -93,7 +93,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				clockTick++;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = new Double(clockTime).toString(1.0);
+				timeString = new Double(clockTime).toString();
 				displayTime.setText(timeString);
 				
 			    }
@@ -120,7 +120,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt){
 				clockTick = 0;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = new Double(clockTime).toString(1.0);
+				timeString = new Double(clockTime).toString();
 				displayTime.setText(timeString);
 			}
 		});
