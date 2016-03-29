@@ -101,6 +101,7 @@ public enum DesignTools {
 		SELECT.setActive(false);
 		DELETE.setActive(false);
 		EXPORT.setActive(false);
+
 		inUse = CIRCLE;
 	}
 	/**

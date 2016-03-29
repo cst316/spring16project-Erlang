@@ -40,15 +40,13 @@ public class DesignPanel extends JPanel{
 	private int w,h,x,y;
 	private double xOffset, yOffset;
 	boolean pressedSwitch;
-	Rectangle2D boundary;
-
 	public DesignPanel(){
 		
 		this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(1000, 1000));
 		this.setBackground(Color.WHITE);
         this.setOpaque(true);
-        this.boundary = null;
+
 		w=h=x=y=0;
         this.iPoint = null;
         this.fPoint = null;
@@ -315,6 +313,7 @@ public class DesignPanel extends JPanel{
 				sketch.addShape(rect);
 			}else if(shape.getClass() == Line.class){
 				//Implementation for redrawing a Line here TBD
+
 			}
 			sketch.repaint();			
 		}
@@ -339,7 +338,6 @@ public class DesignPanel extends JPanel{
 		public void mousePressed(MouseEvent e) {
 			
 			if(e.getSource() == sketch){
-
 				iPoint = e.getPoint();		//used when determining initial position to draw a new shape
   			//	System.out.println("Pressed at location : ("+e.getX()+", "+e.getY()+")");
 			}//sets Text to selected
@@ -417,7 +415,6 @@ public class DesignPanel extends JPanel{
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
 						if(shape.contains(e.getX(),e.getY())){
-
 							sketch.updateLocation(shape,e); 
 							break;
 						}
