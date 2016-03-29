@@ -11,12 +11,8 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.Vector;
-
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -53,18 +49,17 @@ public class DesignPanel extends JPanel{
         this.setOpaque(true);
         
 		w=h=x=y=0;
-		
-        iPoint = null;
-        fPoint = null;
-        listener = new DesignListener();
+        this.iPoint = null;
+        this.fPoint = null;
+        this.listener = new DesignListener();
 
-        toolsPanel = new SketchToolsPanel();		//contains the design/drawing tools
-        sketch = new Sketch();						//where the user will draw
-        sketch.addMouseListener(listener);
+        this.toolsPanel = new SketchToolsPanel();		//contains the design/drawing tools
+        this.sketch = new Sketch();						//where the user will draw
+        this.sketch.addMouseListener(listener);
         this.add(toolsPanel,BorderLayout.NORTH);
         this.add(sketch,BorderLayout.CENTER); 
         
-        pressedSwitch = false;
+        this.pressedSwitch = false;
 	}
 
 	
@@ -120,7 +115,6 @@ public class DesignPanel extends JPanel{
 				color = Color.blue;
 				break;
 			}
-			
 			return color;
 		}
 
@@ -155,21 +149,33 @@ public class DesignPanel extends JPanel{
 			addMouseMotionListener(listener);
 		}
 		
-		protected void paintComponent(Graphics g) {
+		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setStroke(new BasicStroke(toolsPanel.getPenSizes().getSelectedIndex()+1));
-			g2.setColor(toolsPanel.getColor());
 			drawShape(); 		// want to draw only when rectangle, ellipse, or line is selected
 			
-			//This for each loop will iterate through an ArrayList and redraw each shape.
+			//This for each loop will iterate through an Vector and redraw each shape.
 			for(Shape shape : shapes){
-				g2.draw(shape);
+				if(shape.getClass() == Rectangle.class){
+					  Rectangle rect = (Rectangle)shape;
+					  g2.setColor(rect.getColor());
+					  g2.setStroke(new BasicStroke(rect.getStroke()));
+					  g2.draw(shape);
+				}else if(shape.getClass() == Circle.class){
+					  Circle circle = (Circle)shape;
+					  g2.setColor(circle.getColor());
+					  g2.setStroke(new BasicStroke(circle.getStroke()));
+					  g2.draw(shape);
+				}else if(shape.getClass() == Line.class){
+					  Line line = (Line)shape;
+					  g2.setColor(line.getColor());
+					  g2.setStroke(new BasicStroke(line.getStroke()));
+					  g2.draw(shape);
+				}
 			}
-			
 		}
 		
-		public Vector<Shape> getShapes() {
+		private Vector<Shape> getShapes() {
 			return shapes;
 		}
 
@@ -177,24 +183,30 @@ public class DesignPanel extends JPanel{
 		 * This method will take the inputs of each user mouse click and release then create the 
 		 * relative shapes at to its location and add them to an ArrayList.
 		 */
-		public void drawShape(){
+		private void drawShape(){
 			if(iPoint != null){
 				int check = 0;
 				switch(DesignTools.getInUse()){
 				case RECTANGLE:
 					check = checkCondition(); 	// checks initial and final point axis'
 					call(check);			 	//arranges points based on condition drawn
-					RoundRectangle2D rect = new RoundRectangle2D.Double(x, y, w, h, 10, 10);
+					Rectangle rect = new Rectangle(x,y,w,h,10,10);
+					rect.setColor((Color)toolsPanel.getColor());						//set color
+					rect.setStroke((int)toolsPanel.getPenSizes().getSelectedIndex()+1);	//set pen thickness
 					addShape(rect);					
 					break;
 				case CIRCLE:
 					check = checkCondition(); 	// checks initial and final point axis'
 					sketch.call(check);			 	//arranges points based on condition
-					Ellipse2D ell = new Ellipse2D.Double(x,y,w,h);
+					Circle ell = new Circle(x,y,w,h);
+					ell.setColor((Color)toolsPanel.getColor());						//set color
+					ell.setStroke((int)toolsPanel.getPenSizes().getSelectedIndex()+1);	//set pen thickness
 					addShape(ell);
 					break;
 				case LINE:
-					Line2D line = new Line2D.Double(iPoint.x, iPoint.y, fPoint.x, fPoint.y);
+					Line line = new Line(iPoint.x, iPoint.y, fPoint.x, fPoint.y);
+					line.setColor((Color)toolsPanel.getColor());						//set color
+					line.setStroke((int)toolsPanel.getPenSizes().getSelectedIndex()+1);	//set pen thickness
 					sketch.addShape(line);
 					break;
 				case SELECT:
@@ -285,18 +297,22 @@ public class DesignPanel extends JPanel{
 		 * @param the shape that is being moved
 		 * @param e MouseDragged
 		 */
-		public void updateLocation(Shape shape, MouseEvent e){
+		private void updateLocation(Shape shape, MouseEvent e){
 			//get last point, erase last position
 			Point tmp = e.getPoint();
 			x = tmp.x;
 			y = tmp.y;
 			removeShape(shape);				//attempt to remove last shape(selected)
-			if(shape.getClass() == Ellipse2D.Double.class){
-				System.out.println("ITS AN ELLIPSE");
-				sketch.addShape(new Ellipse2D.Double((x - xOffset), (y - yOffset), w, h));
-			}else if(shape.getClass() == RoundRectangle2D.Double.class){
-				System.out.println("ITS A ROUNDRECTANGLE2D");
-				sketch.addShape(new RoundRectangle2D.Double((x - xOffset), (y - yOffset), w, h,10,10));
+			//GET THIS SHAPE, (ITS FEATURES) PLUS THE NEW POSIITONS
+			if(shape.getClass() == Circle.class){
+				Circle circle = (Circle)shape;
+				circle.setCoordinates((x - xOffset),  (y - yOffset), w, h);
+				sketch.addShape(circle);
+			}else if(shape.getClass() == Rectangle.class){
+				Rectangle rect = (Rectangle)shape;
+				rect.setCoordinates((x - xOffset),  (y - yOffset), w, h);
+				sketch.addShape(rect);
+			}else if(shape.getClass() == Line.class){
 			}
 			sketch.repaint();			
 		}
@@ -322,7 +338,7 @@ public class DesignPanel extends JPanel{
 			
 			if(e.getSource() == sketch){
 				iPoint = e.getPoint();		//used when determining initial position to draw a new shape
-  				System.out.println("Pressed at location : ("+e.getX()+", "+e.getY()+")");
+  			//	System.out.println("Pressed at location : ("+e.getX()+", "+e.getY()+")");
 			}//sets Text to selected
 			else if(e.getSource() == DesignTools.TEXT.getButton()){
 				DesignTools.textSelected();
@@ -371,7 +387,7 @@ public class DesignPanel extends JPanel{
 			if(e.getSource() == sketch){
   				fPoint = e.getPoint();			//used when determining final position to draw a new shape
   				sketch.repaint();
-  				System.out.println("Released at location : ("+e.getX()+", "+e.getY()+")");
+  			//	System.out.println("Released at location : ("+e.getX()+", "+e.getY()+")");
   			}
 			if (pressedSwitch) {
 				yOffset = 0;
@@ -394,8 +410,7 @@ public class DesignPanel extends JPanel{
 		public void mouseDragged(MouseEvent e) {
 			//Check if SELECT is active, if so iterate through on mouse presses to see which shape
 			//is currently being pressed on to later move position.
-			System.out.println("Dragged at location : ("+e.getX()+", "+e.getY()+")");
-			
+			//System.out.println("Dragged at location : ("+e.getX()+", "+e.getY()+")");
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
 						if(shape.contains(e.getX(),e.getY())){
