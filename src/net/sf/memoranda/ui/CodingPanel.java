@@ -1,5 +1,6 @@
 package net.sf.memoranda.ui;
 import java.util.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,17 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import net.sf.memoranda.Defect;
-
-/**
- * The CodingPanel class' purpose is to display a log Coding, defects and injections.
- * @author Quinten Becker
- * @return void
- * @version 1.0
- */
-
-
-
-
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,8 +20,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * The CodingPanel class' purpose is to display a log Coding, defects and injections.
+ * @author Quinten Becker & Tyler Driskill
+ * @return void
+ * @version 1.1
+ */
 
 public class CodingPanel extends JPanel {
 	//buttons
@@ -213,7 +211,6 @@ public class CodingPanel extends JPanel {
 		submitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				submitButtonClicked();
-				
 			}
 		});
 		
@@ -222,7 +219,7 @@ public class CodingPanel extends JPanel {
 	
 	private void setupDefectTablePanel() {
 		defectTable_Panel.setLayout(new GridBagLayout());
-		defectTable_Panel.setPreferredSize(new Dimension(950, 350));
+		defectTable_Panel.setPreferredSize(new Dimension(950, 370));
 		
 		populateTable();
 			
@@ -265,10 +262,25 @@ public class CodingPanel extends JPanel {
 		gbCon.gridx = 0;
 		selectedDescrption_Label.setPreferredSize(new Dimension(950, 100));
 		selectedDescrption_Label.setText("(Nothing Selected)");
+		selectedDescrption_Label.setHorizontalAlignment(JLabel.LEFT);
+		selectedDescrption_Label.setVerticalAlignment(JLabel.TOP);
+		selectedDescrption_Label.setBackground(Color.WHITE);
+		selectedDescrption_Label.setOpaque(true);
 		defectTable_Panel.add(selectedDescrption_Label, gbCon);
-		 
-		this.add(defectTable_Panel);
 		
+		removeButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				removeButtonClicked();
+			}
+		});
+		
+		defect_Table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				tableRowSelected();
+			}
+		});
+		
+		this.add(defectTable_Panel);
 	}
 	
 	private void populateTable() {
@@ -298,7 +310,11 @@ public class CodingPanel extends JPanel {
 	    temp.setFixTime(fixTime_TextField.getText());
 	    temp.setFexRef(status_ComboBox.getSelectedItem().toString());
 	    temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
+	    temp.setDescription(description_textPane.getText());
 	    defects.addElement(temp);
+	    Object[] theRow = { temp.getNumber(), temp.getProjectName(), temp.getDate(), temp.getDefectType(),
+	    		            temp.getInject(), temp.getRemove(), temp.getFixTime(), temp.getFexRef() };
+		tableModel.addRow(theRow);
 	    clearInputFields();
     }
 	
@@ -311,6 +327,23 @@ public class CodingPanel extends JPanel {
 	    status_ComboBox.setSelectedIndex(0);
 	    defect_ComboBox.setSelectedIndex(0);
 	    description_textPane.setText("");
+	}
+	
+	private void removeButtonClicked() {
+		int theRowIndex = defect_Table.getSelectedRow();
+		if ( theRowIndex >= 0 ) {
+			defects.remove(theRowIndex);
+		    tableModel.removeRow(theRowIndex);
+		}
+	}
+	
+	private void tableRowSelected() {
+		if ( defect_Table.getSelectedRow() >= 0 ) {
+		    selectedDescrption_Label.setText(defects.get(defect_Table.getSelectedRow()).getDescription());
+		}
+		else {
+			selectedDescrption_Label.setText("(Nothing Selected)");
+		}
 	}
 }
 

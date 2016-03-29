@@ -16,11 +16,12 @@ public class Defect {
 	private String fixTime;
 	private String fexRef;
 	private String defectType;
+	private String description;
 	
 	public Defect(){}
 	
 	public Defect(String projectName,String date, String inject, String remove,
-			String fixTime, String fexRef, String defectType, int number){
+			String fixTime, String fexRef, String defectType, int number, String description){
 			this.date = date;
 			this.defectType = defectType;
 			this.number = number;
@@ -29,6 +30,7 @@ public class Defect {
 			this.projectName = projectName;
 			this.fexRef = fexRef;
 			this.fixTime = fixTime;
+			this.description = description;
 		}
 
 
@@ -98,5 +100,12 @@ public class Defect {
 		this.defectType = defectType;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }
