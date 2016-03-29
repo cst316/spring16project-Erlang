@@ -40,6 +40,7 @@ public class DesignPanel extends JPanel{
 	private int w,h,x,y;
 	private double xOffset, yOffset;
 	boolean pressedSwitch;
+	Rectangle2D boundary;
 
 	public DesignPanel(){
 		
@@ -47,7 +48,7 @@ public class DesignPanel extends JPanel{
         this.setPreferredSize(new Dimension(1000, 1000));
 		this.setBackground(Color.WHITE);
         this.setOpaque(true);
-        
+        this.boundary = null;
 		w=h=x=y=0;
         this.iPoint = null;
         this.fPoint = null;
@@ -306,13 +307,14 @@ public class DesignPanel extends JPanel{
 			//GET THIS SHAPE, (ITS FEATURES) PLUS THE NEW POSIITONS
 			if(shape.getClass() == Circle.class){
 				Circle circle = (Circle)shape;
-				circle.setCoordinates((x - xOffset),  (y - yOffset), w, h);
+				circle.setCoordinates((x - xOffset),  (y - yOffset), circle.getWidth(), circle.getHeight());
 				sketch.addShape(circle);
 			}else if(shape.getClass() == Rectangle.class){
 				Rectangle rect = (Rectangle)shape;
-				rect.setCoordinates((x - xOffset),  (y - yOffset), w, h);
+				rect.setCoordinates((x - xOffset),  (y - yOffset), rect.width, rect.getHeight());
 				sketch.addShape(rect);
 			}else if(shape.getClass() == Line.class){
+				//Implementation for redrawing a Line here TBD
 			}
 			sketch.repaint();			
 		}
