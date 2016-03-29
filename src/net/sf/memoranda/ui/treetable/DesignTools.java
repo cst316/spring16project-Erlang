@@ -14,7 +14,8 @@ public enum DesignTools {
 	RECTANGLE("Rectangle",false,"resources/icons/rectangle.png"),
 	CIRCLE("Circle",false,"resources/icons/circle.png"),
 	LINE("Line", false,"resources/icons/line.png"),
-	SELECT("Select", false, "resources/icons/select.png");
+	SELECT("Select", false, "resources/icons/select.png"),
+	EXPORT("Export", false, "resources/icons/import.png");
 	
 	
 	private String title;
@@ -33,7 +34,7 @@ public enum DesignTools {
 		this.icon = new ImageIcon(
 				net.sf.memoranda.ui.AppFrame.class
 				.getResource(iconLocation));
-		this.button = new JButton(this.icon);
+		this.button = new JButton(this.title,this.icon);
 	}
 	/**
 	 * Get the Constant in use
@@ -73,6 +74,7 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(true);
 		DELETE.setActive(false);
+		EXPORT.setActive(false);
 		inUse = SELECT;
 	}
 	/**
@@ -85,6 +87,7 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(false);
 		DELETE.setActive(false);
+		EXPORT.setActive(false);
 		inUse = TEXT;
 	}
 	/**
@@ -97,6 +100,7 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(false);
 		DELETE.setActive(false);
+		EXPORT.setActive(false);
 		inUse = CIRCLE;
 	}
 	/**
@@ -109,6 +113,7 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(false);
 		DELETE.setActive(false);
+		EXPORT.setActive(false);
 		inUse = RECTANGLE;
 	}
 	/**
@@ -121,6 +126,7 @@ public enum DesignTools {
 		LINE.setActive(true);
 		SELECT.setActive(false);
 		DELETE.setActive(false);
+		EXPORT.setActive(false);
 		inUse = LINE;
 	}
 	/**
@@ -133,7 +139,21 @@ public enum DesignTools {
 		LINE.setActive(false);
 		SELECT.setActive(false);
 		DELETE.setActive(true);
+		EXPORT.setActive(false);
 		inUse = DELETE;
+	}
+	/**
+	 * This method sets EXPORT as active and in use
+	 */
+	public static void exportSelected(){
+		TEXT.setActive(false);
+		CIRCLE.setActive(false);
+		RECTANGLE.setActive(false);
+		LINE.setActive(false);
+		SELECT.setActive(false);
+		DELETE.setActive(false);
+		EXPORT.setActive(true);
+		inUse = EXPORT;
 	}
 	/**
 	 * This method returns the button 
