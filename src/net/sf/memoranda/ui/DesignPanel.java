@@ -12,7 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
+
+import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -355,9 +360,12 @@ public class DesignPanel extends JPanel{
 			}//sets Select to Selected
 			else if(e.getSource() == DesignTools.SELECT.getButton()){
 				DesignTools.selectSelected();
-			}//sets Delet to Selected
+			}//sets Delete to Selected
 			else if(e.getSource() == DesignTools.DELETE.getButton()){
-				DesignTools.deleteSelected();	
+				DesignTools.deleteSelected();
+			}//sets  Export to Selected
+			else if(e.getSource() == DesignTools.EXPORT.getButton()){
+				DesignTools.exportSelected();
 			}	
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
@@ -372,14 +380,22 @@ public class DesignPanel extends JPanel{
 					}
 			}
 			if(DesignTools.DELETE.isActive()){
-				System.out.println("DELETED");
-
 				for(Shape shape : sketch.getShapes()){
 					if(shape.contains(e.getPoint().x, e.getPoint().y)){	
 						sketch.removeShape(shape);
 						break;
 					}
 				}
+			}
+			if(DesignTools.EXPORT.isActive()){
+				//System.out.println("Taking a screenshot");
+				try {
+					this.saveScreenShot(sketch, "src/net/sf/memoranda/ui/resources/SketchImage.png");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				//System.out.println("After a screenshot");
+
 			}
 		}
 
@@ -424,8 +440,26 @@ public class DesignPanel extends JPanel{
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+		}
+		////////////////////////////////////////			
+		/*Referenced "Programming Knowledge" user name to take screen shot of a JPanel
+		* https://www.youtube.com/watch?v=6xGihZDvOA0
+		* NOTE: not precisely the same as the owner's original work
+		*/
+		/////////////////////////////////////////
+		/**
+		 * This Method 
+		 * @param panel	The panel requesting a screenshot.
+		 * @param destination	Destination of the screenshot.
+		 * @throws IOException if file destination does not exist.
+		 */
+		public void saveScreenShot(JPanel panel, String destination) throws IOException{
+			 BufferedImage bufImage = new BufferedImage(
+		    		   panel.getWidth(), 
+		    		   panel.getHeight(),
+		    		   BufferedImage.TYPE_INT_RGB);
+			 panel.paint(bufImage.createGraphics());
+			 ImageIO.write(bufImage, "png", new File(destination));
 		}
 	}
 }
