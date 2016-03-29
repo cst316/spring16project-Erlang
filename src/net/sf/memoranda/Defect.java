@@ -13,7 +13,7 @@ public class Defect {
 	private int number;
 	private String inject;
 	private String remove;
-	private int fixTime; //in minutes
+	private double fixTime; //in minutes
 	private String status;
 	private String defectType;
 	private String description;
@@ -76,11 +76,11 @@ public class Defect {
 		this.remove = remove;
 	}
 	
-	public int getFixTime() {
+	public double getFixTime() {
 		return fixTime;
 	}
 
-	public void setFixTime(int fixTime) {
+	public void setFixTime(double fixTime) {
 		this.fixTime = fixTime;
 	}
 

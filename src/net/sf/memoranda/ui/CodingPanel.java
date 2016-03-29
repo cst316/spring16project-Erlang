@@ -1,4 +1,5 @@
 package net.sf.memoranda.ui;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -50,9 +51,10 @@ public class CodingPanel extends JPanel {
 	//text fields
     JTextField class_TextField;
 	JTextField date_TextField;
-	JTextField inject_TextField;
-	JTextField remove_TextField;
 	JTextField fixTime_TextField;
+	JComboBox<String> inject_ComboBox;
+	JComboBox<String> remove_ComboBox;
+	JComboBox<String> timeUnits_ComboBox;
     JComboBox<String> status_ComboBox;
     JComboBox<String> defect_ComboBox;
     JTextPane description_textPane;
@@ -71,8 +73,12 @@ public class CodingPanel extends JPanel {
 			"80 Function", "90 System",
 			"100 Environment"};
     private final String[] statusOptions = {"Not Fixed", "In Progress", "Fixed"};
+    private final String[] timeOptions = {"mins", "hours", "days"};
+    private final String[] stageOptions = {"Planning", "Design", "Code", "Code Review",
+    		                               "Compile", "Test", "Postmortem"};
     private final String[] columnNames = {"Number","Class", "Date", "Type", "Inject", "Remove", 
-    		                              "Fix Time", "Status"};
+    		                              "Fix Time (mins)", "Status"};
+    private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.0");
     Object[][] data = {};
     
     JPanel newDefect_Panel = new JPanel();
@@ -87,7 +93,7 @@ public class CodingPanel extends JPanel {
 	}
 	
 	private void setupNewDefectPanel() {
-		newDefect_Panel.setPreferredSize(new Dimension(820, 220));
+		newDefect_Panel.setPreferredSize(new Dimension(920, 240));
 		newDefect_Panel.setLayout(new GridBagLayout());
 		
 		//setup GridBag constraints
@@ -125,23 +131,23 @@ public class CodingPanel extends JPanel {
 		newDefect_Panel.add(lbl_Type, gbCon);
 		
 		lbl_Inject = new JLabel("Inject");
-		lbl_Inject.setPreferredSize(new Dimension(100, 15));
+		lbl_Inject.setPreferredSize(new Dimension(120, 15));
 		gbCon.gridx = 3;
 		newDefect_Panel.add(lbl_Inject, gbCon);
 		
 		lbl_Remove = new JLabel("Remove");
-		lbl_Remove.setPreferredSize(new Dimension(100, 15));
+		lbl_Remove.setPreferredSize(new Dimension(120, 15));
 		gbCon.gridx = 4;
 		newDefect_Panel.add(lbl_Remove, gbCon);
 		
 		lbl_FixTime = new JLabel("Fix Time");
-		lbl_FixTime.setPreferredSize(new Dimension(100, 15));
+		lbl_FixTime.setPreferredSize(new Dimension(80, 15));
 		gbCon.gridx = 5;
 		newDefect_Panel.add(lbl_FixTime, gbCon);
 		
 		lbl_FixRef = new JLabel("Status");
 		lbl_FixRef.setPreferredSize(new Dimension(100, 15));
-		gbCon.gridx = 6;
+		gbCon.gridx = 7;
 		newDefect_Panel.add(lbl_FixRef, gbCon);
 		
 		//class text field
@@ -164,27 +170,33 @@ public class CodingPanel extends JPanel {
 		newDefect_Panel.add(defect_ComboBox, gbCon);
 		
 		// inject text field
-		inject_TextField = new JTextField();
-		inject_TextField.setPreferredSize(new Dimension(100, 20));
+		inject_ComboBox = new JComboBox<String>(stageOptions);
+		inject_ComboBox.setPreferredSize(new Dimension(120, 20));
 		gbCon.gridx = 3;
-		newDefect_Panel.add(inject_TextField, gbCon);
+		newDefect_Panel.add(inject_ComboBox, gbCon);
 		
 		// remove text field
-		remove_TextField = new JTextField();
-		remove_TextField.setPreferredSize(new Dimension(100, 20));
+		remove_ComboBox = new JComboBox<String>(stageOptions);
+		remove_ComboBox.setPreferredSize(new Dimension(120, 20));
 		gbCon.gridx = 4;
-		newDefect_Panel.add(remove_TextField, gbCon);
+		newDefect_Panel.add(remove_ComboBox, gbCon);
 		
 		//fix time text Field
 		fixTime_TextField = new JTextField();
-		fixTime_TextField.setPreferredSize(new Dimension(100, 20));
+		fixTime_TextField.setPreferredSize(new Dimension(80, 20));
 		gbCon.gridx = 5;
 		newDefect_Panel.add(fixTime_TextField, gbCon);
+		
+		// remove text field
+		timeUnits_ComboBox = new JComboBox<String>(timeOptions);
+		timeUnits_ComboBox.setPreferredSize(new Dimension(70, 20));
+		gbCon.gridx = 6;
+		newDefect_Panel.add(timeUnits_ComboBox, gbCon);
 		
 		//status options combo box
 		status_ComboBox = new JComboBox<String>(statusOptions);
 		status_ComboBox.setPreferredSize(new Dimension(100, 20));
-		gbCon.gridx = 6;
+		gbCon.gridx = 7;
 		newDefect_Panel.add(status_ComboBox, gbCon);
 		
 		lblDescription = new JLabel("Description:");
@@ -195,17 +207,17 @@ public class CodingPanel extends JPanel {
 		newDefect_Panel.add(lblDescription, gbCon);
 		
 		description_textPane = new JTextPane();
-		description_textPane.setPreferredSize(new Dimension(810, 100));
+		description_textPane.setPreferredSize(new Dimension(910, 100));
 		gbCon.gridy = 4;
 		gbCon.gridx = 0;
-		gbCon.gridwidth = 7;
+		gbCon.gridwidth = 8;
 		newDefect_Panel.add(description_textPane, gbCon);
 		
 		//submit button
 		submitButton = new JButton("Add Defect");
 		submitButton.setPreferredSize(new Dimension(120, 20));
 		gbCon.gridy = 5;
-		gbCon.gridx = 5;
+		gbCon.gridx = 6;
 		gbCon.gridwidth = 2;
 		gbCon.anchor = GridBagConstraints.FIRST_LINE_END;
 		newDefect_Panel.add(submitButton, gbCon);
@@ -307,10 +319,18 @@ public class CodingPanel extends JPanel {
 	    else {
 	    	temp.setNumber(this.defects.get(this.defects.size() - 1).getNumber() + 1);
 	    }
-	    temp.setInject(inject_TextField.getText());
-	    temp.setRemove(remove_TextField.getText());
+	    temp.setInject(inject_ComboBox.getSelectedItem().toString());
+	    temp.setRemove(remove_ComboBox.getSelectedItem().toString());
 	    try {
-	    	temp.setFixTime(Integer.parseInt(fixTime_TextField.getText()));
+	    	double theTimeValue = Double.parseDouble(fixTime_TextField.getText());
+	    	String theUnits = timeUnits_ComboBox.getSelectedItem().toString();
+	    	if (theUnits.equals("hours")) {
+	    		theTimeValue = theTimeValue * 60.0;
+	    	}
+	    	else if (theUnits.equals("days")) {
+	    		theTimeValue = theTimeValue * 60.0 * 24.0;
+	    	}
+	    	temp.setFixTime(theTimeValue);
 	    } catch (NumberFormatException e) {
 	    	JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Fix Time, try again"));
 	    	return;
@@ -320,7 +340,7 @@ public class CodingPanel extends JPanel {
 		temp.setDescription(description_textPane.getText());
 		defects.addElement(temp);
 		Object[] theRow = { temp.getNumber(), temp.getClassName(), temp.getDate(), temp.getDefectType(),
-		    		        temp.getInject(), temp.getRemove(), temp.getFixTime(), temp.getStatus() };
+		    		        temp.getInject(), temp.getRemove(), decimalFormat.format(temp.getFixTime()), temp.getStatus() };
 	    tableModel.addRow(theRow);
 		clearInputFields();
     }
@@ -328,8 +348,8 @@ public class CodingPanel extends JPanel {
 	private void clearInputFields() {
 		class_TextField.setText("");
 		date_TextField.setText("");
-		inject_TextField.setText("");
-		remove_TextField.setText("");
+		inject_ComboBox.setSelectedIndex(0);
+		remove_ComboBox.setSelectedIndex(0);
 		fixTime_TextField.setText("");
 	    status_ComboBox.setSelectedIndex(0);
 	    defect_ComboBox.setSelectedIndex(0);
