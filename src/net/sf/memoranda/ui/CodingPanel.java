@@ -1,8 +1,12 @@
 package net.sf.memoranda.ui;
 import java.util.*;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import net.sf.memoranda.Defect;
 
 /**
@@ -12,204 +16,301 @@ import net.sf.memoranda.Defect;
  * @version 1.0
  */
 
+
+
+
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 
 public class CodingPanel extends JPanel {
-	Vector<Defect> defects = new Vector<Defect>();
+	//buttons
+    JButton submitButton;	
+    //labels
+    JLabel lbl_Defect;
+    JLabel lbl_Class;
+    JLabel lbl_Date;
+    JLabel lbl_Number;
+    JLabel lbl_Type;
+    JLabel lbl_Inject;
+    JLabel lbl_Remove;
+    JLabel lbl_FixTime;
+    JLabel lbl_FixRef;
+    JLabel lblDescription;
+	//text fields
+    JTextField class_TextField;
+	JTextField date_TextField;
+	JTextField inject_TextField;
+	JTextField remove_TextField;
+	JTextField fixTime_TextField;
+    JComboBox<String> status_ComboBox;
+    JComboBox<String> defect_ComboBox;
+    JTextPane description_textPane;
+   
+	JTable defect_Table = new JTable();
+	JScrollPane defectTable_ScrollPane = null;
+	JLabel tableTitle_Label = new JLabel();
+	JLabel selected_Label = new JLabel();
+	JLabel selectedDescrption_Label = new JLabel();
+	JButton removeButton = new JButton();
+	DefaultTableModel tableModel;
+    
+    private final String[] defectOptions = {"10 Documentation", "20 Syntax",
+			"30 Build Package", "40 Assignment",
+			"50 Interface", "60 Checking",
+			"80 Function", "90 System",
+			"100 Environment"};
+    private final String[] statusOptions = {"Not Fixed", "In Progress", "Fixed"};
+    private final String[] columnNames = {"Number","Class", "Date", "Type", "Inject", "Remove", 
+    		                              "Fix Time", "Status"};
+    Object[][] data = {};
+    
+    JPanel newDefect_Panel = new JPanel();
+    JPanel defectTable_Panel = new JPanel();
+    
+    Vector<Defect> defects = new Vector<Defect>();
 	
 	public CodingPanel(){
 		this.setPreferredSize(new Dimension(1000, 1000));
-		
-		DefectLog defect1 = new DefectLog();
-		this.add(defect1);
-		DefectLog defect2 = new DefectLog();
-		this.add(defect2);
-		
+		setupNewDefectPanel();
+		setupDefectTablePanel();
 	}
 	
-	
-	private class DefectLog extends JPanel{
-		//buttons
-		JButton submitButton;
+	private void setupNewDefectPanel() {
+		newDefect_Panel.setPreferredSize(new Dimension(820, 220));
+		newDefect_Panel.setLayout(new GridBagLayout());
 		
-		//text fields
-		JTextField project_TextField; //project text field
-		JTextField date_TextField;
-		JTextField number_TextField;
-		JTextField inject_TextField;
-		JTextField remove_TextField;
-		JTextField fixTime_TextField;
-		JTextField fexRef_TextField;
+		//setup GridBag constraints
+		GridBagConstraints gbCon = new GridBagConstraints();
+		gbCon.anchor = GridBagConstraints.FIRST_LINE_START;
+		gbCon.insets = new Insets(0,5,0,5);
+		gbCon.weightx = 0.5;
+		gbCon.weighty = 0.5;
 		
-		JComboBox defect_ComboBox;
+		//Labels for use in PSP coding log
 		
+		lbl_Defect = new JLabel("Log New Defect:");
+		lbl_Defect.setPreferredSize(new Dimension(200, 15));
+		gbCon.gridwidth = 2;
+		gbCon.gridheight = 1;
+		gbCon.gridx = 0;
+		gbCon.gridy = 0;
+		newDefect_Panel.add(lbl_Defect, gbCon);
 		
-		/*Defect Types	
-		10 Documentation	60 Checking
-		20 Syntax	70 Data
-		30 Build, Package	80 Function
-		40 Assignment	90 System
-		50 Interface	100 Environment*/
+		lbl_Class = new JLabel("Class");
+		lbl_Class.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridwidth = 1;
+		gbCon.gridx = 0;
+		gbCon.gridy = 1;
+		newDefect_Panel.add(lbl_Class, gbCon);
 		
-		 DefectLog(){
-			setPreferredSize(new Dimension(1000, 250));
-			setLayout(null);
-			//window to enter description of defect
-			
-			JTextPane description_textPane = new JTextPane();
-			description_textPane.setBounds(60, 147, 854, 94);
-			add(description_textPane);
-			
-			
-			
-			final String[] defectOptions = {"10 Documentation", "20 Syntax",
-					"30 Build Package", "40 Assignment",
-					"50 Interface", "60 Checking",
-					"80 Function", "90 System",
-					"100 Environment"};
-			
-					
-			
-					//submit button
-					
+		lbl_Date = new JLabel("Date");
+		lbl_Date.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridx = 1;
+		newDefect_Panel.add(lbl_Date, gbCon);
+		
+		lbl_Type = new JLabel("Type");
+		lbl_Type.setPreferredSize(new Dimension(150, 15));
+		gbCon.gridx = 2;
+		newDefect_Panel.add(lbl_Type, gbCon);
+		
+		lbl_Inject = new JLabel("Inject");
+		lbl_Inject.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridx = 3;
+		newDefect_Panel.add(lbl_Inject, gbCon);
+		
+		lbl_Remove = new JLabel("Remove");
+		lbl_Remove.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridx = 4;
+		newDefect_Panel.add(lbl_Remove, gbCon);
+		
+		lbl_FixTime = new JLabel("Fix Time");
+		lbl_FixTime.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridx = 5;
+		newDefect_Panel.add(lbl_FixTime, gbCon);
+		
+		lbl_FixRef = new JLabel("Status");
+		lbl_FixRef.setPreferredSize(new Dimension(100, 15));
+		gbCon.gridx = 6;
+		newDefect_Panel.add(lbl_FixRef, gbCon);
+		
+		//class text field
+		class_TextField = new JTextField();
+		class_TextField.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridy = 2;
+		gbCon.gridx = 0;
+		newDefect_Panel.add(class_TextField, gbCon);
+		
+		//date text field
+		date_TextField = new JTextField();
+		date_TextField.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridx = 1;
+		newDefect_Panel.add(date_TextField, gbCon);
+		
+		//combo box for type of defect
+		defect_ComboBox = new JComboBox<String>(defectOptions);
+		defect_ComboBox.setPreferredSize(new Dimension(150, 20));
+		gbCon.gridx = 2;
+		newDefect_Panel.add(defect_ComboBox, gbCon);
+		
+		// inject text field
+		inject_TextField = new JTextField();
+		inject_TextField.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridx = 3;
+		newDefect_Panel.add(inject_TextField, gbCon);
+		
+		// remove text field
+		remove_TextField = new JTextField();
+		remove_TextField.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridx = 4;
+		newDefect_Panel.add(remove_TextField, gbCon);
+		
+		//fix time text Field
+		fixTime_TextField = new JTextField();
+		fixTime_TextField.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridx = 5;
+		newDefect_Panel.add(fixTime_TextField, gbCon);
+		
+		//status options combo box
+		status_ComboBox = new JComboBox<String>(statusOptions);
+		status_ComboBox.setPreferredSize(new Dimension(100, 20));
+		gbCon.gridx = 6;
+		newDefect_Panel.add(status_ComboBox, gbCon);
+		
+		lblDescription = new JLabel("Description:");
+		lblDescription.setPreferredSize(new Dimension(200, 15));
+		gbCon.gridy = 3;
+		gbCon.gridx = 0;
+		gbCon.gridwidth = 2;
+		newDefect_Panel.add(lblDescription, gbCon);
+		
+		description_textPane = new JTextPane();
+		description_textPane.setPreferredSize(new Dimension(810, 100));
+		gbCon.gridy = 4;
+		gbCon.gridx = 0;
+		gbCon.gridwidth = 7;
+		newDefect_Panel.add(description_textPane, gbCon);
+		
+		//submit button
+		submitButton = new JButton("Add Defect");
+		submitButton.setPreferredSize(new Dimension(120, 20));
+		gbCon.gridy = 5;
+		gbCon.gridx = 5;
+		gbCon.gridwidth = 2;
+		gbCon.anchor = GridBagConstraints.FIRST_LINE_END;
+		newDefect_Panel.add(submitButton, gbCon);
+		
+		submitButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				submitButtonClicked();
 				
-					//placing submit button
-					submitButton = new JButton("Submit");
-					submitButton.setBounds(830, 100, 90, 19);
-					add(submitButton);
-					
-					
-					//text fields for use in PSP coding log
-					
-					//project text field
-					project_TextField = new JTextField();
-					project_TextField.setBounds(60, 70, 70, 19);
-					add(project_TextField);
-					project_TextField.setColumns(10);
-					
-					//date text field
-					date_TextField = new JTextField();
-					date_TextField.setBounds(170, 70, 70, 19);
-					add(date_TextField);
-					date_TextField.setColumns(10);
-					
-					//number text field
-					number_TextField = new JTextField();
-					number_TextField.setBounds(280, 70, 70, 19);
-					add(number_TextField);
-					number_TextField.setColumns(10);
-					
-					// inject text field
-					inject_TextField = new JTextField();
-					inject_TextField.setBounds(500, 70, 70, 19);
-					add(inject_TextField);
-					inject_TextField.setColumns(10);
-					
-					// remove text field
-					remove_TextField = new JTextField();
-					remove_TextField.setBounds(610, 70, 70, 19);
-					add(remove_TextField);
-					remove_TextField.setColumns(10);
-					
-					//fix time text Field
-					fixTime_TextField = new JTextField();
-					fixTime_TextField.setBounds(720, 70, 70, 19);
-					add(fixTime_TextField);
-					fixTime_TextField.setColumns(10);
-					
-					//fix ref text Field
-					fexRef_TextField = new JTextField();
-					fexRef_TextField.setBounds(830, 70, 70, 19);
-					add(fexRef_TextField);
-					fexRef_TextField.setColumns(10);
-					
-					//combo box for type of defect
-					JComboBox defect_ComboBox = new JComboBox(defectOptions);
-					defect_ComboBox.setBounds(390, 70, 98, 19);
-					add(defect_ComboBox);
-					
-					//Labels for use in PSP coding log
-					JLabel lbl_Project = new JLabel("Project");
-					lbl_Project.setBounds(60, 43, 70, 15);
-					add(lbl_Project);
-					
-					JLabel lbl_Date = new JLabel("Date");
-					lbl_Date.setBounds(170, 43, 70, 15);
-					add(lbl_Date);
-					
-					JLabel lbl_Number = new JLabel("Number");
-					lbl_Number.setBounds(280, 43, 70, 15);
-					add(lbl_Number);
-					
-					JLabel lbl_Type = new JLabel("Type");
-					lbl_Type.setBounds(390, 43, 70, 15);
-					add(lbl_Type);
-					
-					JLabel lbl_Inject = new JLabel("Inject");
-					lbl_Inject.setBounds(500, 43, 70, 15);
-					add(lbl_Inject);
-					
-					JLabel lbl_Remove = new JLabel("Remove");
-					lbl_Remove.setBounds(610, 43, 70, 15);
-					add(lbl_Remove);
-					
-					JLabel lbl_FixTime = new JLabel("Fix Time");
-					lbl_FixTime.setBounds(720, 43, 70, 15);
-					add(lbl_FixTime);
-					
-					JLabel lbl_FixRef = new JLabel("Fix Ref");
-					lbl_FixRef.setBounds(830, 43, 70, 15);
-					add(lbl_FixRef);
-					
-					
-					JLabel lblDescription = new JLabel("Description:");
-					lblDescription.setBounds(60, 115, 98, 15);
-					add(lblDescription);
-					
-					
-					
-					
-					/*Method to add everything to the defect class for 
-					temporary holding*/
-					
-					
-					
-					submitButton.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e) {
-							submitButtonClicked();
-							
-						}
-					});
-					
-					
-		}
-		 private void submitButtonClicked() {
-				Defect temp;
-				temp = new Defect();
-				
-				temp.setProjectName(project_TextField.getText());
-				temp.setDate(date_TextField.getText());
-				temp.setNumber(Integer.parseInt(number_TextField.getText()));
-				temp.setInject(inject_TextField.getText());
-				temp.setRemove(remove_TextField.getText());
-				temp.setFixTime(fixTime_TextField.getText());
-				temp.setFexRef(fexRef_TextField.getText());
-				temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
-				defects.addElement(temp);
 			}
+		});
+		
+		this.add(newDefect_Panel);
+	}
+	
+	private void setupDefectTablePanel() {
+		defectTable_Panel.setLayout(new GridBagLayout());
+		defectTable_Panel.setPreferredSize(new Dimension(950, 350));
+		
+		populateTable();
+			
+		GridBagConstraints gbCon = new GridBagConstraints();
+		gbCon.anchor = GridBagConstraints.PAGE_START;
+		gbCon.weightx = 0.5;
+		gbCon.weighty = 0.5;
+		
+		gbCon.gridwidth = 2;
+		gbCon.gridheight = 1;
+		gbCon.gridx = 0;
+		gbCon.gridy = 0;
+		
+		tableTitle_Label.setText("Defect Log:");
+		tableTitle_Label.setPreferredSize(new Dimension(950, 25));
+		defectTable_Panel.add(tableTitle_Label,gbCon);
+		
+		gbCon.gridy = 1;
+		defectTable_ScrollPane = new JScrollPane(defect_Table);
+		defectTable_ScrollPane.setPreferredSize(new Dimension(950,200));
+		defectTable_Panel.add(defectTable_ScrollPane,gbCon);
+		
+		gbCon.anchor = GridBagConstraints.FIRST_LINE_START;
+		gbCon.gridwidth = 1;
+		gbCon.gridy = 2;
+		gbCon.gridx = 0;
+		selected_Label.setText("Selected Defect Description:");
+		selected_Label.setPreferredSize(new Dimension(250, 20));
+		defectTable_Panel.add(selected_Label, gbCon);
+		
+		gbCon.anchor = GridBagConstraints.FIRST_LINE_END;
+		gbCon.gridx = 1;
+		removeButton.setPreferredSize(new Dimension(220, 20));
+		removeButton.setText("Remove Selected Defect");
+		defectTable_Panel.add(removeButton, gbCon);
+		
+		gbCon.anchor = GridBagConstraints.FIRST_LINE_START;
+		gbCon.gridwidth = 2;
+		gbCon.gridy = 3;
+		gbCon.gridx = 0;
+		selectedDescrption_Label.setPreferredSize(new Dimension(950, 100));
+		selectedDescrption_Label.setText("(Nothing Selected)");
+		defectTable_Panel.add(selectedDescrption_Label, gbCon);
+		 
+		this.add(defectTable_Panel);
 		
 	}
-
-
 	
-
+	private void populateTable() {
+		/*
+		 * once we have the PSPProcess class we will need to get saved estimations
+		 * and populate the table with those values
+		 */
+		this.tableModel = new DefaultTableModel(this.columnNames, 0);
+		this.defect_Table.setModel(this.tableModel);
+	}
 	
+	private void submitButtonClicked() {
+	    Defect temp;
+	    temp = new Defect();
+	
+	    temp.setProjectName(class_TextField.getText());
+	    temp.setDate(date_TextField.getText());
+	    //increment number for the user
+	    if (this.defects.size() < 1) {
+	    	temp.setNumber(1);
+	    } 
+	    else {
+	    	temp.setNumber(this.defects.get(this.defects.size() - 1).getNumber() + 1);
+	    }
+	    temp.setInject(inject_TextField.getText());
+	    temp.setRemove(remove_TextField.getText());
+	    temp.setFixTime(fixTime_TextField.getText());
+	    temp.setFexRef(status_ComboBox.getSelectedItem().toString());
+	    temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
+	    defects.addElement(temp);
+	    clearInputFields();
+    }
+	
+	private void clearInputFields() {
+		class_TextField.setText("");
+		date_TextField.setText("");
+		inject_TextField.setText("");
+		remove_TextField.setText("");
+		fixTime_TextField.setText("");
+	    status_ComboBox.setSelectedIndex(0);
+	    defect_ComboBox.setSelectedIndex(0);
+	    description_textPane.setText("");
+	}
 }
 
