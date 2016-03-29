@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import net.sf.memoranda.Defect;
+import net.sf.memoranda.util.Local;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -296,7 +298,7 @@ public class CodingPanel extends JPanel {
 	    Defect temp;
 	    temp = new Defect();
 	
-	    temp.setProjectName(class_TextField.getText());
+	    temp.setClassName(class_TextField.getText());
 	    temp.setDate(date_TextField.getText());
 	    //increment number for the user
 	    if (this.defects.size() < 1) {
@@ -307,15 +309,20 @@ public class CodingPanel extends JPanel {
 	    }
 	    temp.setInject(inject_TextField.getText());
 	    temp.setRemove(remove_TextField.getText());
-	    temp.setFixTime(fixTime_TextField.getText());
-	    temp.setFexRef(status_ComboBox.getSelectedItem().toString());
-	    temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
-	    temp.setDescription(description_textPane.getText());
-	    defects.addElement(temp);
-	    Object[] theRow = { temp.getNumber(), temp.getProjectName(), temp.getDate(), temp.getDefectType(),
-	    		            temp.getInject(), temp.getRemove(), temp.getFixTime(), temp.getFexRef() };
-		tableModel.addRow(theRow);
-	    clearInputFields();
+	    try {
+	    	temp.setFixTime(Integer.parseInt(fixTime_TextField.getText()));
+	    } catch (NumberFormatException e) {
+	    	JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Fix Time, try again"));
+	    	return;
+	    }
+		temp.setStatus(status_ComboBox.getSelectedItem().toString());
+		temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
+		temp.setDescription(description_textPane.getText());
+		defects.addElement(temp);
+		Object[] theRow = { temp.getNumber(), temp.getClassName(), temp.getDate(), temp.getDefectType(),
+		    		        temp.getInject(), temp.getRemove(), temp.getFixTime(), temp.getStatus() };
+	    tableModel.addRow(theRow);
+		clearInputFields();
     }
 	
 	private void clearInputFields() {

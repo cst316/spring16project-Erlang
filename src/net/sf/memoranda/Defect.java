@@ -8,39 +8,39 @@ package net.sf.memoranda;
  */
 
 public class Defect {
-	private String projectName;
+	private String className;
 	private String date;
 	private int number;
 	private String inject;
 	private String remove;
-	private String fixTime;
-	private String fexRef;
+	private int fixTime; //in minutes
+	private String status;
 	private String defectType;
 	private String description;
 	
 	public Defect(){}
 	
 	public Defect(String projectName,String date, String inject, String remove,
-			String fixTime, String fexRef, String defectType, int number, String description){
+			int fixTime, String status, String defectType, int number, String description){
 			this.date = date;
 			this.defectType = defectType;
 			this.number = number;
 			this.inject = inject;
 			this.remove = remove;
-			this.projectName = projectName;
-			this.fexRef = fexRef;
+			this.className = projectName;
+			this.status = status;
 			this.fixTime = fixTime;
 			this.description = description;
 		}
 
 
-	public String getProjectName() {
+	public String getClassName() {
 		
-		return projectName;
+		return className;
 	}
 	
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 	
 	public String getDate() {
@@ -76,22 +76,22 @@ public class Defect {
 		this.remove = remove;
 	}
 	
-	public String getFixTime() {
+	public int getFixTime() {
 		return fixTime;
 	}
-	
-	public void setFixTime(String fixTime) {
+
+	public void setFixTime(int fixTime) {
 		this.fixTime = fixTime;
 	}
-	
-	public String getFexRef() {
-		return fexRef;
+
+	public String getStatus() {
+		return status;
 	}
-	
-	public void setFexRef(String fexRef) {
-		this.fexRef = fexRef;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
+
 	public String getDefectType() {
 		return defectType;
 	}

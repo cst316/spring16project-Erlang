@@ -53,16 +53,16 @@ public class DefectTest extends TestCase {
 	
 	@Test
 	public void testProjectName(){
-		defect1.setProjectName("memoranda test");
-		assertTrue(defect1.getProjectName() == "memoranda test" );
-		assertFalse(defect1.getProjectName() == "hopfully not");
+		defect1.setClassName("memoranda test");
+		assertTrue(defect1.getClassName() == "memoranda test" );
+		assertFalse(defect1.getClassName() == "hopfully not");
 	}
 	
 	@Test
 	public void testInject(){
 		defect1.setInject("memoranda test inject");
 		assertTrue(defect1.getInject() == "memoranda test inject" );
-		assertFalse(defect1.getProjectName() == "hopfully not");
+		assertFalse(defect1.getClassName() == "hopfully not");
 	}
 	
 	
