@@ -95,7 +95,7 @@ public class PSPPanel extends JPanel {
 		StopWatch watch = new StopWatch();
 		ImportDataTimer testing = new ImportDataTimer();
 		estimationPanel = new EstimationPanel();
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BorderLayout());
 		this.initializeTabs();
 		this.add(pspTabs, BorderLayout.WEST);
 		this.add(watch, BorderLayout.CENTER);
@@ -128,19 +128,6 @@ public class PSPPanel extends JPanel {
 	    showSummay();
 	    
 	    this.add(pspTabs);
-
-	pspTabs.addTab("Estimation", web, estimationPanel,"Estimate Size");
-
-
-	pspTabs.addTab("Coding", web, codingPanel," Document your code");
-
-	pspTabs.addTab("Summary", web, summaryPanel, "tables");
-	showSummay();
-
-
-	this.add(pspTabs);
-
-	
 	}	
 	
 	

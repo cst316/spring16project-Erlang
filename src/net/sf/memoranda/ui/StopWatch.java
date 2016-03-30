@@ -30,12 +30,9 @@ public class StopWatch extends JPanel {
 	 * Create the panel.
 	 */
 	public StopWatch() {
-
-		
-		
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = new Double(clockTime).toString();
+		updateTimeString();
 		
 		setLayout(null);
 		displayTime = new JLabel("New label");
@@ -64,7 +61,6 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Select button was being clicked");
 				// TODO Auto-generated method stub
-				
 			}
 			
 		});
@@ -93,7 +89,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				clockTick++;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = new Double(clockTime).toString();
+				updateTimeString();
 				displayTime.setText(timeString);
 				
 			    }
@@ -120,12 +116,36 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt){
 				clockTick = 0;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = new Double(clockTime).toString();
+				updateTimeString();
 				displayTime.setText(timeString);
 			}
 		});
 		
 		
+	}
+	
+	//convert time to properly formatted string
+	private void updateTimeString(){
+		int theMins = (int)clockTime / 60;
+		int theHours = theMins / 60;
+			
+		String theMinsString = Integer.toString( theMins % 60 );
+		String theHoursString = Integer.toString( theHours );
+		String theSecondString = String.format ( "%.1f",( clockTime % 60.0 ) );
+			
+		if( theMinsString.length() < 2 ) {
+			theMinsString = "0" + theMinsString;
+		}
+			
+	    if( theHoursString.length() < 2 ) {
+	        theHoursString = "0" + theHoursString;
+	    }
+	        
+	    if( theSecondString.length() < 4 ) {
+	        theSecondString = "0" + theSecondString;
+	    }
+			
+		timeString = theHoursString + ":" + theMinsString + ":" + theSecondString;
 	}
 	
 	
