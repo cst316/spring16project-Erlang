@@ -11,7 +11,6 @@ import net.sf.memoranda.ui.treetable.DesignTools;
 
 public class DesignToolsTest {
 	JButton testButton;
-	DesignTools tool;
 	@Before
 	public void setUp(){
 	testButton = new JButton();
@@ -19,20 +18,30 @@ public class DesignToolsTest {
 
 	@Test
 	public void testGetInUse() {
-		DesignTools.selectSelected();
-			assertEquals("Should be the same", DesignTools.SELECT, DesignTools.getInUse());
-		DesignTools.circleSelected();
-			assertEquals("Should be the same", DesignTools.CIRCLE, DesignTools.getInUse());
 		DesignTools.deleteSelected();
-			assertEquals("Should be the same", DesignTools.DELETE, DesignTools.getInUse());	
-		DesignTools.exportSelected();
-			assertEquals("Should be the same", DesignTools.EXPORT, DesignTools.getInUse());
-		DesignTools.lineSelected();
-			assertEquals("Should be the same", DesignTools.LINE, DesignTools.getInUse());
-		DesignTools.rectangleSelected();;
-			assertEquals("Should be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
+			assertEquals("Should be the same", DesignTools.DELETE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.TEXT, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
+		
 		DesignTools.textSelected();
 			assertEquals("Should be the same", DesignTools.TEXT, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.DELETE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
+			
+			DesignTools.textSelected();
+			assertEquals("Should be the same", DesignTools.TEXT, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.DELETE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
+			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
+	
 	}
 
 	@Test
