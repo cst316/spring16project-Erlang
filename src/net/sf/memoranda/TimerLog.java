@@ -7,6 +7,8 @@ package net.sf.memoranda;
  */
 public class TimerLog {
 	
+	public TimerLog(){}
+	
 	PspStage cstage;
 	public enum PspStage{
 		PLANNING, DESIGN, CODE,
@@ -23,8 +25,15 @@ public class TimerLog {
 			this.timeValue = timeValue;
 		}
 		
+		public String toString(){
+			
+			String string = "Elapsed time: "+timeValue + " Stage: "+ cstage ;
+			return string;
+			
+		}
 		
-		//accessor and mutators
+		
+		//accessors and mutators
 		public PspStage getcStage() {
 			return cstage;
 		}
@@ -41,6 +50,9 @@ public class TimerLog {
 
 
 		public void setTimeValue(double timeValue) {
+			if(timeValue < 0){
+				timeValue = 0;
+			}
 			this.timeValue = timeValue;
 		}
 
