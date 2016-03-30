@@ -36,6 +36,7 @@ public class PSPPanel extends JPanel {
 	SummaryPanel summaryPanel = new SummaryPanel();
 	EstimatePanel estimatePanel = new EstimatePanel();
 	
+	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
             {"Minute/LOC ", " ", " ", " "," "}, 
