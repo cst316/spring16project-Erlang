@@ -2,6 +2,8 @@ package net.sf.memoranda.ui;
 
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D.Double;
+
+import javax.swing.JTextArea;
 /**
  * This Class is used to draw shapes. It contains an assigned Color and Stroke size
  * @author Carlos
@@ -11,11 +13,11 @@ public class Rectangle extends Double implements MemorandaShape{
 	private Color color;
 	private int stroke;
 	
-	
 	public Rectangle(double x,double y,double w,double h, double arcw, double arch){
 		super(x,y,w,h, arcw, arch);
 		color = null;
 		stroke = 0;	
+		
 	}					
 	
 	public Color getColor() {

@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.event.MouseInputListener;
 
 import net.sf.memoranda.ui.treetable.DesignTools;
@@ -148,23 +149,28 @@ public class DesignPanel extends JPanel{
 	 * @version 1.0
 	 */
 	private class Sketch extends JPanel{
-		// All shapes drawn on the pane.
-		private Vector<Shape> shapes;			
+
+		private Vector <Shape> shapes;			// All shapes drawn on the pane.
+		private Vector <TextField> texts;
 		private Sketch(){
 			super();
 			setBackground(Color.white);
 			setOpaque(true);
 			shapes = new Vector<Shape>(10);
+			texts = new Vector<TextField>(10);
 			addMouseMotionListener(listener);
 		}
-		
+
+
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-			// want to draw only when rectangle, ellipse, or line is selected
-			drawShape(); 		
-			
+
+			drawShape(); 		// want to draw only when rectangle, ellipse, or line is selected
 			//This for each loop will iterate through an Vector and redraw each shape.
+			for(TextField text: texts){
+				g2.drawString(text.getText(), text.getX(), text.getY());
+			}
 			for(Shape shape : shapes){
 				if(shape.getClass() == Rectangle.class){
 					  Rectangle rect = (Rectangle)shape;
@@ -185,6 +191,9 @@ public class DesignPanel extends JPanel{
 			}
 		}
 		
+		protected Vector<TextField> getTexts() {
+			return texts;
+		}
 		private Vector<Shape> getShapes() {
 			return shapes;
 		}
@@ -391,7 +400,7 @@ public class DesignPanel extends JPanel{
 			//sets Select to Selected
 			else if(e.getSource() == DesignTools.SELECT.getButton()){
 				DesignTools.selectSelected();
-<<<<<<< HEAD
+
 			}
 			//sets Delete to Selected
 			else if(e.getSource() == DesignTools.DELETE.getButton()){
@@ -400,12 +409,20 @@ public class DesignPanel extends JPanel{
 			//sets  Export to Selected
 			else if(e.getSource() == DesignTools.EXPORT.getButton()){
 				DesignTools.exportSelected();
-=======
+
 			}//sets Delet to Selected
 			else if(e.getSource() == DesignTools.DELETE.getButton()){
 				DesignTools.deleteSelected();	
->>>>>>> parent of 299d552... Created JUNIT tests for Rectangle, Circle, Line classes. Implemented Export functionality
-			}	
+			}//if Text is active and button pressed on the sketch JPanel. Prompt to enter a text
+			if(DesignTools.TEXT.isActive()){
+				String a;
+				TextField text = null;
+				if(e.getSource() == sketch){
+					 a = JOptionPane.showInputDialog("Enter a String");
+					text = new TextField(a,e.getX(),e.getY());
+					sketch.getTexts().add(text);
+				}
+			}
 			if(DesignTools.SELECT.isActive()){
 					for(Shape shape : sketch.getShapes()){
 						// if press is within a shape's boundary
@@ -429,7 +446,6 @@ public class DesignPanel extends JPanel{
 					}
 				}
 			}
-<<<<<<< HEAD
 			if(DesignTools.EXPORT.isActive()){
 				//System.out.println("Taking a screenshot");
 				try {
@@ -447,8 +463,6 @@ public class DesignPanel extends JPanel{
 					System.out.println(a);
 				}
 			}
-=======
->>>>>>> parent of 299d552... Created JUNIT tests for Rectangle, Circle, Line classes. Implemented Export functionality
 		}
 
 		@Override
