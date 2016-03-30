@@ -208,15 +208,9 @@ public class DesignPanel extends JPanel{
 		}
 
 		/**
-<<<<<<< e865192852cdcc972bb467716146a53d7ea6ce91
-		 * This method will take the inputs of each user mouse click
-		 *  and release then create the 
-		 * relative shapes at to its location and add them to an ArrayList.
-=======
 		 * This method will take the inputs of each user mouse 
 		 * click and release then create the relative shapes at
 		 *  to its location and add them to an ArrayList.
->>>>>>> Check Style Changes added
 		 */
 		private void drawShape(){
 			if(iPoint != null){
@@ -448,8 +442,6 @@ public class DesignPanel extends JPanel{
 					}
 			}
 			if(DesignTools.DELETE.isActive()){
-				System.out.println("DELETED");
-
 				for(Shape shape : sketch.getShapes()){
 					if(shape.contains(event.getPoint().x, 
 							event.getPoint().y)){	
@@ -468,13 +460,6 @@ public class DesignPanel extends JPanel{
 				}
 				//System.out.println("After a screenshot");
 
-			}
-			if(DesignTools.TEXT.isActive()){
-				String astring;
-				if(event.getSource() == sketch){
-					astring = JOptionPane.showInputDialog("Enter a String");
-					System.out.println(astring);
-				}
 			}
 		}
 
