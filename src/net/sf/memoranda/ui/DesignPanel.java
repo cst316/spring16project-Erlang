@@ -394,21 +394,33 @@ public class DesignPanel extends JPanel{
 				iPoint = event.getPoint();
 				//sets Text to selected
 			}else if(event.getSource() == DesignTools.TEXT.getButton()){
+				activateButtons();
+				DesignTools.TEXT.getButton().setEnabled(false);
 				DesignTools.textSelected();
 				//sets Circle to selected
 			}else if(event.getSource() == DesignTools.CIRCLE.getButton()){
+				activateButtons();
+				DesignTools.CIRCLE.getButton().setEnabled(false);
 				DesignTools.circleSelected();
 				//sets Rectangle to selected
 			}else if(event.getSource() == DesignTools.RECTANGLE.getButton()){
+				activateButtons();
+				DesignTools.RECTANGLE.getButton().setEnabled(false);
 				DesignTools.rectangleSelected();
 				//sets Line to selected
 			}else if(event.getSource() == DesignTools.LINE.getButton()){
+				activateButtons();
+				DesignTools.LINE.getButton().setEnabled(false);
 				DesignTools.lineSelected();
 				//sets Select to Selected
 			}else if(event.getSource() == DesignTools.SELECT.getButton()){
+				activateButtons();
+				DesignTools.SELECT.getButton().setEnabled(false);
 				DesignTools.selectSelected();
 				//sets Delete to Selected
 			}else if(event.getSource() == DesignTools.DELETE.getButton()){
+				activateButtons();
+				DesignTools.DELETE.getButton().setEnabled(false);
 				DesignTools.deleteSelected();
 				//sets  Export to Selected
 			}else if(event.getSource() == DesignTools.EXPORT.getButton()){
@@ -527,4 +539,14 @@ public class DesignPanel extends JPanel{
 			 ImageIO.write(bufImage, "png", new File(destination));
 		}
 	}
+	
+	/**
+	 * Sets all buttons back to activated so they can be selected.
+	 */
+	private void activateButtons() {
+		for(DesignTools tool : DesignTools.values()){
+	    	tool.getButton().setEnabled(true);
+	    }
+	}
+	
 }
