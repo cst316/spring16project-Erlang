@@ -3,7 +3,7 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.GridBagconstraints;
+import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -49,7 +49,7 @@ public class PlanningPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	
 	GridBagLayout gridLayout = new GridBagLayout();
-	GridBagconstraints gconstraints = new GridBagconstraints();
+	GridBagConstraints gconstraints = new GridBagConstraints();
 
 	JPanel jpanel1 = new JPanel();
 	
@@ -182,8 +182,8 @@ public class PlanningPanel extends JPanel {
 					.getMessages());
 		}
 		
-		gconstraints.anchor = GridBagconstraints.NORTHWEST;
-		gconstraints.fill = GridBagconstraints.HORIZONTAL;
+		gconstraints.anchor = GridBagConstraints.NORTHWEST;
+		gconstraints.fill = GridBagConstraints.BOTH;
 
 		jpanel1.setLayout(gridLayout);
 		titleBar.setLayout(gridLayout);
@@ -199,6 +199,7 @@ public class PlanningPanel extends JPanel {
 		
 		titleField.setText("Enter name of program here");
 		gconstraints.gridx = 1;
+		gconstraints.weightx = 1;
 		titleBar.add(titleField, gconstraints);
 		
 		authorLabel.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -415,7 +416,8 @@ public class PlanningPanel extends JPanel {
 		
 		gconstraints.gridx = 0;
 		gconstraints.gridy = 0;
-		gconstraints.weightx = 1;
+		gconstraints.fill = GridBagConstraints.NONE;
+		gconstraints.weightx = 0;
 		gconstraints.weighty = 1;
 		//jpanel2.add(editorToolBar, g);
 		
@@ -460,7 +462,7 @@ public class PlanningPanel extends JPanel {
 		try {
 			String str = br.readLine();
 			while (str != null) {
-				css = css + s + "\n";
+				css = css + str + "\n";
 				str = br.readLine();
 			}
 		} catch (IOException ex) {
