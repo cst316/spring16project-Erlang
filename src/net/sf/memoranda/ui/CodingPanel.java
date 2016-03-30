@@ -35,36 +35,35 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class CodingPanel extends JPanel {
-	//buttons
     JButton submitButton;	
-    //labels
-    JLabel lbl_Defect;
-    JLabel lbl_Class;
-    JLabel lbl_Date;
-    JLabel lbl_Number;
-    JLabel lbl_Type;
-    JLabel lbl_Inject;
-    JLabel lbl_Remove;
-    JLabel lbl_FixTime;
-    JLabel lbl_FixRef;
+    JButton removeButton = new JButton();
+    
+    JLabel lblDefect;
+    JLabel lblClass;
+    JLabel lblDate;
+    JLabel lblNumber;
+    JLabel lblType;
+    JLabel lblInject;
+    JLabel lblRemove;
+    JLabel lblFixTime;
+    JLabel lblFixRef;
     JLabel lblDescription;
-	//text fields
-    JTextField class_TextField;
-	JTextField date_TextField;
-	JTextField fixTime_TextField;
-	JComboBox<String> inject_ComboBox;
-	JComboBox<String> remove_ComboBox;
-	JComboBox<String> timeUnits_ComboBox;
-    JComboBox<String> status_ComboBox;
-    JComboBox<String> defect_ComboBox;
-    JTextPane description_textPane;
+    
+    JTextField classTextField;
+	JTextField dateTextField;
+	JTextField fixTimeTextField;
+	JComboBox<String> injectComboBox;
+	JComboBox<String> removeComboBox;
+	JComboBox<String> timeUnitsComboBox;
+    JComboBox<String> statusComboBox;
+    JComboBox<String> defectComboBox;
+    JTextPane descriptionTextPane;
    
-	JTable defect_Table = new JTable();
-	JScrollPane defectTable_ScrollPane = null;
-	JLabel tableTitle_Label = new JLabel();
-	JLabel selected_Label = new JLabel();
-	JLabel selectedDescrption_Label = new JLabel();
-	JButton removeButton = new JButton();
+	JTable defectTable = new JTable();
+	JScrollPane defectTableScrollPane = null;
+	JLabel tableTitleLabel = new JLabel();
+	JLabel selectedLabel = new JLabel();
+	JLabel selectedDescrptionLabel = new JLabel();
 	DefaultTableModel tableModel;
     
     private final String[] defectOptions = {"10 Documentation", "20 Syntax",
@@ -79,12 +78,11 @@ public class CodingPanel extends JPanel {
     private final String[] columnNames = {"Number","Class", "Date", "Type", "Inject", "Remove", 
     		                              "Fix Time (mins)", "Status"};
     private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.0");
-    Object[][] data = {};
     
-    JPanel newDefect_Panel = new JPanel();
-    JPanel defectTable_Panel = new JPanel();
+    private JPanel newDefectPanel = new JPanel();
+    private JPanel defectTablePanel = new JPanel();
     
-    Vector<Defect> defects = new Vector<Defect>();
+    private Vector<Defect> defects = new Vector<Defect>();
 	
 	public CodingPanel(){
 		this.setPreferredSize(new Dimension(1000, 1000));
@@ -93,8 +91,8 @@ public class CodingPanel extends JPanel {
 	}
 	
 	private void setupNewDefectPanel() {
-		newDefect_Panel.setPreferredSize(new Dimension(920, 240));
-		newDefect_Panel.setLayout(new GridBagLayout());
+		newDefectPanel.setPreferredSize(new Dimension(920, 240));
+		newDefectPanel.setLayout(new GridBagLayout());
 		
 		//setup GridBag constraints
 		GridBagConstraints gbCon = new GridBagConstraints();
@@ -105,113 +103,113 @@ public class CodingPanel extends JPanel {
 		
 		//Labels for use in PSP coding log
 		
-		lbl_Defect = new JLabel("Log New Defect:");
-		lbl_Defect.setPreferredSize(new Dimension(200, 15));
+		lblDefect = new JLabel("Log New Defect:");
+		lblDefect.setPreferredSize(new Dimension(200, 15));
 		gbCon.gridwidth = 2;
 		gbCon.gridheight = 1;
 		gbCon.gridx = 0;
 		gbCon.gridy = 0;
-		newDefect_Panel.add(lbl_Defect, gbCon);
+		newDefectPanel.add(lblDefect, gbCon);
 		
-		lbl_Class = new JLabel("Class");
-		lbl_Class.setPreferredSize(new Dimension(100, 15));
+		lblClass = new JLabel("Class");
+		lblClass.setPreferredSize(new Dimension(100, 15));
 		gbCon.gridwidth = 1;
 		gbCon.gridx = 0;
 		gbCon.gridy = 1;
-		newDefect_Panel.add(lbl_Class, gbCon);
+		newDefectPanel.add(lblClass, gbCon);
 		
-		lbl_Date = new JLabel("Date");
-		lbl_Date.setPreferredSize(new Dimension(100, 15));
+		lblDate = new JLabel("Date");
+		lblDate.setPreferredSize(new Dimension(100, 15));
 		gbCon.gridx = 1;
-		newDefect_Panel.add(lbl_Date, gbCon);
+		newDefectPanel.add(lblDate, gbCon);
 		
-		lbl_Type = new JLabel("Type");
-		lbl_Type.setPreferredSize(new Dimension(150, 15));
+		lblType = new JLabel("Type");
+		lblType.setPreferredSize(new Dimension(150, 15));
 		gbCon.gridx = 2;
-		newDefect_Panel.add(lbl_Type, gbCon);
+		newDefectPanel.add(lblType, gbCon);
 		
-		lbl_Inject = new JLabel("Inject");
-		lbl_Inject.setPreferredSize(new Dimension(120, 15));
+		lblInject = new JLabel("Inject");
+		lblInject.setPreferredSize(new Dimension(120, 15));
 		gbCon.gridx = 3;
-		newDefect_Panel.add(lbl_Inject, gbCon);
+		newDefectPanel.add(lblInject, gbCon);
 		
-		lbl_Remove = new JLabel("Remove");
-		lbl_Remove.setPreferredSize(new Dimension(120, 15));
+		lblRemove = new JLabel("Remove");
+		lblRemove.setPreferredSize(new Dimension(120, 15));
 		gbCon.gridx = 4;
-		newDefect_Panel.add(lbl_Remove, gbCon);
+		newDefectPanel.add(lblRemove, gbCon);
 		
-		lbl_FixTime = new JLabel("Fix Time");
-		lbl_FixTime.setPreferredSize(new Dimension(80, 15));
+		lblFixTime = new JLabel("Fix Time");
+		lblFixTime.setPreferredSize(new Dimension(80, 15));
 		gbCon.gridx = 5;
-		newDefect_Panel.add(lbl_FixTime, gbCon);
+		newDefectPanel.add(lblFixTime, gbCon);
 		
-		lbl_FixRef = new JLabel("Status");
-		lbl_FixRef.setPreferredSize(new Dimension(100, 15));
+		lblFixRef = new JLabel("Status");
+		lblFixRef.setPreferredSize(new Dimension(100, 15));
 		gbCon.gridx = 7;
-		newDefect_Panel.add(lbl_FixRef, gbCon);
+		newDefectPanel.add(lblFixRef, gbCon);
 		
 		//class text field
-		class_TextField = new JTextField();
-		class_TextField.setPreferredSize(new Dimension(100, 20));
+		classTextField = new JTextField();
+		classTextField.setPreferredSize(new Dimension(100, 20));
 		gbCon.gridy = 2;
 		gbCon.gridx = 0;
-		newDefect_Panel.add(class_TextField, gbCon);
+		newDefectPanel.add(classTextField, gbCon);
 		
 		//date text field
-		date_TextField = new JTextField();
-		date_TextField.setPreferredSize(new Dimension(100, 20));
+		dateTextField = new JTextField();
+		dateTextField.setPreferredSize(new Dimension(100, 20));
 		gbCon.gridx = 1;
-		newDefect_Panel.add(date_TextField, gbCon);
+		newDefectPanel.add(dateTextField, gbCon);
 		
 		//combo box for type of defect
-		defect_ComboBox = new JComboBox<String>(defectOptions);
-		defect_ComboBox.setPreferredSize(new Dimension(150, 20));
+		defectComboBox = new JComboBox<String>(defectOptions);
+		defectComboBox.setPreferredSize(new Dimension(150, 20));
 		gbCon.gridx = 2;
-		newDefect_Panel.add(defect_ComboBox, gbCon);
+		newDefectPanel.add(defectComboBox, gbCon);
 		
 		// inject text field
-		inject_ComboBox = new JComboBox<String>(stageOptions);
-		inject_ComboBox.setPreferredSize(new Dimension(120, 20));
+		injectComboBox = new JComboBox<String>(stageOptions);
+		injectComboBox.setPreferredSize(new Dimension(120, 20));
 		gbCon.gridx = 3;
-		newDefect_Panel.add(inject_ComboBox, gbCon);
+		newDefectPanel.add(injectComboBox, gbCon);
 		
 		// remove text field
-		remove_ComboBox = new JComboBox<String>(stageOptions);
-		remove_ComboBox.setPreferredSize(new Dimension(120, 20));
+		removeComboBox = new JComboBox<String>(stageOptions);
+		removeComboBox.setPreferredSize(new Dimension(120, 20));
 		gbCon.gridx = 4;
-		newDefect_Panel.add(remove_ComboBox, gbCon);
+		newDefectPanel.add(removeComboBox, gbCon);
 		
 		//fix time text Field
-		fixTime_TextField = new JTextField();
-		fixTime_TextField.setPreferredSize(new Dimension(80, 20));
+		fixTimeTextField = new JTextField();
+		fixTimeTextField.setPreferredSize(new Dimension(80, 20));
 		gbCon.gridx = 5;
-		newDefect_Panel.add(fixTime_TextField, gbCon);
+		newDefectPanel.add(fixTimeTextField, gbCon);
 		
 		// remove text field
-		timeUnits_ComboBox = new JComboBox<String>(timeOptions);
-		timeUnits_ComboBox.setPreferredSize(new Dimension(70, 20));
+		timeUnitsComboBox = new JComboBox<String>(timeOptions);
+		timeUnitsComboBox.setPreferredSize(new Dimension(70, 20));
 		gbCon.gridx = 6;
-		newDefect_Panel.add(timeUnits_ComboBox, gbCon);
+		newDefectPanel.add(timeUnitsComboBox, gbCon);
 		
 		//status options combo box
-		status_ComboBox = new JComboBox<String>(statusOptions);
-		status_ComboBox.setPreferredSize(new Dimension(100, 20));
+		statusComboBox = new JComboBox<String>(statusOptions);
+		statusComboBox.setPreferredSize(new Dimension(100, 20));
 		gbCon.gridx = 7;
-		newDefect_Panel.add(status_ComboBox, gbCon);
+		newDefectPanel.add(statusComboBox, gbCon);
 		
 		lblDescription = new JLabel("Description:");
 		lblDescription.setPreferredSize(new Dimension(200, 15));
 		gbCon.gridy = 3;
 		gbCon.gridx = 0;
 		gbCon.gridwidth = 2;
-		newDefect_Panel.add(lblDescription, gbCon);
+		newDefectPanel.add(lblDescription, gbCon);
 		
-		description_textPane = new JTextPane();
-		description_textPane.setPreferredSize(new Dimension(910, 100));
+		descriptionTextPane = new JTextPane();
+		descriptionTextPane.setPreferredSize(new Dimension(910, 100));
 		gbCon.gridy = 4;
 		gbCon.gridx = 0;
 		gbCon.gridwidth = 8;
-		newDefect_Panel.add(description_textPane, gbCon);
+		newDefectPanel.add(descriptionTextPane, gbCon);
 		
 		//submit button
 		submitButton = new JButton("Add Defect");
@@ -220,20 +218,20 @@ public class CodingPanel extends JPanel {
 		gbCon.gridx = 6;
 		gbCon.gridwidth = 2;
 		gbCon.anchor = GridBagConstraints.FIRST_LINE_END;
-		newDefect_Panel.add(submitButton, gbCon);
+		newDefectPanel.add(submitButton, gbCon);
 		
 		submitButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent aEvent) {
 				submitButtonClicked();
 			}
 		});
 		
-		this.add(newDefect_Panel);
+		this.add(newDefectPanel);
 	}
 	
 	private void setupDefectTablePanel() {
-		defectTable_Panel.setLayout(new GridBagLayout());
-		defectTable_Panel.setPreferredSize(new Dimension(950, 370));
+		defectTablePanel.setLayout(new GridBagLayout());
+		defectTablePanel.setPreferredSize(new Dimension(950, 370));
 		
 		populateTable();
 			
@@ -247,40 +245,40 @@ public class CodingPanel extends JPanel {
 		gbCon.gridx = 0;
 		gbCon.gridy = 0;
 		
-		tableTitle_Label.setText("Defect Log:");
-		tableTitle_Label.setPreferredSize(new Dimension(950, 25));
-		defectTable_Panel.add(tableTitle_Label,gbCon);
+		tableTitleLabel.setText("Defect Log:");
+		tableTitleLabel.setPreferredSize(new Dimension(950, 25));
+		defectTablePanel.add(tableTitleLabel,gbCon);
 		
 		gbCon.gridy = 1;
-		defectTable_ScrollPane = new JScrollPane(defect_Table);
-		defectTable_ScrollPane.setPreferredSize(new Dimension(950,200));
-		defectTable_Panel.add(defectTable_ScrollPane,gbCon);
+		defectTableScrollPane = new JScrollPane(defectTable);
+		defectTableScrollPane.setPreferredSize(new Dimension(950,200));
+		defectTablePanel.add(defectTableScrollPane,gbCon);
 		
 		gbCon.anchor = GridBagConstraints.FIRST_LINE_START;
 		gbCon.gridwidth = 1;
 		gbCon.gridy = 2;
 		gbCon.gridx = 0;
-		selected_Label.setText("Selected Defect Description:");
-		selected_Label.setPreferredSize(new Dimension(250, 20));
-		defectTable_Panel.add(selected_Label, gbCon);
+		selectedLabel.setText("Selected Defect Description:");
+		selectedLabel.setPreferredSize(new Dimension(250, 20));
+		defectTablePanel.add(selectedLabel, gbCon);
 		
 		gbCon.anchor = GridBagConstraints.FIRST_LINE_END;
 		gbCon.gridx = 1;
 		removeButton.setPreferredSize(new Dimension(220, 20));
 		removeButton.setText("Remove Selected Defect");
-		defectTable_Panel.add(removeButton, gbCon);
+		defectTablePanel.add(removeButton, gbCon);
 		
 		gbCon.anchor = GridBagConstraints.FIRST_LINE_START;
 		gbCon.gridwidth = 2;
 		gbCon.gridy = 3;
 		gbCon.gridx = 0;
-		selectedDescrption_Label.setPreferredSize(new Dimension(950, 100));
-		selectedDescrption_Label.setText("(Nothing Selected)");
-		selectedDescrption_Label.setHorizontalAlignment(JLabel.LEFT);
-		selectedDescrption_Label.setVerticalAlignment(JLabel.TOP);
-		selectedDescrption_Label.setBackground(Color.WHITE);
-		selectedDescrption_Label.setOpaque(true);
-		defectTable_Panel.add(selectedDescrption_Label, gbCon);
+		selectedDescrptionLabel.setPreferredSize(new Dimension(950, 100));
+		selectedDescrptionLabel.setText("(Nothing Selected)");
+		selectedDescrptionLabel.setHorizontalAlignment(JLabel.LEFT);
+		selectedDescrptionLabel.setVerticalAlignment(JLabel.TOP);
+		selectedDescrptionLabel.setBackground(Color.WHITE);
+		selectedDescrptionLabel.setOpaque(true);
+		defectTablePanel.add(selectedDescrptionLabel, gbCon);
 		
 		removeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -288,13 +286,14 @@ public class CodingPanel extends JPanel {
 			}
 		});
 		
-		defect_Table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+		defectTable.getSelectionModel().addListSelectionListener(
+				                         new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
 				tableRowSelected();
 			}
 		});
 		
-		this.add(defectTable_Panel);
+		this.add(defectTablePanel);
 	}
 	
 	private void populateTable() {
@@ -303,61 +302,61 @@ public class CodingPanel extends JPanel {
 		 * and populate the table with those values
 		 */
 		this.tableModel = new DefaultTableModel(this.columnNames, 0);
-		this.defect_Table.setModel(this.tableModel);
+		this.defectTable.setModel(this.tableModel);
 	}
 	
 	private void submitButtonClicked() {
 	    Defect temp;
 	    temp = new Defect();
 	
-	    temp.setClassName(class_TextField.getText());
-	    temp.setDate(date_TextField.getText());
+	    temp.setClassName(classTextField.getText());
+	    temp.setDate(dateTextField.getText());
 	    //increment number for the user
 	    if (this.defects.size() < 1) {
 	    	temp.setNumber(1);
-	    } 
-	    else {
+        } else {
 	    	temp.setNumber(this.defects.get(this.defects.size() - 1).getNumber() + 1);
 	    }
-	    temp.setInject(inject_ComboBox.getSelectedItem().toString());
-	    temp.setRemove(remove_ComboBox.getSelectedItem().toString());
+	    temp.setInject(injectComboBox.getSelectedItem().toString());
+	    temp.setRemove(removeComboBox.getSelectedItem().toString());
 	    try {
-	    	double theTimeValue = Double.parseDouble(fixTime_TextField.getText());
-	    	String theUnits = timeUnits_ComboBox.getSelectedItem().toString();
+	    	double theTimeValue = Double.parseDouble(fixTimeTextField.getText());
+	    	String theUnits = timeUnitsComboBox.getSelectedItem().toString();
 	    	if (theUnits.equals("hours")) {
 	    		theTimeValue = theTimeValue * 60.0;
-	    	}
-	    	else if (theUnits.equals("days")) {
+	    	} else if (theUnits.equals("days")) {
 	    		theTimeValue = theTimeValue * 60.0 * 24.0;
 	    	}
 	    	temp.setFixTime(theTimeValue);
 	    } catch (NumberFormatException e) {
-	    	JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Fix Time, try again"));
+	    	JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value "
+	    			                      + "for Fix Time, try again"));
 	    	return;
 	    }
-		temp.setStatus(status_ComboBox.getSelectedItem().toString());
-		temp.setDefectType(defect_ComboBox.getSelectedItem().toString());
-		temp.setDescription(description_textPane.getText());
+		temp.setStatus(statusComboBox.getSelectedItem().toString());
+		temp.setDefectType(defectComboBox.getSelectedItem().toString());
+		temp.setDescription(descriptionTextPane.getText());
 		defects.addElement(temp);
-		Object[] theRow = { temp.getNumber(), temp.getClassName(), temp.getDate(), temp.getDefectType(),
-		    		        temp.getInject(), temp.getRemove(), decimalFormat.format(temp.getFixTime()), temp.getStatus() };
+		Object[] theRow = { temp.getNumber(), temp.getClassName(), temp.getDate(), 
+				temp.getDefectType(),temp.getInject(), temp.getRemove(), 
+				decimalFormat.format(temp.getFixTime()), temp.getStatus() };
 	    tableModel.addRow(theRow);
 		clearInputFields();
     }
 	
 	private void clearInputFields() {
-		class_TextField.setText("");
-		date_TextField.setText("");
-		inject_ComboBox.setSelectedIndex(0);
-		remove_ComboBox.setSelectedIndex(0);
-		fixTime_TextField.setText("");
-	    status_ComboBox.setSelectedIndex(0);
-	    defect_ComboBox.setSelectedIndex(0);
-	    description_textPane.setText("");
+		classTextField.setText("");
+		dateTextField.setText("");
+		injectComboBox.setSelectedIndex(0);
+		removeComboBox.setSelectedIndex(0);
+		fixTimeTextField.setText("");
+	    statusComboBox.setSelectedIndex(0);
+	    defectComboBox.setSelectedIndex(0);
+	    descriptionTextPane.setText("");
 	}
 	
 	private void removeButtonClicked() {
-		int theRowIndex = defect_Table.getSelectedRow();
+		int theRowIndex = defectTable.getSelectedRow();
 		if ( theRowIndex >= 0 ) {
 			defects.remove(theRowIndex);
 		    tableModel.removeRow(theRowIndex);
@@ -365,11 +364,11 @@ public class CodingPanel extends JPanel {
 	}
 	
 	private void tableRowSelected() {
-		if ( defect_Table.getSelectedRow() >= 0 ) {
-		    selectedDescrption_Label.setText(defects.get(defect_Table.getSelectedRow()).getDescription());
-		}
-		else {
-			selectedDescrption_Label.setText("(Nothing Selected)");
+		if ( defectTable.getSelectedRow() >= 0 ) {
+		    selectedDescrptionLabel.setText(
+		    		defects.get(defectTable.getSelectedRow()).getDescription());
+		} else {
+			selectedDescrptionLabel.setText("(Nothing Selected)");
 		}
 	}
 }
