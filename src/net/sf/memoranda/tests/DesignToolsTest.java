@@ -11,6 +11,7 @@ import net.sf.memoranda.ui.treetable.DesignTools;
 
 public class DesignToolsTest {
 	JButton testButton;
+	DesignTools tool;
 	@Before
 	public void setUp(){
 	testButton = new JButton();
@@ -18,51 +19,53 @@ public class DesignToolsTest {
 
 	@Test
 	public void testGetInUse() {
+		DesignTools.selectSelected();
+			assertEquals("Should be the same", 
+					DesignTools.SELECT, DesignTools.getInUse());
+		DesignTools.circleSelected();
+			assertEquals("Should be the same", 
+					DesignTools.CIRCLE, DesignTools.getInUse());
 		DesignTools.deleteSelected();
-			assertEquals("Should be the same", DesignTools.DELETE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.TEXT, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
-		
+			assertEquals("Should be the same", 
+					DesignTools.DELETE, DesignTools.getInUse());	
+		DesignTools.exportSelected();
+			assertEquals("Should be the same", 
+					DesignTools.EXPORT, DesignTools.getInUse());
+		DesignTools.lineSelected();
+			assertEquals("Should be the same", 
+					DesignTools.LINE, DesignTools.getInUse());
+		DesignTools.rectangleSelected();
+			assertEquals("Should be the same", 
+					DesignTools.RECTANGLE, DesignTools.getInUse());
 		DesignTools.textSelected();
-			assertEquals("Should be the same", DesignTools.TEXT, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.DELETE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
-			
-			DesignTools.textSelected();
-			assertEquals("Should be the same", DesignTools.TEXT, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.DELETE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.RECTANGLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.CIRCLE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.LINE, DesignTools.getInUse());
-			assertNotEquals("Should not be the same", DesignTools.SELECT, DesignTools.getInUse());
-	
+			assertEquals("Should be the same",
+					DesignTools.TEXT, DesignTools.getInUse());
 	}
-
+	//check if TEXT is active
 	@Test
 	public void testIsActive() {
 		DesignTools.textSelected();
-		assertTrue("Should be True",DesignTools.TEXT.isActive());	//check if TEXT is active
-	
+		assertTrue("Should be True",
+				DesignTools.TEXT.isActive());	
+		//check if CIRCLE is active
 		DesignTools.circleSelected();
-		assertTrue("Should be True",DesignTools.CIRCLE.isActive());	//check if CIRCLE is active
-		
+		assertTrue("Should be True",
+				DesignTools.CIRCLE.isActive());	
+		//check if RECTANGLE is active
 		DesignTools.rectangleSelected();
-		assertTrue("Should be True",DesignTools.RECTANGLE.isActive());	//check if RECTANGLE is active
-
+		assertTrue("Should be True",
+				DesignTools.RECTANGLE.isActive());
+		//check if LINE is active
 		DesignTools.lineSelected();
-		assertTrue("Should be True",DesignTools.LINE.isActive());	//check if LINE is active
-		
+		assertTrue("Should be True",
+				DesignTools.LINE.isActive());	
+		//check if CIRCLE is active
 		DesignTools.selectSelected();
-		assertTrue("Should be True",DesignTools.SELECT.isActive());	//check if CIRCLE is active
-		
+		assertTrue("Should be True",
+				DesignTools.SELECT.isActive());	
+		//check if DELETE is active
 		DesignTools.deleteSelected();
-		assertTrue("Should be True",DesignTools.DELETE.isActive());	//check if DELETE is active
+		assertTrue("Should be True",DesignTools.DELETE.isActive());	
 	}
 
 	@Test
