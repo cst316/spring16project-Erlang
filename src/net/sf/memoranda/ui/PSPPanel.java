@@ -99,8 +99,13 @@ public class PSPPanel extends JPanel {
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
  *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
+<<<<<<< HEAD
+ * @author Carlos 
+ * @version 1.0 
+=======
  * @author Team Erlang
  * @version 2.0
+>>>>>>> 0fd68408fa1526ba53fa6eaaaa080bf25b84c429
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	

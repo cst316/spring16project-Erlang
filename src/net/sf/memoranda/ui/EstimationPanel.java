@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -182,7 +183,7 @@ public class EstimationPanel extends JPanel  {
 		try{
 			theLineCount = Integer.parseInt( estSizeTextF.getText() );
 	    }catch(NumberFormatException e){
-	        System.out.println( estSizeTextF.getText() + " :could not be parsed to an integer" );
+	    	JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Line Count, try again"));
 	        return;
 	    }
 		Estimation theEstimation = new Estimation( theDescription, theLineCount );
