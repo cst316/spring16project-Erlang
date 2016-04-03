@@ -22,9 +22,14 @@ public class StopWatch extends JPanel {
 	public static final int TENTH_SEC = 100;
 	private JButton start, stop, reset, select, click;
 	private JLabel displayTime;
+	String chosenTab;
+	// A variable to save the time that is captured by the 'Stop' button
+	String timeSaved;
+	
 	
 	 private String[] tabs = { "Planning", "Design", "Coding", "estimation"};
 	 private JComboBox dropDown = new JComboBox(tabs);
+	 SavedTime savedTime = new SavedTime();
 	 
 	/**
 	 * Create the panel.
@@ -66,8 +71,18 @@ public class StopWatch extends JPanel {
 		});
 		add(select);
 		
+		
+		//////////////Captures the the drop down pick 
 		dropDown.setBounds(25, 150, 100, 25);
 		add(dropDown);
+		dropDown.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		         chosenTab = (String) dropDown.getSelectedItem();
+		         savedTime.setTabs(chosenTab);
+		    }
+		});
+		////////////////
+		
 		
 		click = new JButton("Click to import info");
 		add(click);
@@ -91,7 +106,6 @@ public class StopWatch extends JPanel {
 				clockTime = ((double)clockTick)/10.0;
 				updateTimeString();
 				displayTime.setText(timeString);
-				
 			    }
 			});
 		
@@ -108,9 +122,12 @@ public class StopWatch extends JPanel {
 		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				myTimer.stop();
+				timeSaved = timeString;
+				savedTime.setTimewatch(timeSaved);
 			}
 		});
 
+		System.out.println(timeSaved);
 		//reset button action listener
 		reset.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
@@ -120,6 +137,7 @@ public class StopWatch extends JPanel {
 				displayTime.setText(timeString);
 			}
 		});
+		
 		
 		
 	}
@@ -147,6 +165,7 @@ public class StopWatch extends JPanel {
 			
 		timeString = theHoursString + ":" + theMinsString + ":" + theSecondString;
 	}
+	
 	
 	
 }
