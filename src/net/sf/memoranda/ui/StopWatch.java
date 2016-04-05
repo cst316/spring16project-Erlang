@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
@@ -10,6 +11,9 @@ import net.sf.memoranda.TimerLog.PspStage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  * Creates stopwatch for use in all stages of PSP process
@@ -24,22 +28,33 @@ public class StopWatch extends JPanel {
 	private String timeString;
 	public static final int ONE_SEC = 1000;
 	public static final int TENTH_SEC = 100;
-	private JButton start, stop, reset, select, click;
+	private JButton start;
+	private JButton stop;
+	private JButton reset;
+	private JButton select;
 	private JLabel displayTime;
 	String chosenTab;
 	// A variable to save the time that is captured by the 'Stop' button
 	String timeSaved;
-	
+	private JTable timesTable = new JTable();
+	private JScrollPane timesTableScrollPane;
+	private DefaultTableModel tableModel;
+	private JButton removeButton = new JButton();
 	
 	
 	 private String[] tabs = { " ","PLANNING", "DESIGN", "CODE",
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> Added table to stopWatch, applied checkstyle to class
 	TimerLog timerLog;
 	Vector<TimerLog> TimelogArray = new Vector<TimerLog>(10);
 	 
 	 SavedTime savedTime = new SavedTime();
+	 private String[] columnNames = {"Area","Time(mins)"};
 	 
 	/**
 	 * Create the panel.
@@ -99,23 +114,21 @@ public class StopWatch extends JPanel {
 		});
 		////////////////
 		
+		timesTableScrollPane = new JScrollPane(timesTable);
+		timesTableScrollPane.setBounds(25, 200, 205, 400);
+		add(timesTableScrollPane);
 		
-		click = new JButton("Click for Import");
-		add(click);
-		click.setBounds(25, 250, 200, 25);
-		click.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Click button was being clicked");
-				
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		click.setVisible(true);
+		removeButton.setText("Remove Selected Log");
+		removeButton.setBounds(65, 600, 165, 25);
+		add(removeButton);
 		
+		removeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	removeButtonClicked();
+            }
+        });
+		
+		populateTable();
 		
 		myTimer = new Timer(TENTH_SEC, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -186,6 +199,21 @@ public class StopWatch extends JPanel {
 		timeString = theHoursString + ":" + theMinsString + ":" + theSecondString;
 	}
 	
+	private void populateTable() {
+		/*
+		 * once we have the PSPProcess class we will need to get saved estimations
+		 * and populate the table with those values
+		 */
+		this.tableModel = new DefaultTableModel(this.columnNames, 0);
+		this.timesTable.setModel(this.tableModel);
+	}
 	
-	
+
+	private void removeButtonClicked() {
+		int theRowIndex = timesTable.getSelectedRow();
+		if ( theRowIndex >= 0 ) {
+//			estimations.remove(theRowIndex); need to change for time implementation
+		    tableModel.removeRow(theRowIndex);
+		}
+	}
 }
