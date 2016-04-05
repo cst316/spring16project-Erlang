@@ -45,11 +45,6 @@ public class StopWatch extends JPanel {
 	 private String[] tabs = { " ","PLANNING", "DESIGN", "CODE",
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> Added table to stopWatch, applied checkstyle to class
 	TimerLog timerLog;
 	Vector<TimerLog> TimelogArray = new Vector<TimerLog>(10);
 	 
