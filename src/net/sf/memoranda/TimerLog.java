@@ -7,7 +7,7 @@ package net.sf.memoranda;
  */
 public class TimerLog {
 	
-	public TimerLog(){}
+	
 	
 	PspStage cstage;
 	public enum PspStage{
@@ -19,6 +19,7 @@ public class TimerLog {
 	
 		private double timeValue;
 		
+		public TimerLog(){}
 		
 		public TimerLog(PspStage cstage, double timeValue){
 			this.cstage = cstage;

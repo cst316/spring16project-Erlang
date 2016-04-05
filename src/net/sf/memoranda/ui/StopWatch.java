@@ -4,8 +4,12 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import net.sf.memoranda.TimerLog;
+import net.sf.memoranda.TimerLog.PspStage;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 /**
  * Creates stopwatch for use in all stages of PSP process
@@ -27,8 +31,12 @@ public class StopWatch extends JPanel {
 	String timeSaved;
 	
 	
-	 private String[] tabs = { "Planning", "Design", "Coding", "estimation"};
+	 private String[] tabs = { " ", "PLANNING", "DESIGN", "CODE",
+				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
+	TimerLog timerLog;
+	Vector<TimerLog> TimelogArray = new Vector<TimerLog>(10);
+	 
 	 SavedTime savedTime = new SavedTime();
 	 
 	/**
@@ -58,12 +66,14 @@ public class StopWatch extends JPanel {
 		add(reset);
 		
 		//Select button for selecting tabs 
-		select = new JButton("Select");
+		select = new JButton("Save");
 		select.setBounds(150, 150, 80, 25);
 		select.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TimelogArray.add(timerLog);
+				
 				System.out.println("Select button was being clicked");
 				// TODO Auto-generated method stub
 			}
@@ -77,14 +87,17 @@ public class StopWatch extends JPanel {
 		add(dropDown);
 		dropDown.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		         chosenTab = (String) dropDown.getSelectedItem();
-		         savedTime.setTabs(chosenTab);
+		    	PspStage chosenTab = (PspStage) dropDown.getSelectedItem();
+		         
+		         timerLog.setcStage(chosenTab);
+		         
+		       //  savedTime.setTabs(chosenTab);
 		    }
 		});
 		////////////////
 		
 		
-		click = new JButton("Click to import info");
+		click = new JButton("Click for Import");
 		add(click);
 		click.setBounds(25, 250, 200, 25);
 		click.addActionListener(new ActionListener(){
@@ -92,6 +105,7 @@ public class StopWatch extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Click button was being clicked");
+				
 				// TODO Auto-generated method stub
 				
 			}
@@ -122,8 +136,11 @@ public class StopWatch extends JPanel {
 		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				myTimer.stop();
-				timeSaved = timeString;
-				savedTime.setTimewatch(timeSaved);
+				double timeSaved = Double.parseDouble(timeString);
+				timerLog.setTimeValue(timeSaved);
+				
+				//	savedTime.setTimewatch(timeSaved);
+				
 			}
 		});
 
