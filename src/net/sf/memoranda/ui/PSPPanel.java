@@ -89,9 +89,10 @@ public class PSPPanel extends JPanel {
 	 * 
 	 * @param parent used to initialize planning panel tab
 	 */
-	public PSPPanel(DailyItemsPanel parent){
+	public PSPPanel(WorkPanel _parentPanel){
 		super(new BorderLayout());
-		planPanel = new PlanningPanel(parent);
+		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	//
+		planPanel = new PlanningPanel(dPanel);						//
 		StopWatch watch = new StopWatch();
 		ImportDataTimer testing = new ImportDataTimer();
 		estimationPanel = new EstimationPanel();
