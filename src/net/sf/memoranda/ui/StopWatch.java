@@ -28,11 +28,15 @@ public class StopWatch extends JPanel {
 	private String timeString;
 	public static final int ONE_SEC = 1000;
 	public static final int TENTH_SEC = 100;
+
 	private JButton start;
 	private JButton stop;
 	private JButton reset;
 	private JButton select;
+	private JButton custom;
+	
 	private JLabel displayTime;
+	private JTextField customTime;
 	String chosenTab;
 	// A variable to save the time that is captured by the 'Stop' button
 	String timeSaved;
@@ -77,6 +81,17 @@ public class StopWatch extends JPanel {
 		reset.setBounds(25, 87, 80, 25);
 		add(reset);
 		
+		
+		//enter custom time button
+		custom = new JButton("Custom");
+		custom.setBounds(150, 195, 100, 25);
+		add(custom);
+		
+		//enter custom time combo box
+		customTime = new JTextField();
+		customTime.setBounds(25, 195, 100, 25);
+		add(customTime);
+		
 		//Select button for selecting tabs 
 		select = new JButton("Save");
 		select.setBounds(150, 150, 80, 25);
@@ -92,6 +107,15 @@ public class StopWatch extends JPanel {
 			
 		});
 		add(select);
+		
+		//captures custom time and stores it
+		custom.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	customButtonClick();
+		    	
+		    }
+		});
+		
 		
 		
 		//////////////Captures the the drop down pick 
@@ -170,6 +194,16 @@ public class StopWatch extends JPanel {
 		
 	}
 	
+	private void customButtonClick() {
+		if(customTime.getText() != null){
+		String tempCustomTime = customTime.getText();
+    	System.out.println("Custom Time Button clicked with value " + tempCustomTime);
+    	TimerLog time = new TimerLog(PspStage.values()[(dropDown.getSelectedIndex()-1)], Double.parseDouble(customTime.getText()));
+         
+		}
+		
+	}
+
 	//convert time to properly formatted string
 	private void updateTimeString(){
 		int theMins = (int)clockTime / 60;
