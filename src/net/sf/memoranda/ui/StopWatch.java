@@ -31,9 +31,11 @@ public class StopWatch extends JPanel {
 	String timeSaved;
 	
 	
-	 private String[] tabs = { " ", "PLANNING", "DESIGN", "CODE",
+	
+	 private String[] tabs = { " ","PLANNING", "DESIGN", "CODE",
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
+	
 	TimerLog timerLog;
 	Vector<TimerLog> TimelogArray = new Vector<TimerLog>(10);
 	 
@@ -87,8 +89,9 @@ public class StopWatch extends JPanel {
 		add(dropDown);
 		dropDown.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	PspStage chosenTab = (PspStage) dropDown.getSelectedItem();
-		         
+		    	
+		    	PspStage chosenTab = PspStage.values()[(dropDown.getSelectedIndex()-1)];
+		         timerLog = new TimerLog();
 		         timerLog.setcStage(chosenTab);
 		         
 		       //  savedTime.setTabs(chosenTab);
