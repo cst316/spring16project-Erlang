@@ -1,7 +1,11 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -14,7 +18,7 @@ import javax.swing.JTable;
 /**
  * initializes the PSPPanel to display different PSP Panes
  * @author Carlos
- *
+ * @version 2.0
  */
 public class PSPPanel extends JPanel {
 	
@@ -35,7 +39,7 @@ public class PSPPanel extends JPanel {
 	CodingPanel codingPanel = new CodingPanel(); 
 	SummaryPanel summaryPanel = new SummaryPanel();
 	EstimatePanel estimatePanel = new EstimatePanel();
-	
+	StopWatch watch;
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -90,17 +94,32 @@ public class PSPPanel extends JPanel {
 	 * @param parent used to initialize planning panel tab
 	 */
 	public PSPPanel(WorkPanel _parentPanel){
-		super(new BorderLayout());
-		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	//
-		planPanel = new PlanningPanel(dPanel);						//
-		StopWatch watch = new StopWatch();
+		super(new GridBagLayout());
+		this.setPreferredSize(_parentPanel.getPreferredSize());
+		watch = new StopWatch();
+		pspTabs.setPreferredSize(new Dimension(920,670));
+		watch.setPreferredSize(new Dimension(300,670));
+		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
+		planPanel = new PlanningPanel(dPanel);						
 		ImportDataTimer testing = new ImportDataTimer();
 		estimationPanel = new EstimationPanel();
-		this.setLayout(new BorderLayout());
 		this.initializeTabs();
-		this.add(pspTabs, BorderLayout.WEST);
-		this.add(watch, BorderLayout.CENTER);
+
+		setUpDisplay();
+	}
+	/**
+	 * This method setsup the PSPanel to display the stop watch and
+	 * the PSPTabs together
+	 */
+	public void setUpDisplay(){
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(pspTabs,c);
 		
+		c.gridx = 1;
+		this.add(watch, c);
 	}
 	
 	
@@ -109,7 +128,7 @@ public class PSPPanel extends JPanel {
  *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
  * @author Team Erlang
- * @version 2.0
+ * @version 3.0
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
@@ -127,8 +146,6 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
-	    
-	    this.add(pspTabs);
 	}	
 	
 	
