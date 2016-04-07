@@ -7,13 +7,17 @@ import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
+import net.sf.memoranda.util.Local;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
+
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import java.awt.Rectangle;
 
 /**
  * Creates stopwatch for use in all stages of PSP process
@@ -34,9 +38,23 @@ public class StopWatch extends JPanel {
 	private JButton reset;
 	private JButton select;
 	private JButton custom;
+	private JPanel autoPanel;
+	private JPanel manuPanel;
 	
+	private JLabel titleLabel;
 	private JLabel displayTime;
-	private JTextField customTime;
+	private JLabel areaLabel;
+	private JLabel areaLabelManu;
+	private JLabel autoLabel;
+	private JLabel manuLabel;
+	private JLabel secLabel;
+	private JLabel minLabel;
+	private JLabel hrsLabel;
+	private JLabel entriesLabel;
+	private Rectangle autoRectangle;
+	private JTextField customTimeSec;
+	private JTextField customTimeMin;
+	private JTextField customTimeHrs;
 	String chosenTab;
 	// A variable to save the time that is captured by the 'Stop' button
 	String timeSaved;
@@ -49,11 +67,12 @@ public class StopWatch extends JPanel {
 	 private String[] tabs = { " ","PLANNING", "DESIGN", "CODE",
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
-	TimerLog timerLog;
-	Vector<TimerLog> TimelogArray = new Vector<TimerLog>(10);
+	 private JComboBox dropDownManu = new JComboBox(tabs);
+	Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
 	 
 	 SavedTime savedTime = new SavedTime();
-	 private String[] columnNames = {"Area","Time(mins)"};
+	 private String[] columnNames = {"Area","Time"};
+	 Object[][] data = {};
 	 
 	/**
 	 * Create the panel.
@@ -61,80 +80,134 @@ public class StopWatch extends JPanel {
 	public StopWatch() {
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		updateTimeString();
+		timeString = timeToFormattedString(clockTime);
 		
 		setLayout(null);
-		displayTime = new JLabel("New label");
+		
+		titleLabel = new JLabel("Self Timer");
+		titleLabel.setBounds(25, 10, 80, 25);
+		add(titleLabel);
+		
+		autoLabel = new JLabel("Automatic Entry:");
+		autoLabel.setBounds(127, 17, 110, 25);
+		add(autoLabel);
+		
+		manuLabel = new JLabel("Manual Entry:");
+		manuLabel.setBounds(147, 162, 90, 25);
+		add(manuLabel);
+		
+		entriesLabel = new JLabel("Entries:");
+		entriesLabel.setBounds(179, 307, 65, 25);
+		add(entriesLabel);
+		
+		autoPanel = new JPanel();
+		autoPanel.setLayout(null);
+		autoPanel.setBounds(20, 40, 220, 120);
+		autoPanel.setBackground(Color.LIGHT_GRAY);
+		add(autoPanel);
+		
+		displayTime = new JLabel();
 		displayTime.setText(timeString);
-		displayTime.setBounds(113, 55, 70, 15);
-		add(displayTime);
+		displayTime.setBounds(70, 5, 75, 15);
+		autoPanel.add(displayTime);
 		
 		start = new JButton("Start");
-		start.setBounds(25, 12, 80, 25);
-		add(start);
+		start.setBounds(5, 30, 70, 25);
+		autoPanel.add(start);
 		
 		stop = new JButton("Stop");
-		stop.setBounds(25, 50, 80, 25);
-		add(stop);
+		stop.setBounds(75, 30, 70, 25);
+		autoPanel.add(stop);
 		
 		reset = new JButton("Reset");
-		reset.setBounds(25, 87, 80, 25);
-		add(reset);
+		reset.setBounds(145, 30, 70, 25);
+		autoPanel.add(reset);
 		
+		areaLabel = new JLabel("Worked on:");
+		areaLabel.setBounds(5, 65, 70, 25);
+		autoPanel.add(areaLabel);
 		
-		//enter custom time button
-		custom = new JButton("Custom");
-		custom.setBounds(150, 195, 100, 25);
-		add(custom);
-		
-		//enter custom time combo box
-		customTime = new JTextField();
-		customTime.setBounds(25, 195, 100, 25);
-		add(customTime);
+		dropDown.setBounds(5, 90, 100, 25);
+		autoPanel.add(dropDown);
 		
 		//Select button for selecting tabs 
 		select = new JButton("Save");
-		select.setBounds(150, 150, 80, 25);
+		select.setBounds(135, 90, 80, 25);
+		autoPanel.add(select);
+		
+		manuPanel = new JPanel();
+		manuPanel.setLayout(null);
+		manuPanel.setBounds(20, 185, 220, 120);
+		manuPanel.setBackground(Color.LIGHT_GRAY);
+		add(manuPanel);
+		
+		areaLabelManu = new JLabel("Worked on:");
+		areaLabelManu.setBounds(5, 65, 70, 25);
+		manuPanel.add(areaLabelManu);
+		
+		dropDownManu.setBounds(5, 90, 100, 25);
+		manuPanel.add(dropDownManu);
+		
+		//enter custom time button
+		custom = new JButton("Save");
+		custom.setBounds(135, 90, 80, 25);
+		manuPanel.add(custom);
+		
+		secLabel = new JLabel("Sec(s):");
+		secLabel.setBounds(145, 5, 70, 25);
+		manuPanel.add(secLabel);
+		
+		minLabel = new JLabel("Min(s):");
+		minLabel.setBounds(75, 5, 70, 25);
+		manuPanel.add(minLabel);
+		
+		hrsLabel = new JLabel("Hour(s):");
+		hrsLabel.setBounds(5, 5, 70, 25);
+		manuPanel.add(hrsLabel);
+		
+		customTimeHrs = new JTextField();
+		customTimeHrs.setBounds(5, 30, 70, 25);
+		manuPanel.add(customTimeHrs);
+		
+		customTimeMin = new JTextField();
+		customTimeMin.setBounds(75, 30, 70, 25);
+		manuPanel.add(customTimeMin);
+		
+		customTimeSec = new JTextField();
+		customTimeSec.setBounds(145, 30, 70, 25);
+		manuPanel.add(customTimeSec);
+		
 		select.addActionListener(new ActionListener(){
-
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				TimelogArray.add(timerLog);
-				
-				System.out.println("Select button was being clicked");
-				// TODO Auto-generated method stub
+				TimerLog theTimerLog = new TimerLog();
+				PspStage theSelectedStage;
+				try {
+		    		theSelectedStage = PspStage.values()[(dropDown.getSelectedIndex()-1)];
+		    	} catch (ArrayIndexOutOfBoundsException exc){
+		    		JOptionPane.showMessageDialog(null,Local.getString("Please select a \"Worked On:\" area"));
+			        return;
+		    	}
+				theTimerLog.setcStage(theSelectedStage);
+				theTimerLog.setTimeValue(clockTime);
+				addNewTimerLog(theTimerLog);
+				resetTime();
+				dropDown.setSelectedIndex(0);
 			}
 			
 		});
-		add(select);
 		
 		//captures custom time and stores it
 		custom.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	customButtonClick();
-		    	
+		    	if(customButtonClick()) {
+		    		clearTime();
+			    	dropDownManu.setSelectedIndex(0);
+		    	}
 		    }
 		});
-		
-		
-		
-		//////////////Captures the the drop down pick 
-		dropDown.setBounds(25, 150, 100, 25);
-		add(dropDown);
-		dropDown.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		    	
-		    	PspStage chosenTab = PspStage.values()[(dropDown.getSelectedIndex()-1)];
-		         timerLog = new TimerLog();
-		         timerLog.setcStage(chosenTab);
-		         
-		       //  savedTime.setTabs(chosenTab);
-		    }
-		});
-		////////////////
 		
 		timesTableScrollPane = new JScrollPane(timesTable);
-		timesTableScrollPane.setBounds(25, 200, 205, 400);
+		timesTableScrollPane.setBounds(25, 330, 210, 270);
 		add(timesTableScrollPane);
 		
 		removeButton.setText("Remove Selected Log");
@@ -143,7 +216,7 @@ public class StopWatch extends JPanel {
 		
 		removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	removeButtonClicked();
+            	removeTimerLog(timesTable.getSelectedRow());
             }
         });
 		
@@ -153,7 +226,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				clockTick++;
 				clockTime = ((double)clockTick)/10.0;
-				updateTimeString();
+				timeString = timeToFormattedString(clockTime);
 				displayTime.setText(timeString);
 			    }
 			});
@@ -163,6 +236,7 @@ public class StopWatch extends JPanel {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				myTimer.start();
+				toggleAutoSaveButton();
 			}
 		});
 		
@@ -170,12 +244,8 @@ public class StopWatch extends JPanel {
 		//stop button action listener
 		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				myTimer.stop();
-				double timeSaved = Double.parseDouble(timeString);
-				timerLog.setTimeValue(timeSaved);
-				
-				//	savedTime.setTimewatch(timeSaved);
-				
+				myTimer.stop();	
+				toggleAutoSaveButton();
 			}
 		});
 
@@ -183,35 +253,123 @@ public class StopWatch extends JPanel {
 		//reset button action listener
 		reset.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				clockTick = 0;
-				clockTime = ((double)clockTick)/10.0;
-				updateTimeString();
-				displayTime.setText(timeString);
+				resetTime();
+				toggleAutoSaveButton();
 			}
 		});
 		
-		
-		
 	}
 	
-	private void customButtonClick() {
-		if(customTime.getText() != null){
-		String tempCustomTime = customTime.getText();
-    	System.out.println("Custom Time Button clicked with value " + tempCustomTime);
-    	TimerLog time = new TimerLog(PspStage.values()[(dropDown.getSelectedIndex()-1)], Double.parseDouble(customTime.getText()));
-         
+	private boolean customButtonClick() {
+		double theSecs = 0.0;
+		double theMins = 0.0;
+		double theHrs = 0.0;
+		PspStage theSelectedStage;
+		try {
+			System.out.println("WHAT'S IN THE BOX: "+customTimeSec.getText());
+			if(!customTimeSec.getText().isEmpty()) {
+			    theSecs = Double.parseDouble(customTimeSec.getText());
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Sec(s), try again"));
+	        return false;
 		}
-		
+		try {
+			if(!customTimeMin.getText().isEmpty()) {
+				theMins = Double.parseDouble(customTimeMin.getText());
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Min(s), try again"));
+	        return false;
+		}
+		try {
+			if(!customTimeHrs.getText().isEmpty()) {
+				theHrs = Double.parseDouble(customTimeHrs.getText());
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null,Local.getString("Inappropriate value for Hour(s), try again"));
+	        return false;
+		}
+    	try {
+    		theSelectedStage = PspStage.values()[(dropDownManu.getSelectedIndex()-1)];
+    	} catch (ArrayIndexOutOfBoundsException e){
+    		JOptionPane.showMessageDialog(null,Local.getString("Please select a \"Worked On:\" area"));
+	        return false;
+    	}
+    	TimerLog theTimerLog = new TimerLog();
+    	double theTotalSecs = theSecs +  (theMins*60.0) + (theHrs*60.0*60.0);
+    	theTimerLog.setTimeValue(theTotalSecs);
+    	theTimerLog.setcStage(theSelectedStage);
+    	addNewTimerLog(theTimerLog);
+    	return true;
+	}
+	
+	private void addNewTimerLog(TimerLog aTimerLog) {
+		TimelogArray.addElement(aTimerLog);
+		String theStage = stageEnumToString(aTimerLog.getcStage());
+		String theFormattedTime = timeToFormattedString(aTimerLog.getTimeValue());
+		Object[] theRow = { theStage, theFormattedTime };
+		tableModel.addRow(theRow);
+	}
+	
+	private void removeTimerLog(int aIndex) {
+		if(aIndex < 0 || aIndex >= TimelogArray.size()) {
+			System.out.println("Trying to remove from ouside of the TimeLog table bounds");
+		}
+		int theRowIndex = timesTable.getSelectedRow();
+		TimelogArray.remove(theRowIndex); 
+		tableModel.removeRow(theRowIndex);
+	}
+	
+	private String stageEnumToString(PspStage aPspStage) {
+		String theStringValue = "unknown";
+		switch (aPspStage) {
+		    case PLANNING:
+		    	theStringValue = "Planning";
+		    	break;
+		    case DESIGN:
+		    	theStringValue = "Design";
+		    	break;
+		    case CODE:
+		    	theStringValue = "Code";
+		    	break;
+		    case CODEREVIEW:
+		    	theStringValue = "Code Review";
+		    	break;
+		    case COMPILE:
+		    	theStringValue = "Compile";
+		    	break;
+		    case TEST:
+		    	theStringValue = "Test";
+		    	break;
+		    case POSTMORTEM:
+		    	theStringValue = "Postmortem";
+		    	break;
+		}
+		return theStringValue;
 	}
 
+	private void resetTime() {
+		clockTick = 0;
+		clockTime = ((double)clockTick)/10.0;
+		timeString = timeToFormattedString(clockTime);
+		displayTime.setText(timeString);
+	}
+	
+	private void clearTime() {
+		customTimeSec.setText("");
+		customTimeMin.setText("");
+		customTimeHrs.setText("");
+	}
+	
 	//convert time to properly formatted string
-	private void updateTimeString(){
-		int theMins = (int)clockTime / 60;
+	private String timeToFormattedString(double aTimeInSec) {
+		int theMins = (int)aTimeInSec / 60;
 		int theHours = theMins / 60;
 			
 		String theMinsString = Integer.toString( theMins % 60 );
 		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( clockTime % 60.0 ) );
+		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
 			
 		if( theMinsString.length() < 2 ) {
 			theMinsString = "0" + theMinsString;
@@ -225,7 +383,7 @@ public class StopWatch extends JPanel {
 	        theSecondString = "0" + theSecondString;
 	    }
 			
-		timeString = theHoursString + ":" + theMinsString + ":" + theSecondString;
+		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
 	}
 	
 	private void populateTable() {
@@ -237,12 +395,7 @@ public class StopWatch extends JPanel {
 		this.timesTable.setModel(this.tableModel);
 	}
 	
-
-	private void removeButtonClicked() {
-		int theRowIndex = timesTable.getSelectedRow();
-		if ( theRowIndex >= 0 ) {
-//			estimations.remove(theRowIndex); need to change for time implementation
-		    tableModel.removeRow(theRowIndex);
-		}
+	private void toggleAutoSaveButton() {
+		select.setEnabled(!myTimer.isRunning());
 	}
 }
