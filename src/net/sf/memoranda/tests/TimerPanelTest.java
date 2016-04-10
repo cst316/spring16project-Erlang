@@ -20,7 +20,7 @@ import net.sf.memoranda.ui.StopWatch;
  */
 
 public class TimerPanelTest {
-/*
+
 	PspStage pspTesting;
 
 	double timeValueTest = 2.5;
@@ -71,5 +71,5 @@ public class TimerPanelTest {
 	
 	}
 	
-*/	
+	
 }
