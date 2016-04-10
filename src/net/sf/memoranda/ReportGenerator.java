@@ -117,19 +117,13 @@ public class ReportGenerator
 		theTaskStringBuilder.append( "<b>" + aTask.getText() + ":</b><br>\n" );
 		if( aReportSettings.isWithTaskIDs() )
 		{
-			if( isSubTask )
-			{
-				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
-			}
+			modifyIfSubtaskString(theTaskStringBuilder, isSubTask);
 			theTaskStringBuilder.append("<b>ID:</b> "+ aTask.getID() + "<br>\n" );
 		}
 		
 		if( aReportSettings.isWithTaskDates() )
 		{
-			if( isSubTask )
-			{
-				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
-			}
+			modifyIfSubtaskString(theTaskStringBuilder, isSubTask);
 			theTaskStringBuilder.append( "<b>Start Date:</b> " + aTask.getStartDate().toString() + " " +
                                           "<b>End Date:</b> " + aTask.getEndDate() + "<br>\n" );
 		}
@@ -155,18 +149,12 @@ public class ReportGenerator
 				thePriorityString = "Highest";
 				break;
 			}
-			if( isSubTask )
-			{
-				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
-			}
+			modifyIfSubtaskString(theTaskStringBuilder, isSubTask);
 			theTaskStringBuilder.append( "<b>The Priority:</b>" + thePriorityString + "<br>\n" );
 		}
 		if( aReportSettings.isWithTaskProgress() )
 		{
-			if( isSubTask )
-			{
-				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
-			}
+			modifyIfSubtaskString(theTaskStringBuilder, isSubTask);
 			theTaskStringBuilder.append( "<b>The Progress:</b> " +aTask.getProgress() + "<br>\n");
 		}
 		if( aReportSettings.isWithTaskStatus() )
@@ -199,14 +187,19 @@ public class ReportGenerator
 			default:
 				//do nothing
 			}
-			if( isSubTask )
-			{
-				theTaskStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
-			}
+			modifyIfSubtaskString(theTaskStringBuilder, isSubTask);
 			theTaskStringBuilder.append( "<b>Status:</b> "+ theStatusString + "<br>\n" );
 		}
 		theTaskStringBuilder.append("<br>\n");
 		return theTaskStringBuilder.toString();
+	}
+	
+	private static StringBuilder modifyIfSubtaskString(StringBuilder aStringBuilder, boolean aIsSubTask) {
+		if (aIsSubTask)
+		{
+			aStringBuilder.append("&nbsp&nbsp&nbsp&nbsp");
+		}
+		return aStringBuilder;
 	}
 	
 	private static String generateNotesString() 
