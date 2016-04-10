@@ -310,7 +310,7 @@
 	<target name="mk_installer" depends="create_run_jar">
 		
 	    <mkinstaller input="${basedir}/install.xml"
-	        output="${basedir}/installer/installer.jar"
+	        output="${basedir}/installer/MemorandaInstaller.jar"
 	    	installerType = "standard"
 	        basedir="${basedir}"/>
 	</target>

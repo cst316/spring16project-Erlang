@@ -22,8 +22,8 @@
     </locale>
 	
 <resources>
-        <res id="LicencePanel.licence" src="LICENSE.txt" parse = "yes" type = "plain"/>
-        <res id="InfoPanel.info" src="README.txt" parse = "yes" type = "plain"/>
+        <res id="LicencePanel.licence" src="LICENSE.txt" />
+        <res id="InfoPanel.info" src="README.txt" />
     </resources>
 	
     <panels>
