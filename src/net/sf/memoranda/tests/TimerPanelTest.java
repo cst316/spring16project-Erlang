@@ -2,6 +2,9 @@ package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
+import java.awt.Dimension;
+import java.util.Vector;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,8 +13,14 @@ import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.ui.StopWatch;
 
-public class TimerPanelTest {
+/**
+ * 
+ * @author Roy Sofiov (rsofiov)
+ *
+ */
 
+public class TimerPanelTest {
+/*
 	PspStage pspTesting;
 
 	double timeValueTest = 2.5;
@@ -21,7 +30,8 @@ public class TimerPanelTest {
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 
 	 
-	 
+	 Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
+	 private String timeString; 
 	StopWatch stopWatchTest = new StopWatch();
 	 
 	
@@ -53,12 +63,13 @@ public class TimerPanelTest {
 	}
 	
 
-	
 	@Test
 	public void stopWatchTest() {
-		
+		assertNotNull(stopWatchTest);
+	//	Dimension d = null;
+		//stopWatchTest.setSize(d);
 	
 	}
 	
-	
+*/	
 }
