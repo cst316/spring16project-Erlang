@@ -294,7 +294,7 @@
 	                <attribute name="Class-Path" value="."/>
 	            </manifest>
 	           
-	            <fileset dir="${basedir}/bin"/>
+	           
 	            
 	        </jar>
 	    </target>
