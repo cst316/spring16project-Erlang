@@ -292,8 +292,9 @@
 	            <manifest>
 	                <attribute name="Main-Class" value="net.sf.memoranda.Start"/>
 	                <attribute name="Class-Path" value="."/>
+	            	 
 	            </manifest>
-	           
+	        		<fileset dir="${basedir}/build"/>
 	           
 	            
 	        </jar>
