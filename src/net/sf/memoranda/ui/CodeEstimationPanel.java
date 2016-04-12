@@ -28,7 +28,7 @@ import javax.swing.table.TableModel;
 import net.sf.memoranda.Estimation;
 import net.sf.memoranda.util.Local;
 
-public class EstimationPanel extends JPanel  {
+public class CodeEstimationPanel extends JPanel  {
 	
 	JPanel newEstPanel = new JPanel();
 	JLabel descTitleLabel = new JLabel();
@@ -52,7 +52,7 @@ public class EstimationPanel extends JPanel  {
 	
 	Vector<Estimation> estimations = new Vector<Estimation>();
 	
-	public EstimationPanel() {
+	public CodeEstimationPanel() {
 		this.setPreferredSize(new Dimension(1000, 1000));
 		
 		setupNewEstimationPanel();

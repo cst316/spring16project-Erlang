@@ -25,15 +25,15 @@ public class PSPPanel extends JPanel {
 	JTabbedPane planningTabPane = new JTabbedPane();
 	JTabbedPane developmentTabPane = new JTabbedPane();
 	JTabbedPane postmortemTabPane = new JTabbedPane(); 
-	
 
 	JPanel planningPanel = new JPanel();
 	JPanel developmentPanel = new JPanel();
 	JPanel postmortemPanel = new JPanel();
 	
+	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel();
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
-	EstimationPanel estimationPanel = null;
+	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
@@ -92,7 +92,7 @@ public class PSPPanel extends JPanel {
 	 */
 	public PSPPanel(DailyItemsPanel parent){
 		planPanel = new PlanningPanel(parent);
-		estimationPanel = new EstimationPanel();
+		codeEstimationPanel = new CodeEstimationPanel();
 		this.setLayout(new FlowLayout());
 		this.initializeTabs();
 	}
@@ -111,12 +111,13 @@ public class PSPPanel extends JPanel {
 >>>>>>> 0fd68408fa1526ba53fa6eaaaa080bf25b84c429
  */
 	private void initializeTabs(){
-		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	
-		planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
+		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
+		planningTabPane.addTab("Planning Notes", web, planPanel,"Edit the plan");	
 		planningPanel.add(planningTabPane);
 			
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
+		developmentTabPane.addTab("Code Estimation", web, codeEstimationPanel,"Edit the plan");//title, icon, panel, hintText
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
 		developmentPanel.add(developmentTabPane);
 		
