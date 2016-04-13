@@ -34,7 +34,7 @@ public class WorkPanel extends JPanel {
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
 	public ResourcesPanel filesPanel = new ResourcesPanel();
-	public PSPPanel pspPanel = new PSPPanel(this);			
+//	public PSPPanel pspPanel = new PSPPanel(this);			
 	public JButton agendaB = new JButton();
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
@@ -234,7 +234,7 @@ public class WorkPanel extends JPanel {
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");		//
 		panel.add(filesPanel, "FILES");					//
-		panel.add(pspPanel, "PSPPANEL");				//
+//		panel.add(pspPanel, "PSPPANEL");				//
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
