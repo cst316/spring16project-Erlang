@@ -1,12 +1,15 @@
 package net.sf.memoranda.ui;
-
 //Testing 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -34,10 +37,18 @@ public class PSPPanel extends JPanel {
 	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel();
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
+
 	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
+	
+
+//	EstimationPanel estimationPanel = null;
+//	CodingPanel codingPanel = new CodingPanel(); 
+//	SummaryPanel summaryPanel = new SummaryPanel();
+//	EstimatePanel estimatePanel = new EstimatePanel();
 	StopWatch watch;
+
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -91,15 +102,41 @@ public class PSPPanel extends JPanel {
 	 * 
 	 * @param parent used to initialize planning panel tab
 	 */
-	public PSPPanel(DailyItemsPanel parent){
-		planPanel = new PlanningPanel(parent);
-		codeEstimationPanel = new CodeEstimationPanel();
-		this.setLayout(new FlowLayout());
-	
-		watch = new StopWatch();							
+
+//	public PSPPanel(DailyItemsPanel parent){
+//		planPanel = new PlanningPanel(parent);
+//		codeEstimationPanel = new CodeEstimationPanel();
+//		this.setLayout(new FlowLayout());
+
+	public PSPPanel(WorkPanel _parentPanel){
+		super(new GridBagLayout());
+		this.setPreferredSize(_parentPanel.getPreferredSize());
+		watch = new StopWatch();
+		pspTabs.setPreferredSize(new Dimension(920,670));
+		watch.setPreferredSize(new Dimension(300,670));
+		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
+		planPanel = new PlanningPanel(dPanel);						
 		ImportDataTimer testing = new ImportDataTimer();
+//		estimationPanel = new EstimationPanel();
+		codeEstimationPanel = new CodeEstimationPanel();
+
 		this.initializeTabs();
 
+		setUpDisplay();
+	}
+	/**
+	 * This method setsup the PSPanel to display the stop watch and
+	 * the PSPTabs together
+	 */
+	public void setUpDisplay(){
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(pspTabs,c);
+		
+		c.gridx = 1;
+		this.add(watch, c);
 	}
 	
 	
@@ -107,17 +144,9 @@ public class PSPPanel extends JPanel {
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
  *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
-<<<<<<< HEAD
  * @author Carlos 
  * @version 1.0 
-=======
- * @author Team Erlang
-<<<<<<< HEAD
- * @version 2.0
->>>>>>> 0fd68408fa1526ba53fa6eaaaa080bf25b84c429
-=======
- * @version 3.0
->>>>>>> US-109
+
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
@@ -136,7 +165,8 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
-//	    showSummay();
+	    showSummay();
+
 	    
 	    this.add(pspTabs);
 
@@ -146,29 +176,29 @@ public class PSPPanel extends JPanel {
 	/**
 	 * Method creates a table on the summary tab 
 	 */
-//	public void showSummay(){
-//		  //Future button to import data
-//		JButton b = new JButton("Click to import info");
-//			summaryPanel.add(b);
-//		   b.setSize(50,250);
-//		    b.setVisible(true);
-//		  
-//		 
-//		
-//	    
-//
-// //SummaryObject
-//	  SummaryObject x = new SummaryObject();
-//	  x.getDefectInjectedCompile();
-//	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
-//	  JScrollPane scrollPane = new JScrollPane(tableSummary);
-//	  JPanel panel = new JPanel();
-//	  panel.add(scrollPane);
-//	  summaryPanel.add(new JScrollPane(panel));
-//	  scrollPane.setSize(500,1500);
-//	  summaryPanel.setVisible(true);	
-//
-//	}
+	public void showSummay(){
+		  //Future button to import data
+		JButton b = new JButton("Click to import info");
+			summaryPanel.add(b);
+		   b.setSize(50,250);
+		    b.setVisible(true);
+		  
+		 
+		
+	    
+
+ //SummaryObject
+	  SummaryObject x = new SummaryObject();
+	  x.getDefectInjectedCompile();
+	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
+	  JScrollPane scrollPane = new JScrollPane(tableSummary);
+	  JPanel panel = new JPanel();
+	  panel.add(scrollPane);
+	  summaryPanel.add(new JScrollPane(panel));
+	  scrollPane.setSize(500,1500);
+	  summaryPanel.setVisible(true);	
+
+	}
 	
 	
 }
