@@ -1,0 +1,56 @@
+MEMORANDA 1.0 RELEASE NOTES
+
+
+Welcome to the first release of Memoranda!
+
+After months of development, the Memoranda application is finally at your
+service! We feel that this release is as reliable and robust as ever in 
+giving users in planning projects and giving the users all the resource
+they need to flourish in their project. 
+
+We would also like to thank everyone who has contributed in the development
+of this project! 
+===========================================================================
+
+				WHAT'S NEW ON MEMORANDA 1.0?
+
+===========================================================================
+
+Addition of Personal Software Process (PSP) tab
+
+Our objective for this release was how to make the application more useful
+to software developers and programmers alike. To complete that goal, we 
+added a new panel for the PSP process to cater to those users.
+
+The PSP panel is divided in its three phases with sub-procedures associated
+with them:
+		
+		- Planning
+			- Planning Notes
+			- Estimation
+		- Development
+			- Design
+			- Coding
+		- Postmortem
+			- Summary
+
+In the Planning phase, one of the sub procedures that users can do 
+is brief the name of the project, its contributors, the date in the 
+Planning Notes tab. The other procedure is the Estimation, where expected
+completion tab for each phase and sub-phase can be declared.
+
+In the Development phase, users can create the design of the project, whether
+it be UML Diagrams or rough sketches of the program in the Design tab. In the
+Coding tab, any defects that are found during the project can be listed here
+
+Lastly, in the Postmortem phase, this is where everything that was declared
+in all phases of the project are transferred and debriefed. From there a report
+is generated.
+
+A timer is also available for listing the actual time needed for each procedure,
+where the times are also transferred to the Postmortem Summary tab.    
+
+
+
+  				
+ 
