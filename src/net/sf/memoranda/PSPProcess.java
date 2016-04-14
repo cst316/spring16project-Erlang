@@ -21,7 +21,7 @@ public class PSPProcess {
 	 * @param index of Estimation to return
 	 * @return Estimation
 	 */
-	protected Estimation getEstimation(int index){
+	public Estimation getEstimation(int index){
 		return estimation.elementAt(index);
 	}
 	/**
@@ -35,22 +35,30 @@ public class PSPProcess {
 	 * Add an Estimation object to the Estimation vector.
 	 * @param newEstimation to be added
 	 */
-	protected void addEstimation(Estimation newEstimation){
+	public void addEstimation(Estimation newEstimation){
 		estimation.addElement(newEstimation);
 	}
 	/**
 	 * Remove an Estimation object from the Estimation vector.
 	 * @param index to be removed
 	 */
-	protected void removeEstimation(int index){
+	public void removeEstimation(int index){
 		estimation.remove(index);
+	}
+	/**
+	 * get size of estimation vector
+	 * @param none
+	 * @return estimation vector size int
+	 */
+	public int getEstimationSize(){
+		return estimation.size();
 	}
 	/**
 	 * Get an Defect object at specified index.
 	 * @param index of Defect to return
 	 * @return Defect at 
 	 */
-	protected Defect getDefect(int index){
+	public Defect getDefect(int index){
 		return defects.elementAt(index);
 	}
 	/**
@@ -64,14 +72,14 @@ public class PSPProcess {
 	 * Add an Defect object to the Defect vector.
 	 * @param newDefect to be added
 	 */
-	protected void addDefect(Defect newDefect){	//To be used by CodingPanel
+	public void addDefect(Defect newDefect){	//To be used by CodingPanel
 		defects.addElement(newDefect);			//to add a defect
 	}
 	/**
 	 * Remove an Defect object from the Defect vector.
 	 * @param index to be removed
 	 */
-	protected void removeDefect(int index){
+	public void removeDefect(int index){
 		defects.remove(index);
 	}
 	/**
@@ -85,7 +93,7 @@ public class PSPProcess {
 	 * Set the planning object.
 	 * @param planning to be set
 	 */
-	protected void setPlannning(Planning planning) {
+	public void setPlannning(Planning planning) {
 		this.planning = planning;
 	}
 	/*
