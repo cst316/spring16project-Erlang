@@ -29,11 +29,8 @@ public class PSPPanel extends JPanel {
 	EstimationPanel estimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel(); 
 	SummaryPanel summaryPanel = new SummaryPanel();
-<<<<<<< HEAD
-	EstimatePanel estimatePanel = new EstimatePanel();
 	StopWatch watch;
-=======
->>>>>>> master
+
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -150,11 +147,8 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
-<<<<<<< HEAD
-=======
-	    
+
 	    this.add(pspTabs);
->>>>>>> master
 	}	
 	
 	
