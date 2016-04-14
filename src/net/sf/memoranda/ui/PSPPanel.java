@@ -49,51 +49,6 @@ public class PSPPanel extends JPanel {
 //	EstimatePanel estimatePanel = new EstimatePanel();
 	StopWatch watch;
 
-	
-	Object rowSummary[][] = { { " "," ", " ", " "," "},
-            {"Summary ", " ", " ", " "," "},
-            {"Minute/LOC ", " ", " ", " "," "}, 
-            {"LOC/Hour ", " ", " ", " "," "},
-            {"Defect/KLOC ", " ", " ", " "," "},
-            {"Yield ", " ", " ", " "," "},
-            {"A/FR ", " ", " ", " "," "},
-            {"Program size (LOC) ", " ", " ", " "," "},
-            {"Total New & Change ", " ", " ", " "," "},
-            {"Maximum Size ", " ", " ", " "," "},
-            {"Minimum Size ", " ", " ", " "," "},
-            {" ", " ", " ", " "," "},
-            {"Timein Phase (min.)","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"Postmortem ", " ", " ", " "," "},
-            {"  Total ", " ", " ", " "," "},
-            {"Maximum Size ", " ", " ", " "," "},
-            {"Minimum Size ", " ", " ", " "," "},
-            {" ", " ", " ", " "," "},
-            {"Defect Injected ","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"  Total", " ", " ", " "," "}, 
-            {" ", " ", " ", " "," "},
-            {"Defect Removed ","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"  Total ", " ", " ", " "," "}};
-	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
-
-	
 			
 	ImageIcon web = new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
@@ -165,7 +120,7 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
-	    showSummay();
+	    //showSummay();
 
 	    
 	    this.add(pspTabs);
@@ -176,29 +131,6 @@ public class PSPPanel extends JPanel {
 	/**
 	 * Method creates a table on the summary tab 
 	 */
-	public void showSummay(){
-		  //Future button to import data
-		JButton b = new JButton("Click to import info");
-			summaryPanel.add(b);
-		   b.setSize(50,250);
-		    b.setVisible(true);
-		  
-		 
-		
-	    
 
- //SummaryObject
-	  SummaryObject x = new SummaryObject();
-	  x.getDefectInjectedCompile();
-	  Tables tableSummary = new Tables(rowSummary, columnSummary);	
-	  JScrollPane scrollPane = new JScrollPane(tableSummary);
-	  JPanel panel = new JPanel();
-	  panel.add(scrollPane);
-	  summaryPanel.add(new JScrollPane(panel));
-	  scrollPane.setSize(500,1500);
-	  summaryPanel.setVisible(true);	
-
-	}
-	
 	
 }
