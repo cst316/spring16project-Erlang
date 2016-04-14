@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import net.sf.memoranda.Estimation;
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.util.Local;
 
 public class CodeEstimationPanel extends JPanel  {
@@ -50,9 +51,11 @@ public class CodeEstimationPanel extends JPanel  {
 	JButton removeButton = new JButton();
 	DefaultTableModel tableModel;
 	
-	Vector<Estimation> estimations = new Vector<Estimation>();
+	private PSPProcess pspProcess;
 	
-	public CodeEstimationPanel() {
+	public CodeEstimationPanel(PSPProcess pspProcess) {
+		
+		this.pspProcess = pspProcess;
 		this.setPreferredSize(new Dimension(1000, 1000));
 		
 		setupNewEstimationPanel();
@@ -187,7 +190,8 @@ public class CodeEstimationPanel extends JPanel  {
 	        return;
 	    }
 		Estimation theEstimation = new Estimation( theDescription, theLineCount );
-		estimations.addElement(theEstimation);
+		pspProcess.addEstimation(theEstimation);
+	
 		Object[] theRow = { theEstimation.getModuleDescription(), theEstimation.getLineCount() };
 		tableModel.addRow(theRow);
 		descriptionTextA.setText("");
@@ -198,7 +202,7 @@ public class CodeEstimationPanel extends JPanel  {
 	private void removeButtonClicked() {
 		int theRowIndex = estimationTable.getSelectedRow();
 		if ( theRowIndex >= 0 ) {
-			estimations.remove(theRowIndex);
+			pspProcess.removeEstimation(theRowIndex);
 		    tableModel.removeRow(theRowIndex);
 		}
 		updateLineCountTotal();
@@ -215,8 +219,8 @@ public class CodeEstimationPanel extends JPanel  {
 	
 	private void updateLineCountTotal() {
 		long theLineCountTotal = 0;
-		for ( int i = 0; i < estimations.size(); i++ ) {
-			theLineCountTotal = theLineCountTotal + estimations.get(i).getLineCount();
+		for ( int i = 0; i < pspProcess.getEstimationSize(); i++ ) {
+			theLineCountTotal = theLineCountTotal + pspProcess.getEstimation(i).getLineCount();
 		}
 		estTotalLabel.setText( estTotalPrefix + theLineCountTotal );
 	}
