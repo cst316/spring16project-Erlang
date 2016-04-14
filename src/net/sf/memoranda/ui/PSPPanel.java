@@ -1,8 +1,7 @@
 package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -86,7 +85,6 @@ public class PSPPanel extends JPanel {
 	 * @param parent used to initialize planning panel tab
 	 */
 	public PSPPanel(WorkPanel _parentPanel){
-		//super(new GridBagLayout());
 		super(new BorderLayout());
 		this.setPreferredSize(_parentPanel.getPreferredSize());
 		watch = new StopWatch();
