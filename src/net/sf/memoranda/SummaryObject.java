@@ -311,8 +311,5 @@ public class SummaryObject {
 	public void setDefectRemovedTotal(String[] defectRemovedTotal) {
 		this.defectRemovedTotal = defectRemovedTotal;
 	}
-	
-	
-	
-
 }
+

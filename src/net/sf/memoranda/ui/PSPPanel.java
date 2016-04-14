@@ -29,8 +29,11 @@ public class PSPPanel extends JPanel {
 	EstimationPanel estimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel(); 
 	SummaryPanel summaryPanel = new SummaryPanel();
+<<<<<<< HEAD
 	EstimatePanel estimatePanel = new EstimatePanel();
 	StopWatch watch;
+=======
+>>>>>>> master
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -118,13 +121,23 @@ public class PSPPanel extends JPanel {
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
  *  and Post mortem forms management for the convenience of Software Engineering Students
  * @return void
+<<<<<<< HEAD
+ * @author Carlos 
+ * @version 1.0 
+=======
  * @author Team Erlang
+<<<<<<< HEAD
  * @version 3.0
+=======
+ * @version 2.0
+>>>>>>> 0fd68408fa1526ba53fa6eaaaa080bf25b84c429
+>>>>>>> master
  */
 	private void initializeTabs(){
-		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	
+		planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
 		planningPanel.add(planningTabPane);
-		planningTabPane.addTab("Estimation", web, estimatePanel,"Edit the plan");	
+			
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
@@ -137,6 +150,11 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
+<<<<<<< HEAD
+=======
+	    
+	    this.add(pspTabs);
+>>>>>>> master
 	}	
 	
 	
