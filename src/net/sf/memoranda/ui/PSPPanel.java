@@ -3,7 +3,6 @@ package net.sf.memoranda.ui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
 
 /**
@@ -42,6 +42,7 @@ public class PSPPanel extends JPanel {
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
 	
+	PSPProcess pspProcess = new PSPProcess();
 
 //	EstimationPanel estimationPanel = null;
 //	CodingPanel codingPanel = new CodingPanel(); 
@@ -73,7 +74,7 @@ public class PSPPanel extends JPanel {
 		planPanel = new PlanningPanel(dPanel);						
 		ImportDataTimer testing = new ImportDataTimer();
 //		estimationPanel = new EstimationPanel();
-		codeEstimationPanel = new CodeEstimationPanel();
+		codeEstimationPanel = new CodeEstimationPanel(pspProcess);
 
 		this.initializeTabs();
 
