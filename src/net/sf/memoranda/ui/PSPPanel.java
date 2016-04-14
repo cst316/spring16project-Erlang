@@ -1,4 +1,5 @@
 package net.sf.memoranda.ui;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -85,7 +86,8 @@ public class PSPPanel extends JPanel {
 	 * @param parent used to initialize planning panel tab
 	 */
 	public PSPPanel(WorkPanel _parentPanel){
-		super(new GridBagLayout());
+		//super(new GridBagLayout());
+		super(new BorderLayout());
 		this.setPreferredSize(_parentPanel.getPreferredSize());
 		watch = new StopWatch();
 		pspTabs.setPreferredSize(new Dimension(920,670));
@@ -95,24 +97,12 @@ public class PSPPanel extends JPanel {
 		ImportDataTimer testing = new ImportDataTimer();
 		estimationPanel = new EstimationPanel();
 		this.initializeTabs();
-
-		setUpDisplay();
-	}
-	/**
-	 * This method setsup the PSPanel to display the stop watch and
-	 * the PSPTabs together
-	 */
-	public void setUpDisplay(){
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		this.add(pspTabs,c);
 		
-		c.gridx = 1;
-		this.add(watch, c);
+		this.add(watch, BorderLayout.EAST);
+		this.add(pspTabs, BorderLayout.CENTER);
+		
 	}
-	
+
 	
 /**
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
@@ -131,8 +121,10 @@ public class PSPPanel extends JPanel {
 >>>>>>> master
  */
 	private void initializeTabs(){
-		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	
-		planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
+
+		
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+
 		planningPanel.add(planningTabPane);
 			
 		
@@ -142,9 +134,12 @@ public class PSPPanel extends JPanel {
 		
 		postmortemTabPane.addTab("Summary", web, summaryPanel, "Tables");
 		postmortemPanel.add(postmortemTabPane);
-
-		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
-		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
+		
+		JScrollPane planScroller = new JScrollPane(planningPanel);
+		JScrollPane devScroller = new JScrollPane(developmentPanel);
+		
+		pspTabs.add("Planning",planScroller);
+		pspTabs.add("Development",devScroller);
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
 
