@@ -24,6 +24,8 @@ import net.sf.memoranda.SummaryObject;
  */
 public class PSPPanel extends JPanel {
 	
+	PSPProcess pspProcess = new PSPProcess();
+	
 	//Tabs for PSP implementation
 	JTabbedPane pspTabs = new JTabbedPane();
 	JTabbedPane planningTabPane = new JTabbedPane();
@@ -34,15 +36,13 @@ public class PSPPanel extends JPanel {
 	JPanel developmentPanel = new JPanel();
 	JPanel postmortemPanel = new JPanel();
 	
-	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel();
+	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel(pspProcess);
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 
 	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
 	SummaryPanel summaryPanel = new SummaryPanel();
-	
-	PSPProcess pspProcess = new PSPProcess();
 
 //	EstimationPanel estimationPanel = null;
 //	CodingPanel codingPanel = new CodingPanel(); 
@@ -108,7 +108,6 @@ public class PSPPanel extends JPanel {
 		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
 		planningTabPane.addTab("Planning Notes", web, planPanel,"Edit the plan");	
 		planningPanel.add(planningTabPane);
-			
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
 		developmentTabPane.addTab("Code Estimation", web, codeEstimationPanel,"Edit the plan");//title, icon, panel, hintText
@@ -121,8 +120,6 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
-	    //showSummay();
-
 	    
 	    this.add(pspTabs);
 

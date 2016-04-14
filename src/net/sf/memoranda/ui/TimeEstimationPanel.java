@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.util.Local;
 
 public class TimeEstimationPanel extends JPanel {
@@ -28,12 +29,13 @@ public class TimeEstimationPanel extends JPanel {
 	JLabel totalTimeTitle;
 	JLabel totalTimeText;
 	double totalTimeEstimate;
-	double[] timeEstimates = new double[7];
 	JTextField[][] textFields = new JTextField[7][2];
+	PSPProcess pspProcess;
 	
-	public TimeEstimationPanel() {
+	public TimeEstimationPanel(PSPProcess aPSPProcess) {
 		this.setPreferredSize(new Dimension(1000, 1000));
 		this.setLayout(null);
+		this.pspProcess = aPSPProcess;
 		
 		inputPanel = new JPanel();
 		inputPanel.setLayout(null);
@@ -119,22 +121,24 @@ public class TimeEstimationPanel extends JPanel {
 				  public void sumUpTotalTimeEstimate() {
 					  try {
 						  for(int i =0; i <textFields.length; i++) {
-							  timeEstimates[i] = 0.0;
+							  double theNewValue = 0.0;
 							  if(!textFields[i][0].getText().isEmpty()) {
-								  timeEstimates[i] = timeEstimates[i] + 
+								  theNewValue = theNewValue + 
 								      (Double.parseDouble(textFields[i][0].getText())*60.0*60.0);
 							  }
 							  if(!textFields[i][1].getText().isEmpty()) {
-								  timeEstimates[i] = timeEstimates[i] + 
+								  theNewValue = theNewValue + 
 								      (Double.parseDouble(textFields[i][1].getText())*60.0);
 							  }
+							  pspProcess.setTimeEstimationValue(i, theNewValue);
 						  }
 					  } catch (NumberFormatException e) {
 						  JOptionPane.showMessageDialog(null,Local.getString("Only numbers are allowed as entry"));
 					  }
 					  totalTimeEstimate = 0.0;
-					  for(int i =0; i <timeEstimates.length; i++) {
-						  totalTimeEstimate = totalTimeEstimate + timeEstimates[i];
+					  double[] theTimes = pspProcess.getTimeEstimations();
+					  for(int i =0; i <theTimes.length; i++) {
+						  totalTimeEstimate = totalTimeEstimate + theTimes[i];
 					  }
 					  updateTotalTimeText();
 				  }

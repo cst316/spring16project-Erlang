@@ -1,16 +1,23 @@
 package net.sf.memoranda;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+
+import net.sf.memoranda.ui.SummaryObserver;
 
 public class PSPProcess {
 	Vector<Estimation> estimation;
 	Vector<Defect> defects;
+	private List<SummaryObserver> observers = new ArrayList<SummaryObserver>(); 
+	double[] timeEstimates;
 	Planning planning;
 	//Image designPanel; // get the design panel, or the export PNG files stored
 
 	public PSPProcess(){
 		estimation = new Vector<Estimation>();
 		defects = new Vector<Defect>();
+		timeEstimates = new double[7];
 	}
 	/*
 	 * When respected Buttons are pressed on the remote Display Panels
@@ -103,6 +110,26 @@ public class PSPProcess {
 	 * 
 	 * 
 	 */
+	
+	public void setTimeEstimationValue(int aIndex, double aValue) {
+		if (aIndex >= 0 && aIndex < timeEstimates.length) {
+			timeEstimates[aIndex] = aValue;
+		}
+	}
+	
+	public double[] getTimeEstimations() {
+		return timeEstimates;
+	}
+	
+	public void attachObserver(SummaryObserver observer){
+	    observers.add(observer);		
+	}
+
+	public void notifyAllObservers(){
+	    for (SummaryObserver observer : observers) {
+	         observer.update();
+	    }
+	} 	
 	
 	
 	
