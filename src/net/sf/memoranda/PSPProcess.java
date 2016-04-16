@@ -3,16 +3,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Vector;
 import javax.swing.JFrame;
 
 import net.sf.memoranda.ui.ExportedImage;
 import net.sf.memoranda.ui.SummaryObserver;
+import net.sf.memoranda.ui.SummaryPanel;
 
-public class PSPProcess {
+public class PSPProcess extends Observable{
 	Vector<Estimation> estimation;
 	Vector<Defect> defects;
-	private List<SummaryObserver> observers = new ArrayList<SummaryObserver>(); 
+	
+	SummaryPanel summPanelObs;
+	
 	double[] timeEstimates;
 	Planning planning;
 	ExportedImage designImage;
@@ -141,19 +145,20 @@ public class PSPProcess {
 		if (aIndex >= 0 && aIndex < timeEstimates.length) {
 			timeEstimates[aIndex] = aValue;
 		}
+		notifySummaryObserver();
 	}
 	
 	public double[] getTimeEstimations() {
 		return timeEstimates;
 	}
 	
-	public void attachObserver(SummaryObserver observer){
-	    observers.add(observer);		
+	public void attachSummaryObserver(SummaryPanel observer){
+		summPanelObs = observer;		
 	}
 
-	public void notifyAllObservers(){
-	    for (SummaryObserver observer : observers) {
-	         observer.update();
+	public void notifySummaryObserver(){
+	    if(summPanelObs != null) {
+	    	summPanelObs.updateTimeEstimates();
 	    }
 	} 	
 	
