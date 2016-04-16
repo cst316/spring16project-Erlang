@@ -18,12 +18,9 @@ import net.sf.memoranda.SummaryObject;
  * Creates a Summary tab that is used in the PSP icon
  *
  */
-<<<<<<< HEAD
-//public class SummaryPanel extends JPanel {
-public class SummaryPanel extends JPanel implements Observer{
-=======
+
 public class SummaryPanel extends JPanel{
->>>>>>> ea367013133c5993b8d882fbd2f192cf9034da20
+
 	
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
@@ -73,12 +70,9 @@ public class SummaryPanel extends JPanel{
 	
 	protected PSPProcess pspProcess;
 	
-<<<<<<< HEAD
-	public SummaryPanel(){
-		
-=======
+
 	public SummaryPanel(PSPProcess pspProcess){
->>>>>>> ea367013133c5993b8d882fbd2f192cf9034da20
+
         this.setPreferredSize(new Dimension(1000, 1000));
         new JPanel();
         this.pspProcess = pspProcess;
@@ -98,10 +92,7 @@ public class SummaryPanel extends JPanel{
   	  panel.add(scrollPane);
   	  add(new JScrollPane(panel));
   	  scrollPane.setSize(500,1500);
-<<<<<<< HEAD
-  	  setVisible(true);	  
-        
-=======
+
   	  setVisible(true);	
 	}
 	
@@ -119,7 +110,7 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = timeToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 1);
 		}
->>>>>>> ea367013133c5993b8d882fbd2f192cf9034da20
+
 	}
 
 
@@ -151,24 +142,9 @@ public class SummaryPanel extends JPanel{
 		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
 	}
 	
-<<<<<<< HEAD
-	@Override
-	public void update(Observable PSPProcess, Object arg) {
-		// TODO Auto-generated method stub
+
 		
-		
-	}
 
-
-
-=======
-	
-//	@Override
-//	public void update(Observable o, Object arg) {
-//		// TODO Auto-generated method stub
-//	}
-	
->>>>>>> ea367013133c5993b8d882fbd2f192cf9034da20
 }
 
 
