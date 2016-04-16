@@ -42,7 +42,7 @@ public class PSPPanel extends JPanel {
 
 	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel();
-	SummaryPanel summaryPanel = new SummaryPanel();
+	SummaryPanel summaryPanel = new SummaryPanel(pspProcess);
 
 //	EstimationPanel estimationPanel = null;
 //	CodingPanel codingPanel = new CodingPanel(); 

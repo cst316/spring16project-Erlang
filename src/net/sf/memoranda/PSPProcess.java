@@ -1,23 +1,33 @@
 package net.sf.memoranda;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Vector;
+import javax.swing.JFrame;
 
+import net.sf.memoranda.ui.ExportedImage;
 import net.sf.memoranda.ui.SummaryObserver;
+import net.sf.memoranda.ui.SummaryPanel;
 
-public class PSPProcess {
+public class PSPProcess extends Observable{
 	Vector<Estimation> estimation;
 	Vector<Defect> defects;
-	private List<SummaryObserver> observers = new ArrayList<SummaryObserver>(); 
+	
+	SummaryPanel summPanelObs;
+	
 	double[] timeEstimates;
 	Planning planning;
-	//Image designPanel; // get the design panel, or the export PNG files stored
-
+	ExportedImage designImage;
+	
 	public PSPProcess(){
 		estimation = new Vector<Estimation>();
 		defects = new Vector<Defect>();
 		timeEstimates = new double[7];
+		designImage = new ExportedImage();
+		getExported();
+		//displayImage("Test");		will display the exported picture when called
 	}
 	/*
 	 * When respected Buttons are pressed on the remote Display Panels
@@ -103,31 +113,52 @@ public class PSPProcess {
 	public void setPlannning(Planning planning) {
 		this.planning = planning;
 	}
-	/*
-	 *
-	 ******* No Current Methods for ****
-	 * DesignPanel designPanel
-	 * 
-	 * 
+	/**
+	 * This method will call the ExportedImage class to pull the buffered image saved
 	 */
+	public void getExported(){
+		designImage.checkExported();
+	}
+	/*
+	 * Source: https://docs.oracle.com/javase/tutorial/2d/images/examples/LoadImageApp.java
+	 */
+	/**
+	 * This method will display the image exported from design panel
+	 * @param imageName the image to be displayed
+	 */
+	public void displayImage(String imageName){
+		 JFrame f = new JFrame(imageName);
+         
+	        f.addWindowListener(new WindowAdapter(){
+	                public void windowClosing(WindowEvent e) {
+	                    System.exit(0);
+	                }
+	            });
+	        
+	        f.add(designImage);
+	        f.pack();
+	        f.setVisible(true);
+	}
+	
 	
 	public void setTimeEstimationValue(int aIndex, double aValue) {
 		if (aIndex >= 0 && aIndex < timeEstimates.length) {
 			timeEstimates[aIndex] = aValue;
 		}
+		notifySummaryObserver();
 	}
 	
 	public double[] getTimeEstimations() {
 		return timeEstimates;
 	}
 	
-	public void attachObserver(SummaryObserver observer){
-	    observers.add(observer);		
+	public void attachSummaryObserver(SummaryPanel observer){
+		summPanelObs = observer;		
 	}
 
-	public void notifyAllObservers(){
-	    for (SummaryObserver observer : observers) {
-	         observer.update();
+	public void notifySummaryObserver(){
+	    if(summPanelObs != null) {
+	    	summPanelObs.updateTimeEstimates();
 	    }
 	} 	
 	
