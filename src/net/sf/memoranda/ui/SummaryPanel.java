@@ -8,6 +8,7 @@ import javax.swing.JButton;////////Delete
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
 
 
@@ -15,7 +16,9 @@ import net.sf.memoranda.SummaryObject;
  * Creates a Summary tab that is used in the PSP icon
  *
  */
+//public class SummaryPanel extends JPanel {
 public class SummaryPanel extends JPanel implements Observer{
+	
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -62,6 +65,7 @@ public class SummaryPanel extends JPanel implements Observer{
 	
 	
 	public SummaryPanel(){
+		
         this.setPreferredSize(new Dimension(1000, 1000));
         new JPanel();
     	
@@ -77,26 +81,21 @@ public class SummaryPanel extends JPanel implements Observer{
   	  panel.add(scrollPane);
   	  add(new JScrollPane(panel));
   	  scrollPane.setSize(500,1500);
-  	  setVisible(true);	
-
-  	
-        
+  	  setVisible(true);	  
         
 	}
 
-	/**
-	 * Method creates a table on the summary tab 
-	 */
 
-	
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable PSPProcess, Object arg) {
 		// TODO Auto-generated method stub
 		
-	
 		
 	}
+
+
+
 }
 
 
