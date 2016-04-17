@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
@@ -35,6 +36,7 @@ import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
+import net.sf.memoranda.Planning;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.CurrentNote;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
@@ -45,6 +47,8 @@ import net.sf.memoranda.util.HTMLFileExport;
 import net.sf.memoranda.util.HTMLFileImport;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.Planning;
 
 
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
@@ -99,6 +103,8 @@ public class PlanningPanel extends JPanel {
 	JLabel authorLabel = new JLabel();
 	
 	JLabel dateLabel = new JLabel();
+	
+	JLabel alertLabel = new JLabel();
 
 	public JTextField titleField = new JTextField();
 	
@@ -107,11 +113,16 @@ public class PlanningPanel extends JPanel {
 	JButton newB = new JButton();
 
 	JButton previewB = new JButton();
+	
+	JButton saveB = new JButton();
+	
+	private PSPProcess pspProcess;
 
 	//DailyItemsPanel parentPanel = null;
 
-	public PlanningPanel(DailyItemsPanel parent) {
+	public PlanningPanel(DailyItemsPanel parent, PSPProcess pspProcess) {
         this.setPreferredSize(new Dimension(1000, 1000));
+        this.pspProcess = pspProcess;
 		//this.revalidate();
 		try {
 			//parentPanel = parent;
@@ -223,6 +234,7 @@ public class PlanningPanel extends JPanel {
 		gconstraints.gridy = 0;
 		dateBar.add(dateLabel, gconstraints);
 		
+		
 		gconstraints.gridx = 0;
 		gconstraints.gridy = 0;
 		titleBar.setFloatable(false);
@@ -236,7 +248,21 @@ public class PlanningPanel extends JPanel {
 		dateBar.setFloatable(false);
 		jpanel1.add(dateBar, gconstraints);
 		
+		
+		saveB.setText("Save");
+		saveB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				saveButtonClicked();
+			}
+		});
+		saveB.setPreferredSize(new Dimension(50, 50));
+		gconstraints.gridy = 3;
+		jpanel1.add(saveB, gconstraints);
 		//jpanel2.setLayout(gridLayout);
+		
+		alertLabel.setText("");
+		gconstraints.gridy = 4;
+		jpanel1.add(alertLabel, gconstraints);
 		
 		this.setLayout(gridLayout);
 		
@@ -702,5 +728,26 @@ public class PlanningPanel extends JPanel {
 		} catch (IOException ioe) {
 			new ExceptionDialog(ioe, "Cannot create temporary file", null);
 		}
+	}
+	
+	private void saveButtonClicked(){
+		try{
+			String theDate = CurrentDate.get().getFullDateString();
+			String theName = authorField.getText();
+			String theProgram = titleField.getText();
+			
+			if(theName.length() == 0 || theProgram.length() == 0){
+				throw new Exception();
+			}
+			
+			Planning plan = new Planning(theName, theProgram, theDate);
+			pspProcess.setPlannning(plan);
+			alertLabel.setText("");
+		}
+		catch (Exception e){
+			alertLabel.setText("<html><font color='red'>One or both of the fields cannot be empty</font></html>");
+			return;
+		}
+		
 	}
 }

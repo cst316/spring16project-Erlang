@@ -13,7 +13,7 @@ import net.sf.memoranda.date.*;
 public class PlanningTest {
 
 	Planning plan1 = new Planning();
-	CurrentDate testDate = new CurrentDate();
+	String testDate = CurrentDate.get().getFullDateString();
 
 	@Test
 	public void testSetters() {

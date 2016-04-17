@@ -23,6 +23,7 @@ public class PSPProcess {
 		timeEstimates = new double[7];
 		designImage = new ExportedImage();
 		getExported();
+		planning = new Planning();
 		//displayImage("Test");		will display the exported picture when called
 	}
 	/*

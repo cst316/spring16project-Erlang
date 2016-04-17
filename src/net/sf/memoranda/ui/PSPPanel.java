@@ -71,7 +71,7 @@ public class PSPPanel extends JPanel {
 		pspTabs.setPreferredSize(new Dimension(920,670));
 		watch.setPreferredSize(new Dimension(300,670));
 		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
-		planPanel = new PlanningPanel(dPanel);						
+		planPanel = new PlanningPanel(dPanel, pspProcess);						
 		ImportDataTimer testing = new ImportDataTimer();
 //		estimationPanel = new EstimationPanel();
 		codeEstimationPanel = new CodeEstimationPanel(pspProcess);
