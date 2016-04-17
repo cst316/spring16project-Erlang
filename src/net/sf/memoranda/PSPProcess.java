@@ -26,12 +26,10 @@ public class PSPProcess extends Observable{
 		defects = new Vector<Defect>();
 		timeEstimates = new double[7];
 		designImage = new ExportedImage();
-<<<<<<< HEAD
 		getExported();
 		planning = new Planning();
-=======
 //		getExported();
->>>>>>> 6d94eda59a30cf4b055b9e19138536b8ad78f9b0
+
 		//displayImage("Test");		will display the exported picture when called
 	}
 	/*
