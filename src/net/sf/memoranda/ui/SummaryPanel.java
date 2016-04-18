@@ -113,7 +113,8 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = timeToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 1);
 		}
-
+		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		this.tableModel.setValueAt(theTotalString, 20, 1);
 	}
 	
 	public void updateTimeLogs() {
@@ -152,7 +153,8 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = timeToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 2);
 		}
-
+		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		this.tableModel.setValueAt(theTotalString, 20, 2);
 	}
 
 
@@ -184,6 +186,13 @@ public class SummaryPanel extends JPanel{
 		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
 	}
 	
+	private double generateTimeTotal(double[] aTimeArray) {
+		double theTotal = 0;
+		for(int i = 0; i < aTimeArray.length; i++) {
+			theTotal = theTotal + aTimeArray[i];
+		}
+		return theTotal;
+	}
 
 		
 
