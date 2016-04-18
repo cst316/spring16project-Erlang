@@ -742,7 +742,7 @@ public class PlanningPanel extends JPanel {
 			
 			Planning plan = new Planning(theName, theProgram, theDate);
 			pspProcess.setPlannning(plan);
-			alertLabel.setText("");
+			alertLabel.setText("Information saved");
 		}
 		catch (Exception e){
 			alertLabel.setText("<html><font color='red'>One or both of the fields cannot be empty</font></html>");
