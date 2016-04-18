@@ -9,7 +9,9 @@ giving users in planning projects and giving the users all the resource
 they need to flourish in their project. 
 
 We would also like to thank everyone who has contributed in the development
-of this project! 
+of this project!
+
+Team Erlang 
 ===========================================================================
 
 				WHAT'S NEW ON MEMORANDA 1.0?
@@ -53,13 +55,15 @@ where the times are also transferred to the Postmortem Summary tab.
 
 
 Summary:
-	- Current Version: 1.0 (4/18/16)
-	- Additions:
+	- Current Version: 1.0 (Apr-18-2016)
+	- Modifications:
 		- Personal Software Process Tabs
 			- PSP Process object for storing information
 			  from each phase and sub-phase
 			- Timer added for calculation of actual time
-			
+		- Report generation for an entire project
+	- Bug fixes:
+		- Minimize issue fixed
 		
  					
  
