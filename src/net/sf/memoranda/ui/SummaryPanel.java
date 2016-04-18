@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import javax.swing.JButton;////////Delete
 import javax.swing.JPanel;
@@ -12,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
+import net.sf.memoranda.TimerLog;
 
 
 /**
@@ -87,6 +89,7 @@ public class SummaryPanel extends JPanel{
   	  tableSummary = new JTable();	
   	  initializeTable();
   	  updateTimeEstimates();
+  	  updateTimeLogs();
   	  JScrollPane scrollPane = new JScrollPane(tableSummary);
   	  JPanel panel = new JPanel();
   	  panel.add(scrollPane);
@@ -109,6 +112,45 @@ public class SummaryPanel extends JPanel{
 		for(int i = 0; i < theTimes.length; i++){
 			 String theTimeString = timeToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 1);
+		}
+
+	}
+	
+	public void updateTimeLogs() {
+		Vector<TimerLog> theTimerLogs = pspProcess.getAllTimerLogs();
+		double[] theTimes = new double[7];
+		for(int i = 0; i < theTimerLogs.size(); i++) {
+			TimerLog theTimerLog = theTimerLogs.get(i);
+			int theIndex = 0;
+			switch(theTimerLog.getcStage())
+			{
+			case PLANNING:
+				theIndex = 0;
+				break;
+			case DESIGN:
+				theIndex = 1;
+				break;
+			case CODE:
+				theIndex = 2;
+				break;
+			case CODEREVIEW:
+				theIndex = 3;
+				break;
+			case COMPILE:
+				theIndex = 4;
+				break;
+			case TEST:
+				theIndex = 5;
+				break;
+			case POSTMORTEM:
+				theIndex = 6;
+				break;
+			}
+			theTimes[theIndex] = theTimes[theIndex] + theTimerLog.getTimeValue();
+		}
+		for(int i = 0; i < theTimes.length; i++){
+			 String theTimeString = timeToFormattedString(theTimes[i]);
+			 this.tableModel.setValueAt(theTimeString, (13+i), 2);
 		}
 
 	}

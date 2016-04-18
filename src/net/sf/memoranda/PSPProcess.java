@@ -14,6 +14,7 @@ import net.sf.memoranda.ui.SummaryPanel;
 public class PSPProcess extends Observable{
 	Vector<Estimation> estimation;
 	Vector<Defect> defects;
+	Vector<TimerLog> timelogs;
 	
 	SummaryPanel summPanelObs;
 	
@@ -24,9 +25,10 @@ public class PSPProcess extends Observable{
 	public PSPProcess(){
 		estimation = new Vector<Estimation>();
 		defects = new Vector<Defect>();
+		timelogs = new Vector<TimerLog>();
 		timeEstimates = new double[7];
 		designImage = new ExportedImage();
-		getExported();
+//		getExported();
 		planning = new Planning();
 //		getExported();
 
@@ -102,6 +104,47 @@ public class PSPProcess extends Observable{
 	public void removeDefect(int index){
 		defects.remove(index);
 	}
+	
+	/**
+	 * Get an TimerLog object at specified index.
+	 * @param index of TimerLog to return
+	 * @return TimerLog
+	 */
+	public TimerLog getTimerLog(int index){
+		return timelogs.elementAt(index);
+	}
+	/**
+	 * Get all TimerLog objects.
+	 * @return A Vector of all TimerLog objects
+	 */
+	public Vector<TimerLog> getAllTimerLogs() {
+		return timelogs;
+	}
+	/**
+	 * Add a TimerLog object to the timelogs vector.
+	 * @param newTimerLog to be added
+	 */
+	public void addTimerLog(TimerLog newTimerLog){
+		timelogs.addElement(newTimerLog);
+		notifySummaryAboutTimeLogs();
+	}
+	/**
+	 * Remove a TimerLog object from the timelogs vector.
+	 * @param index to be removed
+	 */
+	public void removeTimerLog(int index){
+		timelogs.remove(index);
+		notifySummaryAboutTimeLogs();
+	}
+	/**
+	 * get size of timelogs vector
+	 * @param none
+	 * @return timelogs vector size int
+	 */
+	public int getTimerLogsSize(){
+		return timelogs.size();
+	}
+	
 	/**
 	 * Get the planning object.
 	 * @return the planning to be returned
@@ -148,7 +191,7 @@ public class PSPProcess extends Observable{
 		if (aIndex >= 0 && aIndex < timeEstimates.length) {
 			timeEstimates[aIndex] = aValue;
 		}
-		notifySummaryObserver();
+		notifySummaryAboutTimeEstimations();
 	}
 	
 	public double[] getTimeEstimations() {
@@ -159,11 +202,17 @@ public class PSPProcess extends Observable{
 		summPanelObs = observer;		
 	}
 
-	public void notifySummaryObserver(){
+	public void notifySummaryAboutTimeEstimations(){
 	    if(summPanelObs != null) {
 	    	summPanelObs.updateTimeEstimates();
 	    }
-	} 	
+	} 
+	
+	public void notifySummaryAboutTimeLogs(){
+	    if(summPanelObs != null) {
+	    	summPanelObs.updateTimeLogs();
+	    }
+	} 
 	
 	
 	

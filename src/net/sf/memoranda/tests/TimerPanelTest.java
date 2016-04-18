@@ -8,6 +8,7 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.Report;
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
@@ -22,6 +23,7 @@ import net.sf.memoranda.ui.StopWatch;
 public class TimerPanelTest {
 
 	PspStage pspTesting;
+	PSPProcess pspProcess = new PSPProcess();
 
 	double timeValueTest = 2.5;
 	double temp;
@@ -32,7 +34,7 @@ public class TimerPanelTest {
 	 
 	 Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
 	 private String timeString; 
-	StopWatch stopWatchTest = new StopWatch();
+	StopWatch stopWatchTest = new StopWatch(pspProcess);
 	 
 	
 	

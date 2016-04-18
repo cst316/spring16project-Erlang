@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
@@ -68,16 +69,17 @@ public class StopWatch extends JPanel {
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
 	 private JComboBox dropDownManu = new JComboBox(tabs);
-	Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
 	 
 	 SavedTime savedTime = new SavedTime();
 	 private String[] columnNames = {"Area","Time"};
 	 Object[][] data = {};
+	 PSPProcess pspProcess;
 	 
 	/**
 	 * Create the panel.
 	 */
-	public StopWatch() {
+	public StopWatch(PSPProcess aPSPProcess) {
+		pspProcess = aPSPProcess;
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
 		timeString = timeToFormattedString(clockTime);
@@ -305,7 +307,7 @@ public class StopWatch extends JPanel {
 	}
 	
 	private void addNewTimerLog(TimerLog aTimerLog) {
-		TimelogArray.addElement(aTimerLog);
+		pspProcess.addTimerLog(aTimerLog);
 		String theStage = stageEnumToString(aTimerLog.getcStage());
 		String theFormattedTime = timeToFormattedString(aTimerLog.getTimeValue());
 		Object[] theRow = { theStage, theFormattedTime };
@@ -313,11 +315,11 @@ public class StopWatch extends JPanel {
 	}
 	
 	private void removeTimerLog(int aIndex) {
-		if(aIndex < 0 || aIndex >= TimelogArray.size()) {
+		if(aIndex < 0 || aIndex >= pspProcess.getTimerLogsSize()) {
 			System.out.println("Trying to remove from ouside of the TimeLog table bounds");
 		}
 		int theRowIndex = timesTable.getSelectedRow();
-		TimelogArray.remove(theRowIndex); 
+		pspProcess.removeTimerLog(theRowIndex); 
 		tableModel.removeRow(theRowIndex);
 	}
 	

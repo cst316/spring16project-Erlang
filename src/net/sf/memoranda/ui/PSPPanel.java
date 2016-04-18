@@ -67,7 +67,7 @@ public class PSPPanel extends JPanel {
 	public PSPPanel(WorkPanel _parentPanel){
 		super(new GridBagLayout());
 		this.setPreferredSize(_parentPanel.getPreferredSize());
-		watch = new StopWatch();
+		watch = new StopWatch(pspProcess);
 		pspTabs.setPreferredSize(new Dimension(920,670));
 		watch.setPreferredSize(new Dimension(300,670));
 		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
