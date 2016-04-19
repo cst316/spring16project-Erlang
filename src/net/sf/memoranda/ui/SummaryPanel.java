@@ -37,7 +37,7 @@ public class SummaryPanel extends JPanel{
             {"Maximum Size ", " ", " ", " "," "},
             {"Minimum Size ", " ", " ", " "," "},
             {" ", " ", " ", " "," "},
-            {"Timein Phase (min.)","Estimation", "Actual", "To Date", "To Date %"},
+            {"Timein Phase (min.)","Estimation", "Actual", "% Error", "To Date %"},
             {"Planning ", " ", " ", " "," "},
             {"Design ", " ", " ", " "," "},
             {"Code ", " ", " ", " "," "},
@@ -90,6 +90,7 @@ public class SummaryPanel extends JPanel{
   	  initializeTable();
   	  updateTimeEstimates();
   	  updateTimeLogs();
+  	  updateToDatePercentages();
   	  JScrollPane scrollPane = new JScrollPane(tableSummary);
   	  JPanel panel = new JPanel();
   	  panel.add(scrollPane);
@@ -119,36 +120,7 @@ public class SummaryPanel extends JPanel{
 	
 	public void updateTimeLogs() {
 		Vector<TimerLog> theTimerLogs = pspProcess.getAllTimerLogs();
-		double[] theTimes = new double[7];
-		for(int i = 0; i < theTimerLogs.size(); i++) {
-			TimerLog theTimerLog = theTimerLogs.get(i);
-			int theIndex = 0;
-			switch(theTimerLog.getcStage())
-			{
-			case PLANNING:
-				theIndex = 0;
-				break;
-			case DESIGN:
-				theIndex = 1;
-				break;
-			case CODE:
-				theIndex = 2;
-				break;
-			case CODEREVIEW:
-				theIndex = 3;
-				break;
-			case COMPILE:
-				theIndex = 4;
-				break;
-			case TEST:
-				theIndex = 5;
-				break;
-			case POSTMORTEM:
-				theIndex = 6;
-				break;
-			}
-			theTimes[theIndex] = theTimes[theIndex] + theTimerLog.getTimeValue();
-		}
+		double[] theTimes = pspProcess.getTimerLogSectTotals();
 		for(int i = 0; i < theTimes.length; i++){
 			 String theTimeString = timeToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 2);
@@ -156,7 +128,22 @@ public class SummaryPanel extends JPanel{
 		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
 		this.tableModel.setValueAt(theTotalString, 20, 2);
 	}
-
+	
+	public void updateToDatePercentages() {
+		double[] thePercentages = pspProcess.getToDatePercentages();
+		for(int i = 0; i < thePercentages.length; i++){
+			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
+			 this.tableModel.setValueAt(theTimeString, (13+i), 4);
+		}
+	}
+	
+	public void updatePercentErrors() {
+		double[] thePercentages = pspProcess.getTimeLogPercentError();
+		for(int i = 0; i < thePercentages.length; i++){
+			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
+			 this.tableModel.setValueAt(theTimeString, (13+i), 3);
+		}
+	}
 
 	public void update() {
 		System.out.println("testing, testing, 123");
