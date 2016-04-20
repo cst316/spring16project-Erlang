@@ -3,6 +3,13 @@
 ================================================================================
 
                         INSTALLATION AND RUNNING
+                        
+ ------------------
+Q.: How do I install Memoranda 2.0?
+
+A.:  You can find the download for Memoranda 2.0 on the website - http://memoranda-erlang.ddns.net/
+Click on Download, and then 'Download Memoranda 2.0'
+
 
 -----------------
 Q.: I am neither under Windows nor KDE. Can I work with Memoranda?
@@ -204,8 +211,9 @@ development of code.
 Q.: Does ‘PSP’ part of the Memoranda or a stand along software?
 
 A.: ‘PSP’ is part of memoranda and doesn’t required a different installation. 
-	When you download and configure Memoranda on your local computer, ‘PSP’ icon 
+	When you download and configure Memoranda 2.0 on your local computer, ‘PSP’ icon 
 	will be part of it. 
+	
 
 ------------------
 Q.: Why there is a stopwatch in the ‘PSP’ Panel?
@@ -219,12 +227,24 @@ A.: When ever you planning to work with the ‘PSP’ Panel, you should always r
 ------------------
 Q.: Can I save and export the ‘PSP’ project?
 
-A.: As for right now, you can save your ‘PSP’ project with the program, but NOT to 
-	export it. The Export/Import feature will be added soon to one of the next updates. 
+A.: As for right now, there is no option to save or export any PSP project. The Export/Import feature 
+will be added soon to one of the next updates. 
 
 
 ------------------
-Q.: Can I upload a file to the design tab in the 'PSP' panel ?
+Q.: Can I change my estimates on PSP?
 
-A.: 
+A.: Yes you can, but it is not recommended, if you would like to have a pure estimate of your 
+project with the PSP process  
+
+
+------------------
+Q.: What version of JRE do I need for PSP?
+
+A.: In order of working with PSP on Memoranda, you need to have Java SE 8 Runtime Environment.  
+To download/update click here - http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+
+
+
 
