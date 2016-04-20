@@ -11,6 +11,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.util.Local;
 
 public class TimeEstimationPanel extends JPanel {
@@ -150,30 +151,6 @@ public class TimeEstimationPanel extends JPanel {
 	}
 	
 	private void updateTotalTimeText() {
-		totalTimeText.setText(timeToFormattedString(totalTimeEstimate));
-	}
-	
-	//convert time to properly formatted string
-	private String timeToFormattedString(double aTimeInSec) {
-		int theMins = (int)aTimeInSec / 60;
-		int theHours = theMins / 60;
-				
-		String theMinsString = Integer.toString( theMins % 60 );
-		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
-				
-		if( theMinsString.length() < 2 ) {
-			theMinsString = "0" + theMinsString;
-		}
-				
-		if( theHoursString.length() < 2 ) {
-		    theHoursString = "0" + theHoursString;
-		}
-		        
-		if( theSecondString.length() < 4 ) {
-		    theSecondString = "0" + theSecondString;
-	    }
-				
-		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
+		totalTimeText.setText(TimeConverter.secondsToFormattedString(totalTimeEstimate));
 	}
 }

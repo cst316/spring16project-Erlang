@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
+import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
 
 
@@ -90,6 +91,7 @@ public class SummaryPanel extends JPanel{
   	  initializeTable();
   	  updateTimeEstimates();
   	  updateTimeLogs();
+  	  updatePercentErrors();
   	  updateToDatePercentages();
   	  JScrollPane scrollPane = new JScrollPane(tableSummary);
   	  JPanel panel = new JPanel();
@@ -111,10 +113,10 @@ public class SummaryPanel extends JPanel{
 	public void updateTimeEstimates() {
 		double[] theTimes = pspProcess.getTimeEstimations();
 		for(int i = 0; i < theTimes.length; i++){
-			 String theTimeString = timeToFormattedString(theTimes[i]);
+			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 1);
 		}
-		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
 		this.tableModel.setValueAt(theTotalString, 20, 1);
 	}
 	
@@ -122,10 +124,10 @@ public class SummaryPanel extends JPanel{
 		Vector<TimerLog> theTimerLogs = pspProcess.getAllTimerLogs();
 		double[] theTimes = pspProcess.getTimerLogSectTotals();
 		for(int i = 0; i < theTimes.length; i++){
-			 String theTimeString = timeToFormattedString(theTimes[i]);
+			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 2);
 		}
-		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
 		this.tableModel.setValueAt(theTotalString, 20, 2);
 	}
 	
@@ -148,31 +150,7 @@ public class SummaryPanel extends JPanel{
 	public void update() {
 		System.out.println("testing, testing, 123");
 	}
-	
-	//convert time to properly formatted string
-	private String timeToFormattedString(double aTimeInSec) {
-		int theMins = (int)aTimeInSec / 60;
-		int theHours = theMins / 60;
-					
-		String theMinsString = Integer.toString( theMins % 60 );
-		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
-					
-		if( theMinsString.length() < 2 ) {
-			theMinsString = "0" + theMinsString;
-		}
-					
-		if( theHoursString.length() < 2 ) {
-			theHoursString = "0" + theHoursString;
-	    }
-			        
-		if( theSecondString.length() < 4 ) {
-			theSecondString = "0" + theSecondString;
-		}
-					
-		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
-	}
-	
+		
 	private double generateTimeTotal(double[] aTimeArray) {
 		double theTotal = 0;
 		for(int i = 0; i < aTimeArray.length; i++) {
