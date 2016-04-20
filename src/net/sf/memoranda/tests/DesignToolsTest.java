@@ -67,17 +67,6 @@ public class DesignToolsTest {
 		DesignTools.deleteSelected();
 		assertTrue("Should be True",DesignTools.DELETE.isActive());	
 	}
-
-	@Test
-	public void testGetTitle() {
-		assertEquals("Should be equal","Delete", DesignTools.DELETE.getTitle());
-		assertEquals("Should be equal","Text",DesignTools.TEXT.getTitle());
-		assertEquals("Should be equal","Rectangle",DesignTools.RECTANGLE.getTitle());
-		assertEquals("Should be equal","Circle",DesignTools.CIRCLE.getTitle());
-		assertEquals("Should be equal","Line",DesignTools.LINE.getTitle());
-		assertEquals("Should be equal","Select",DesignTools.SELECT.getTitle());
-	}
-
 	@Test
 	public void testSelectSelected() {
 		DesignTools.selectSelected();
