@@ -96,6 +96,7 @@ public class PSPProcess extends Observable{
 	 */
 	public void addDefect(Defect newDefect){	//To be used by CodingPanel
 		defects.addElement(newDefect);			//to add a defect
+		notifySummaryDefects();
 	}
 	/**
 	 * Remove an Defect object from the Defect vector.
@@ -103,6 +104,16 @@ public class PSPProcess extends Observable{
 	 */
 	public void removeDefect(int index){
 		defects.remove(index);
+		notifySummaryDefects();
+	}
+	
+	/**
+	 * get size of defects vector
+	 * @param none
+	 * @return estimation vector size int
+	 */
+	public int getDefectsSize(){
+		return defects.size();
 	}
 	
 	/**
@@ -113,6 +124,7 @@ public class PSPProcess extends Observable{
 	public TimerLog getTimerLog(int index){
 		return timelogs.elementAt(index);
 	}
+	
 	/**
 	 * Get all TimerLog objects.
 	 * @return A Vector of all TimerLog objects
@@ -291,6 +303,12 @@ public class PSPProcess extends Observable{
 	    	summPanelObs.updateTimeLogs();
 	    	summPanelObs.updatePercentErrors();
 	    	summPanelObs.updateToDatePercentages();
+	    }
+	} 
+	
+	public void notifySummaryDefects(){
+	    if(summPanelObs != null) {
+	    	summPanelObs.updateDefectsTable();
 	    }
 	} 
 	

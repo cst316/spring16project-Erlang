@@ -41,16 +41,11 @@ public class PSPPanel extends JPanel {
 	DesignPanel designPanel = new DesignPanel();
 
 	CodeEstimationPanel codeEstimationPanel = null;
-	CodingPanel codingPanel = new CodingPanel();
+	CodingPanel codingPanel = new CodingPanel(pspProcess);
 	SummaryPanel summaryPanel = new SummaryPanel(pspProcess);
 
-//	EstimationPanel estimationPanel = null;
-//	CodingPanel codingPanel = new CodingPanel(); 
-//	SummaryPanel summaryPanel = new SummaryPanel();
-//	EstimatePanel estimatePanel = new EstimatePanel();
 	StopWatch watch;
-
-			
+	
 	ImageIcon web = new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
 			.getResource("resources/icons/web.png"));

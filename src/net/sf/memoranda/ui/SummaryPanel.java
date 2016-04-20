@@ -14,10 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import net.sf.memoranda.Defect;
 import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
 import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
+import net.sf.memoranda.TimerLog.PspStage;
 
 
 /**
@@ -50,8 +52,8 @@ public class SummaryPanel extends JPanel{
             {"LOC/Hour", " ", " ", " "," "},
             {"Defect/KLOC", " ", " ", " "," "} };
 	
-	Object timeColumns[] = { " ", "Estimated", "Actual", "% Error", "To Date %"};
-	Object defectColumns[] = { " ", "Count", "To Date %"};
+	Object timeColumns[] = { " ", "Estimated", "Actual", "% Error", "% Comp."};
+	Object defectColumns[] = { " ", "Count", "% Comp."};
 	Object prodColumns[] = { " ", "Estimated", "Actual"};
 	DefaultTableModel timeTableModel;
 	DefaultTableModel defectTableModel;
@@ -76,11 +78,7 @@ public class SummaryPanel extends JPanel{
       this.pspProcess.attachSummaryObserver(this);
   
   	  timeTable = new JTable();	
-  	  initializeTimeTable();
-  	  updateTimeEstimates();
-  	  updateTimeLogs();
-  	  updatePercentErrors();
-  	  updateToDatePercentages();
+  	  
   	  JScrollPane timeScrollPane = new JScrollPane(timeTable);
   	  add(timeScrollPane);
   	  timeScrollPane.setBounds(250,50,500, 160);
@@ -115,6 +113,13 @@ public class SummaryPanel extends JPanel{
 	  locTextField = new JTextField();
 	  locTextField.setBounds(560, 490, 100, 25);
 	  add(locTextField);
+	  
+	  initializeTimeTable();
+  	  updateTimeEstimates();
+  	  updateTimeLogs();
+  	  updatePercentErrors();
+  	  updateToDatePercentages();
+  	  updateDefectsTable();
 	  
   	  setVisible(true);	
 	}
@@ -168,7 +173,7 @@ public class SummaryPanel extends JPanel{
 		double[] thePercentages = pspProcess.getToDatePercentages();
 		for(int i = 0; i < thePercentages.length; i++){
 			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
-			 this.timeTableModel.setValueAt(theTimeString, i, 4);
+			 this.timeTableModel.setValueAt(theTimeString+"%", i, 4);
 		}
 		this.timeTableModel.setValueAt("-----", 7, 3);
 	}
@@ -177,7 +182,7 @@ public class SummaryPanel extends JPanel{
 		double[] thePercentages = pspProcess.getTimeLogPercentError();
 		for(int i = 0; i < thePercentages.length; i++){
 			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
-			 this.timeTableModel.setValueAt(theTimeString, i, 3);
+			 this.timeTableModel.setValueAt(theTimeString+"%", i, 3);
 		}
 		this.timeTableModel.setValueAt("-----", 7, 4);
 	}
@@ -192,6 +197,28 @@ public class SummaryPanel extends JPanel{
 			theTotal = theTotal + aTimeArray[i];
 		}
 		return theTotal;
+	}
+	
+	public void updateDefectsTable() {
+		System.out.println("updateDefectsTable() called");
+		int[] theCounts = new int[7];
+		int theTotal = 0;
+		Vector<Defect> theDefects = pspProcess.getAllDefects(); 
+		for(int i = 0; i < theDefects.size(); i++) {
+			Defect theDefect = theDefects.get(i);
+			theCounts[theDefect.getInject().ordinal()] = theCounts[theDefect.getInject().ordinal()] + 1;
+			theTotal++;
+		}
+		for(int i = 0; i < theCounts.length; i++) {
+			this.defectTableModel.setValueAt(theCounts[i], i, 1);
+			String thePrcnt = "0.0";
+			if(theTotal > 0) {
+				thePrcnt = String.format ( "%.1f",( ((double)theCounts[i]/theTotal) * 100.0 ) );
+			}
+			this.defectTableModel.setValueAt(thePrcnt+"%", i, 2);
+		}
+		this.defectTableModel.setValueAt(theTotal, 7, 1);
+		this.defectTableModel.setValueAt("-----", 7, 2);
 	}
 
 		
