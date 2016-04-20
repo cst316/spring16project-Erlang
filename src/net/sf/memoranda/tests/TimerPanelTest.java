@@ -35,7 +35,6 @@ public class TimerPanelTest {
 	 Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
 	 private String timeString; 
 	StopWatch stopWatchTest = new StopWatch(pspProcess);
-	 
 	
 	
 	@Before

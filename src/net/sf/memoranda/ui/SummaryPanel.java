@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.SummaryObject;
+import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
 
 
@@ -37,7 +38,7 @@ public class SummaryPanel extends JPanel{
             {"Maximum Size ", " ", " ", " "," "},
             {"Minimum Size ", " ", " ", " "," "},
             {" ", " ", " ", " "," "},
-            {"Timein Phase (min.)","Estimation", "Actual", "To Date", "To Date %"},
+            {"Timein Phase (min.)","Estimation", "Actual", "% Error", "To Date %"},
             {"Planning ", " ", " ", " "," "},
             {"Design ", " ", " ", " "," "},
             {"Code ", " ", " ", " "," "},
@@ -90,6 +91,8 @@ public class SummaryPanel extends JPanel{
   	  initializeTable();
   	  updateTimeEstimates();
   	  updateTimeLogs();
+  	  updatePercentErrors();
+  	  updateToDatePercentages();
   	  JScrollPane scrollPane = new JScrollPane(tableSummary);
   	  JPanel panel = new JPanel();
   	  panel.add(scrollPane);
@@ -110,82 +113,44 @@ public class SummaryPanel extends JPanel{
 	public void updateTimeEstimates() {
 		double[] theTimes = pspProcess.getTimeEstimations();
 		for(int i = 0; i < theTimes.length; i++){
-			 String theTimeString = timeToFormattedString(theTimes[i]);
+			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 1);
 		}
-		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
 		this.tableModel.setValueAt(theTotalString, 20, 1);
 	}
 	
 	public void updateTimeLogs() {
 		Vector<TimerLog> theTimerLogs = pspProcess.getAllTimerLogs();
-		double[] theTimes = new double[7];
-		for(int i = 0; i < theTimerLogs.size(); i++) {
-			TimerLog theTimerLog = theTimerLogs.get(i);
-			int theIndex = 0;
-			switch(theTimerLog.getcStage())
-			{
-			case PLANNING:
-				theIndex = 0;
-				break;
-			case DESIGN:
-				theIndex = 1;
-				break;
-			case CODE:
-				theIndex = 2;
-				break;
-			case CODEREVIEW:
-				theIndex = 3;
-				break;
-			case COMPILE:
-				theIndex = 4;
-				break;
-			case TEST:
-				theIndex = 5;
-				break;
-			case POSTMORTEM:
-				theIndex = 6;
-				break;
-			}
-			theTimes[theIndex] = theTimes[theIndex] + theTimerLog.getTimeValue();
-		}
+		double[] theTimes = pspProcess.getTimerLogSectTotals();
 		for(int i = 0; i < theTimes.length; i++){
-			 String theTimeString = timeToFormattedString(theTimes[i]);
+			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.tableModel.setValueAt(theTimeString, (13+i), 2);
 		}
-		String theTotalString = timeToFormattedString(generateTimeTotal(theTimes));
+		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
 		this.tableModel.setValueAt(theTotalString, 20, 2);
 	}
-
+	
+	public void updateToDatePercentages() {
+		double[] thePercentages = pspProcess.getToDatePercentages();
+		for(int i = 0; i < thePercentages.length; i++){
+			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
+			 this.tableModel.setValueAt(theTimeString, (13+i), 4);
+		}
+	}
+	
+	public void updatePercentErrors() {
+		double[] thePercentages = pspProcess.getTimeLogPercentError();
+		for(int i = 0; i < thePercentages.length; i++){
+			 String theTimeString = String.format ( "%.1f",( thePercentages[i] * 100.0 ) );
+			 this.tableModel.setValueAt(theTimeString, (13+i), 3);
+		}
+	}
 
 	public void update() {
 		System.out.println("testing, testing, 123");
 	}
-	
-	//convert time to properly formatted string
-	private String timeToFormattedString(double aTimeInSec) {
-		int theMins = (int)aTimeInSec / 60;
-		int theHours = theMins / 60;
-					
-		String theMinsString = Integer.toString( theMins % 60 );
-		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
-					
-		if( theMinsString.length() < 2 ) {
-			theMinsString = "0" + theMinsString;
-		}
-					
-		if( theHoursString.length() < 2 ) {
-			theHoursString = "0" + theHoursString;
-	    }
-			        
-		if( theSecondString.length() < 4 ) {
-			theSecondString = "0" + theSecondString;
-		}
-					
-		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
-	}
-	
+		
 	private double generateTimeTotal(double[] aTimeArray) {
 		double theTotal = 0;
 		for(int i = 0; i < aTimeArray.length; i++) {

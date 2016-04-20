@@ -146,6 +146,82 @@ public class PSPProcess extends Observable{
 	}
 	
 	/**
+	 * get timerlog section totals
+	 * @param none
+	 * @return array of timelog section totals as doubles
+	 */
+	public double[] getTimerLogSectTotals() {
+		double[] theTimes = new double[7];
+		for(int i = 0; i < timelogs.size(); i++) {
+			TimerLog theTimerLog = timelogs.get(i);
+			int theIndex = 0;
+			switch(theTimerLog.getcStage())
+			{
+			case PLANNING:
+				theIndex = 0;
+				break;
+			case DESIGN:
+				theIndex = 1;
+				break;
+			case CODE:
+				theIndex = 2;
+				break;
+			case CODEREVIEW:
+				theIndex = 3;
+				break;
+			case COMPILE:
+				theIndex = 4;
+				break;
+			case TEST:
+				theIndex = 5;
+				break;
+			case POSTMORTEM:
+				theIndex = 6;
+				break;
+			}
+			theTimes[theIndex] = theTimes[theIndex] + theTimerLog.getTimeValue();
+		}
+		return theTimes;
+	}
+	
+	public double[] getTimeLogPercentError() {
+		double[] thePercentages = new double[7];
+		double[] theTimes = getTimerLogSectTotals();
+		for(int i = 0; i < theTimes.length; i++) {
+			if (theTimes[i] > 0.0 && this.timeEstimates[i] > 0.0) {
+				thePercentages[i] = Math.abs(this.timeEstimates[i] - theTimes[i]) / theTimes[i];
+			}
+			else {
+				thePercentages[i] = 0.0;
+			}
+		}
+		return thePercentages;
+	}
+	
+	/**
+	 * get to date percentages of timerlogs 
+	 * @param none
+	 * @return timelog to date percentages as an array of doubles 
+	 */
+	public double[] getToDatePercentages() {
+		double[] thePercentages = new double[7];
+		double[] theTimes = getTimerLogSectTotals();
+		double theTotal = 0.0;
+		for(double theTime : theTimes) {
+			theTotal = theTotal + theTime;
+		}
+		for(int i = 0; i < theTimes.length; i++) {
+			if (theTotal > 0.0) {
+			    thePercentages[i] = theTimes[i]/theTotal;
+			}
+			else {
+				thePercentages[i] = 0.0;
+			}
+		}
+		return thePercentages;
+	}
+	
+	/**
 	 * Get the planning object.
 	 * @return the planning to be returned
 	 */
@@ -205,12 +281,16 @@ public class PSPProcess extends Observable{
 	public void notifySummaryAboutTimeEstimations(){
 	    if(summPanelObs != null) {
 	    	summPanelObs.updateTimeEstimates();
+	    	summPanelObs.updatePercentErrors();
+	    	summPanelObs.updateToDatePercentages();
 	    }
 	} 
 	
 	public void notifySummaryAboutTimeLogs(){
 	    if(summPanelObs != null) {
 	    	summPanelObs.updateTimeLogs();
+	    	summPanelObs.updatePercentErrors();
+	    	summPanelObs.updateToDatePercentages();
 	    }
 	} 
 	

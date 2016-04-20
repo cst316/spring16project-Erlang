@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
@@ -82,7 +83,7 @@ public class StopWatch extends JPanel {
 		pspProcess = aPSPProcess;
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = timeToFormattedString(clockTime);
+		timeString = TimeConverter.secondsToFormattedString(clockTime);
 		
 		setLayout(null);
 		
@@ -228,7 +229,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				clockTick++;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = timeToFormattedString(clockTime);
+				timeString = TimeConverter.secondsToFormattedString(clockTime);
 				displayTime.setText(timeString);
 			    }
 			});
@@ -309,7 +310,7 @@ public class StopWatch extends JPanel {
 	private void addNewTimerLog(TimerLog aTimerLog) {
 		pspProcess.addTimerLog(aTimerLog);
 		String theStage = stageEnumToString(aTimerLog.getcStage());
-		String theFormattedTime = timeToFormattedString(aTimerLog.getTimeValue());
+		String theFormattedTime = TimeConverter.secondsToFormattedString(aTimerLog.getTimeValue());
 		Object[] theRow = { theStage, theFormattedTime };
 		tableModel.addRow(theRow);
 	}
@@ -354,7 +355,7 @@ public class StopWatch extends JPanel {
 	private void resetTime() {
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = timeToFormattedString(clockTime);
+		timeString = TimeConverter.secondsToFormattedString(clockTime);
 		displayTime.setText(timeString);
 	}
 	
@@ -362,30 +363,6 @@ public class StopWatch extends JPanel {
 		customTimeSec.setText("");
 		customTimeMin.setText("");
 		customTimeHrs.setText("");
-	}
-	
-	//convert time to properly formatted string
-	private String timeToFormattedString(double aTimeInSec) {
-		int theMins = (int)aTimeInSec / 60;
-		int theHours = theMins / 60;
-			
-		String theMinsString = Integer.toString( theMins % 60 );
-		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
-			
-		if( theMinsString.length() < 2 ) {
-			theMinsString = "0" + theMinsString;
-		}
-			
-	    if( theHoursString.length() < 2 ) {
-	        theHoursString = "0" + theHoursString;
-	    }
-	        
-	    if( theSecondString.length() < 4 ) {
-	        theSecondString = "0" + theSecondString;
-	    }
-			
-		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
 	}
 	
 	private void populateTable() {
