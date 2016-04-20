@@ -1,4 +1,4 @@
-MEMORANDA 1.0 RELEASE NOTES
+MEMORANDA 2.0 RELEASE NOTES
 
 
 Welcome to the first release of Memoranda!
@@ -14,7 +14,7 @@ of this project!
 Team Erlang 
 ===========================================================================
 
-				WHAT'S NEW ON MEMORANDA 1.0?
+				WHAT'S NEW ON MEMORANDA 2.0?
 
 ===========================================================================
 
@@ -55,7 +55,7 @@ where the times are also transferred to the Postmortem Summary tab.
 
 
 Summary:
-	- Current Version: 1.0 (Apr-18-2016)
+	- Current Version: 2.0 (Apr-18-2016)
 	- Modifications:
 		- Personal Software Process Tabs
 			- PSP Process object for storing information
