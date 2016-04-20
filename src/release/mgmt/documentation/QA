@@ -245,6 +245,10 @@ A.: In order of working with PSP on Memoranda, you need to have Java SE 8 Runtim
 To download/update click here - http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 
+ ------------------
+  Q.: Can I upload a file to the design tab in the 'PSP' panel ?
+A.: No, not at this time, although it may be implemented in the future.
+
 
 
 
