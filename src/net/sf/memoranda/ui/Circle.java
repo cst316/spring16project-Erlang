@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D.Double;
  * @author Carlos
  *
  */
-public class Circle extends Double implements MemorandaShape{
+public class Circle extends Double implements IMemorandaShape{
 	private Color color;
 	private int stroke;
 
