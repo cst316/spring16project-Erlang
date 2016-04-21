@@ -1,4 +1,5 @@
 package net.sf.memoranda.ui;
+
 //Testing 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -6,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -111,7 +113,7 @@ public class PSPPanel extends JPanel {
 //		this.setLayout(new FlowLayout());
 
 	public PSPPanel(WorkPanel _parentPanel){
-		super(new GridBagLayout());
+		super(new BorderLayout());
 		this.setPreferredSize(_parentPanel.getPreferredSize());
 		watch = new StopWatch(pspProcess);
 		pspTabs.setPreferredSize(new Dimension(920,670));
@@ -123,24 +125,12 @@ public class PSPPanel extends JPanel {
 		codeEstimationPanel = new CodeEstimationPanel(pspProcess);
 
 		this.initializeTabs();
-
-		setUpDisplay();
-	}
-	/**
-	 * This method setsup the PSPanel to display the stop watch and
-	 * the PSPTabs together
-	 */
-	public void setUpDisplay(){
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		this.add(pspTabs,c);
 		
-		c.gridx = 1;
-		this.add(watch, c);
+		this.add(watch, BorderLayout.EAST);
+		this.add(pspTabs, BorderLayout.CENTER);
+		
 	}
-	
+
 	
 /**
  * This method initializes tabs for the PSP Panel. Each Tab will resemble Development,
@@ -157,6 +147,12 @@ public class PSPPanel extends JPanel {
 	private void initializeTabs(){
 		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
 		planningTabPane.addTab("Planning Notes", web, planPanel,"Edit the plan");	
+
+
+		
+		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
+	//	planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
+
 		planningPanel.add(planningTabPane);
 		
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
@@ -166,9 +162,12 @@ public class PSPPanel extends JPanel {
 		
 		postmortemTabPane.addTab("Summary", web, summaryPanel, "Tables");
 		postmortemPanel.add(postmortemTabPane);
-
-		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
-		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
+		
+		JScrollPane planScroller = new JScrollPane(planningPanel);
+		JScrollPane devScroller = new JScrollPane(developmentPanel);
+		
+		pspTabs.add("Planning",planScroller);
+		pspTabs.add("Development",devScroller);
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 
 	 //   showSummay();
