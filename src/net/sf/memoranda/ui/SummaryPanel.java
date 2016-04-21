@@ -7,19 +7,25 @@ import java.util.Vector;
 
 import javax.swing.JButton;////////Delete
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import net.sf.memoranda.Defect;
+import net.sf.memoranda.Estimation;
 import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.SummaryCalculator;
 import net.sf.memoranda.SummaryObject;
 import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
+import net.sf.memoranda.util.Local;
 
 
 /**
@@ -70,6 +76,12 @@ public class SummaryPanel extends JPanel{
 	
 	protected PSPProcess pspProcess;
 	
+	double timerLogTotal;
+	double estimateTimeTotal;
+	long defectTotal;
+	long locActualTotal;
+	long locEstTotal;
+	
 	public SummaryPanel(PSPProcess pspProcess){
 
       this.setPreferredSize(new Dimension(1000, 1000));
@@ -114,14 +126,44 @@ public class SummaryPanel extends JPanel{
 	  locTextField.setBounds(560, 490, 100, 25);
 	  add(locTextField);
 	  
+	  addListenersToTextFields();
 	  initializeTimeTable();
   	  updateTimeEstimates();
   	  updateTimeLogs();
   	  updatePercentErrors();
   	  updateToDatePercentages();
   	  updateDefectsTable();
+  	  updateProdTable();
 	  
   	  setVisible(true);	
+	}
+	
+	private void addListenersToTextFields() {
+		DocumentListener theDocListnr = new DocumentListener() {
+		    public void changedUpdate(DocumentEvent e) {
+		    	incorporateEnteredLOC();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				incorporateEnteredLOC();
+			}
+		    public void insertUpdate(DocumentEvent e) {
+		    	incorporateEnteredLOC();
+		    }
+				  
+			public void incorporateEnteredLOC() {
+			    try {
+			    	if(!locTextField.getText().isEmpty()) {
+			    	    locActualTotal = Long.parseLong(locTextField.getText());
+			    	} else {
+			    		locActualTotal = 0;
+			    	}
+			    	updateProdTable();
+			    } catch (NumberFormatException e) {
+			    	JOptionPane.showMessageDialog(null,Local.getString("Only numbers are allowed as entry"));
+			    }
+			}
+		};
+		locTextField.getDocument().addDocumentListener(theDocListnr);		  
 	}
 	
 	private void initializeTimeTable() {
@@ -154,7 +196,8 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.timeTableModel.setValueAt(theTimeString, i, 1);
 		}
-		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
+		estimateTimeTotal = SummaryCalculator.timeTotal(theTimes);
+		String theTotalString = TimeConverter.secondsToFormattedString(estimateTimeTotal);
 		this.timeTableModel.setValueAt(theTotalString, 7, 1);
 	}
 	
@@ -165,7 +208,8 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.timeTableModel.setValueAt(theTimeString, i, 2);
 		}
-		String theTotalString = TimeConverter.secondsToFormattedString(generateTimeTotal(theTimes));
+		timerLogTotal = SummaryCalculator.timeTotal(theTimes);
+		String theTotalString = TimeConverter.secondsToFormattedString(timerLogTotal);
 		this.timeTableModel.setValueAt(theTotalString, 7, 2);
 	}
 	
@@ -186,23 +230,40 @@ public class SummaryPanel extends JPanel{
 		}
 		this.timeTableModel.setValueAt("-----", 7, 4);
 	}
+	
+	public void updateProdTable() {
+		updateEstimatedLOCTotal();
+		this.prodTableModel.setValueAt(this.locEstTotal, 0, 1);
+		String theEstLOCPH = String.format
+				( "%.1f",SummaryCalculator.lOCPerHour(this.locEstTotal, this.estimateTimeTotal));
+		this.prodTableModel.setValueAt(theEstLOCPH, 1, 1);
+		this.prodTableModel.setValueAt("-----", 2, 1);
+		this.prodTableModel.setValueAt(this.locActualTotal, 0, 2);
+		String theActLOCPH = String.format 
+				( "%.1f",SummaryCalculator.lOCPerHour(this.locActualTotal, this.timerLogTotal));
+		this.prodTableModel.setValueAt(theActLOCPH, 1, 2);
+		String theDfctKLOC = String.format 
+				( "%.1f",SummaryCalculator.defectsPerKLOC(this.defectTotal, this.locActualTotal));
+		this.prodTableModel.setValueAt(theDfctKLOC, 2, 2);
+	}
 
 	public void update() {
 		System.out.println("testing, testing, 123");
 	}
 		
-	private double generateTimeTotal(double[] aTimeArray) {
-		double theTotal = 0;
-		for(int i = 0; i < aTimeArray.length; i++) {
-			theTotal = theTotal + aTimeArray[i];
+	private void updateEstimatedLOCTotal() {
+		Vector<Estimation> theEstimations = pspProcess.getAllEstimations();
+		long theTotal = 0;
+		for(Estimation theEst: theEstimations) {
+			theTotal = theTotal + theEst.getLineCount();
 		}
-		return theTotal;
+		locEstTotal = theTotal;
 	}
 	
 	public void updateDefectsTable() {
 		System.out.println("updateDefectsTable() called");
 		int[] theCounts = new int[7];
-		int theTotal = 0;
+		long theTotal = 0;
 		Vector<Defect> theDefects = pspProcess.getAllDefects(); 
 		for(int i = 0; i < theDefects.size(); i++) {
 			Defect theDefect = theDefects.get(i);
@@ -217,6 +278,7 @@ public class SummaryPanel extends JPanel{
 			}
 			this.defectTableModel.setValueAt(thePrcnt+"%", i, 2);
 		}
+		this.defectTotal = theTotal;
 		this.defectTableModel.setValueAt(theTotal, 7, 1);
 		this.defectTableModel.setValueAt("-----", 7, 2);
 	}
