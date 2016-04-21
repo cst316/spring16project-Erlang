@@ -1,20 +1,15 @@
 package net.sf.memoranda.ui;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.KeyEvent;
-
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 /**
  * initializes the PSPPanel to display different PSP Panes
  * @author Carlos
- *
+ * @version 2.0
  */
 public class PSPPanel extends JPanel {
 	
@@ -32,8 +27,10 @@ public class PSPPanel extends JPanel {
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 	EstimationPanel estimationPanel = null;
-	CodingPanel codingPanel = new CodingPanel();
+	CodingPanel codingPanel = new CodingPanel(); 
 	SummaryPanel summaryPanel = new SummaryPanel();
+	StopWatch watch;
+
 	
 	Object rowSummary[][] = { { " "," ", " ", " "," "},
             {"Summary ", " ", " ", " "," "},
@@ -87,11 +84,33 @@ public class PSPPanel extends JPanel {
 	 * 
 	 * @param parent used to initialize planning panel tab
 	 */
-	public PSPPanel(DailyItemsPanel parent){
-		planPanel = new PlanningPanel(parent);
+	public PSPPanel(WorkPanel _parentPanel){
+		super(new GridBagLayout());
+		this.setPreferredSize(_parentPanel.getPreferredSize());
+		watch = new StopWatch();
+		pspTabs.setPreferredSize(new Dimension(920,670));
+		watch.setPreferredSize(new Dimension(300,670));
+		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
+		planPanel = new PlanningPanel(dPanel);						
+		ImportDataTimer testing = new ImportDataTimer();
 		estimationPanel = new EstimationPanel();
-		this.setLayout(new FlowLayout());
 		this.initializeTabs();
+
+		setUpDisplay();
+	}
+	/**
+	 * This method setsup the PSPanel to display the stop watch and
+	 * the PSPTabs together
+	 */
+	public void setUpDisplay(){
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(pspTabs,c);
+		
+		c.gridx = 1;
+		this.add(watch, c);
 	}
 	
 	
@@ -104,8 +123,12 @@ public class PSPPanel extends JPanel {
  * @version 1.0 
 =======
  * @author Team Erlang
+<<<<<<< HEAD
+ * @version 3.0
+=======
  * @version 2.0
 >>>>>>> 0fd68408fa1526ba53fa6eaaaa080bf25b84c429
+>>>>>>> master
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");	
@@ -124,7 +147,7 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 	    showSummay();
-	    
+
 	    this.add(pspTabs);
 	}	
 	
