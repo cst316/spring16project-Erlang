@@ -129,7 +129,7 @@ public class ReportSettingsTest {
 		assertFalse(testSettings.isWithProjectStatus());
 		assertFalse(testSettings.isWithProjectDescription());
 		assertFalse(testSettings.isWithTasks());
-		assertFalse(testSettings.isWithTaskIDs());
+		assertFalse(testSettings.isWithTaskIDs()); 
 		assertFalse(testSettings.isWithTaskDates());
 		assertFalse(testSettings.isWithTaskText());
 		assertFalse(testSettings.isWithTaskPriority());
