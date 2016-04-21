@@ -59,6 +59,7 @@ public class PSPProcess extends Observable{
 	 */
 	public void addEstimation(Estimation newEstimation){
 		estimation.addElement(newEstimation);
+		notifySummaryProd();
 	}
 	/**
 	 * Remove an Estimation object from the Estimation vector.
@@ -66,6 +67,7 @@ public class PSPProcess extends Observable{
 	 */
 	public void removeEstimation(int index){
 		estimation.remove(index);
+		notifySummaryProd();
 	}
 	/**
 	 * get size of estimation vector
@@ -295,6 +297,7 @@ public class PSPProcess extends Observable{
 	    	summPanelObs.updateTimeEstimates();
 	    	summPanelObs.updatePercentErrors();
 	    	summPanelObs.updateToDatePercentages();
+	    	notifySummaryProd();
 	    }
 	} 
 	
@@ -303,15 +306,22 @@ public class PSPProcess extends Observable{
 	    	summPanelObs.updateTimeLogs();
 	    	summPanelObs.updatePercentErrors();
 	    	summPanelObs.updateToDatePercentages();
+	    	notifySummaryProd();
 	    }
 	} 
 	
 	public void notifySummaryDefects(){
 	    if(summPanelObs != null) {
 	    	summPanelObs.updateDefectsTable();
+	    	notifySummaryProd();
 	    }
 	} 
 	
+	public void notifySummaryProd(){
+	    if(summPanelObs != null) {
+	    	summPanelObs.updateProdTable();
+	    }
+	} 
 	
 	
 	

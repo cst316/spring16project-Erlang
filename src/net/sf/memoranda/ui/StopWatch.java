@@ -76,6 +76,7 @@ public class StopWatch extends JPanel {
 	 Object[][] data = {};
 	 PSPProcess pspProcess;
 	 
+	 
 	/**
 	 * Create the panel.
 	 */
