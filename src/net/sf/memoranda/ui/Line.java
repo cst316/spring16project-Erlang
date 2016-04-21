@@ -7,7 +7,7 @@ import java.awt.geom.Line2D.Double;
  * @author Carlos
  *
  */
-public class Line extends Double implements MemorandaShape{
+public class Line extends Double implements IMemorandaShape{
 	private Color color;
 	private int stroke;
 	public Line(double x1, double y1, double x2, double y2){

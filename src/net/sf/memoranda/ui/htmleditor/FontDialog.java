@@ -107,7 +107,8 @@ public class FontDialog extends JDialog {
 			}
 		});
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(10, 10, 5, 5);
@@ -122,19 +123,22 @@ public class FontDialog extends JDialog {
 			BorderFactory.createEmptyBorder(), Local.getString("Font size")));
 		fontSizeCB.setPreferredSize(new Dimension(60, 50));
 		gbc = new GridBagConstraints();
-		gbc.gridx = 2; gbc.gridy = 0;
+		gbc.gridx = 2; 
+		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 5, 5, 10);
 		areaPanel.add(fontSizeCB, gbc);
 		lblTextColor.setText(Local.getString("Font color"));		
 		gbc = new GridBagConstraints();
-		gbc.gridx = 0; gbc.gridy = 1;
+		gbc.gridx = 0; 
+		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(5, 20, 5, 5);
 		areaPanel.add(lblTextColor, gbc);
 		colorField.setPreferredSize(new Dimension(60, 25));
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1; gbc.gridy = 1;
+		gbc.gridx = 1; 
+		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		areaPanel.add(colorField, gbc);
@@ -148,7 +152,8 @@ public class FontDialog extends JDialog {
 			"resources/icons/color.png")));
 		colorB.setPreferredSize(new Dimension(25, 25));
 		gbc = new GridBagConstraints();
-		gbc.gridx = 2; gbc.gridy = 1;
+		gbc.gridx = 2; 
+		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(5, 5, 5, 5);
 		areaPanel.add(colorB, gbc);
@@ -161,7 +166,8 @@ public class FontDialog extends JDialog {
 		sample.setPreferredSize(new Dimension(250, 50));
 		samplePanel.add(sample);		
 		gbc = new GridBagConstraints();
-		gbc.gridx = 0; gbc.gridy = 2;
+		gbc.gridx = 0; 
+		gbc.gridy = 2;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 2;
 		gbc.fill = GridBagConstraints.BOTH;

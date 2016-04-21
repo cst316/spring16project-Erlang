@@ -7,8 +7,8 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.util;
-import java.io.BufferedReader;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -54,7 +54,8 @@ public class ProjectPackager {
             
             PackDirectory(prDir.getPath(), prDir, zip);
             zip.putNextEntry(new ZipEntry("__PROJECT_INFO__"));
-            String prInfo = prj.getID() + "\n" + prj.getTitle() + "\n" + prj.getStartDate().toString() + "\n";
+            String prInfo = prj.getID() + "\n" + prj.getTitle() + "\n" + 
+            		prj.getStartDate().toString() + "\n";
             if (prj.getEndDate() != null)
                 prInfo += prj.getEndDate().toString();
             zip.write(prInfo.getBytes("UTF-8"));
@@ -71,7 +72,8 @@ public class ProjectPackager {
         try {
             ZipFile zip = new ZipFile(zipfile);
             ZipEntry info = zip.getEntry("__PROJECT_INFO__");
-            BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(info), "UTF-8"));
+            BufferedReader in = new BufferedReader(new 
+            		InputStreamReader(zip.getInputStream(info), "UTF-8"));
             String pId = in.readLine();
             String pTitle = in.readLine();
             String pStartD = in.readLine();
@@ -81,7 +83,8 @@ public class ProjectPackager {
                 int n =
                     JOptionPane.showConfirmDialog(
                         App.getFrame(),
-                        Local.getString("This project is already exists and will be replaced.\nContinue?"),
+                        Local.getString("This project is already exists and "
+                        		+ "will be replaced.\nContinue?"),
                         Local.getString("Project is already exists"),
                         JOptionPane.YES_NO_OPTION);
                 if (n != JOptionPane.YES_OPTION) {
@@ -90,7 +93,8 @@ public class ProjectPackager {
                 }	
                 ProjectManager.removeProject(pId);
             }
-            Project prj = ProjectManager.createProject(pId, pTitle, new CalendarDate(pStartD), null);
+            Project prj = ProjectManager.createProject(pId, pTitle, 
+            		new CalendarDate(pStartD), null);
             if (pEndD != null)
                 prj.setEndDate(new CalendarDate(pEndD));
             //File prDir = new File(JN_DOCPATH + prj.getID());
@@ -105,7 +109,8 @@ public class ProjectPackager {
                    theDirectory = null;
                 }
                 if ((!ze.getName().equals("__PROJECT_INFO__")) && (!ze.isDirectory())) {
-                    FileOutputStream out = new FileOutputStream(JN_DOCPATH + prj.getID() +"/"+ ze.getName());
+                    FileOutputStream out = new FileOutputStream(JN_DOCPATH + prj.getID() +
+                    		"/"+ ze.getName());
                     InputStream inp = zip.getInputStream(ze);
                     
                     byte[] buffer = new byte[1024];

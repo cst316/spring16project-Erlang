@@ -18,8 +18,8 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.event.CaretEvent;
@@ -85,7 +85,8 @@ public class AddResourceDialog extends JDialog {
         });
         gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         gbc.insets = new Insets(10, 15, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -93,7 +94,8 @@ public class AddResourceDialog extends JDialog {
         
         gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
-        gbc.gridx = 2; gbc.gridy = 0;
+        gbc.gridx = 2; 
+        gbc.gridy = 0;
         gbc.insets = new Insets(10, 15, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -101,7 +103,8 @@ public class AddResourceDialog extends JDialog {
         
         jLabel1.setText(Local.getString("Path")+": ");
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0; 
+        gbc.gridy = 1;
         gbc.insets = new Insets(5, 20, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -114,7 +117,8 @@ public class AddResourceDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1; 
+        gbc.gridy = 1;
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -126,7 +130,8 @@ public class AddResourceDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 2; gbc.gridy = 1;
+        gbc.gridx = 2; 
+        gbc.gridy = 1;
         gbc.insets = new Insets(5, 10, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(browseB, gbc);
@@ -137,14 +142,16 @@ public class AddResourceDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0; 
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(5, 15, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(inetShortcutRB, gbc);
         jLabel2.setText(Local.getString("URL")+":  ");
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridx = 0; 
+        gbc.gridy = 3;
         gbc.insets = new Insets(5, 20, 5, 15);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(jLabel2, gbc);
@@ -156,7 +163,8 @@ public class AddResourceDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 1; gbc.gridy = 3;
+        gbc.gridx = 1; 
+        gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(5, 5, 0, 15);
         gbc.anchor = GridBagConstraints.WEST;

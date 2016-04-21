@@ -13,23 +13,30 @@ package net.sf.memoranda.ui.treetable;
  * it only in accordance with the terms of the license agreement
  * you entered into with Sun.
  */
-
+import javax.swing.table.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.tree.*;
-import javax.swing.table.*;
-
-import net.sf.memoranda.Task;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
 import java.awt.event.MouseEvent;
-
 import java.util.EventObject;
+import javax.swing.tree.*;
+
+
+import net.sf.memoranda.Task;
+
+
+
+
+
+
+
+
+
+
 
 /**
  * This example shows how to create a simple JTreeTable component, by using a

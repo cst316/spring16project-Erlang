@@ -63,22 +63,14 @@ public class DesignPanel extends JPanel{
         
         this.pressedSwitch = false;
 	}
-	
-	
-	protected SketchToolsPanel getToolsPanel() {
-		return toolsPanel;
-	}
 
-	protected Sketch getSketch() {
-		return sketch;
-	}
 	
 	/**
 	 * This inner class will be used to stage the sketch tools for drawing the design
 	 * @author Carlos
 	 * @version 1.0
 	 */
-	private class SketchToolsPanel extends JPanel implements ActionListener{
+	private class SketchToolsPanel extends JPanel{
 		// Drop Down Menu for drawing size and colors
 		private JComboBox penSizes, penColors;
 		// contains color options
@@ -90,27 +82,19 @@ public class DesignPanel extends JPanel{
 		SketchToolsPanel(){
 			 penSizes =new JComboBox(sizes);
 		     penColors = new JComboBox(colors);
-
-	        penSizes.addActionListener(this);
-	        penColors.addActionListener(this);	        
-	        
+     	        
 	        add(penSizes);
 	        add(penColors);
-	        
-
 	        // Iterate through the enum Jbuttons, add them to this component 
 	        //and a listener to the button
 	        for(DesignTools tool : DesignTools.values()){
-	        	this.add(tool.getButton());
+	        	this.add(tool.getButton()); 
 	        	tool.getButton().addMouseListener(listener);
 	        }
 		}
 
 		public JComboBox getPenSizes() {
 			return penSizes;
-		}
-		public JComboBox getPenColors() {
-			return penColors;
 		}
 		public Color getColor(){
 			int index = penColors.getSelectedIndex();
@@ -128,26 +112,9 @@ public class DesignPanel extends JPanel{
 			case 3:
 				color = Color.blue;
 				break;
-			default: color = Color.black;//default to black
-				break;
 			}
 			return color;
 		}
-
-		@Override
-		public void actionPerformed(ActionEvent event){
-			//if pensize jcombo box is selected
-			if(toolsPanel.getPenSizes() == event.getSource()){
-				 JComboBox cb = (JComboBox)event.getSource();
-				 String size = (String)cb.getSelectedItem();
-
-				 //if pencolors jcombo box is selected
-			}else if(event.getSource() == toolsPanel.getPenColors()){
-				JComboBox cb = (JComboBox)event.getSource();
-				String color = (String)cb.getSelectedItem();
-			}	
-		}
-
 	}
 	/**
 	 * This inner class panel will be used to sketch the user's design
@@ -168,9 +135,7 @@ public class DesignPanel extends JPanel{
 			texts = new Vector<TextField>(10);
 			addMouseMotionListener(listener);
 		}
-
-
-
+		
 		public void paintComponent(Graphics graph) {
 			super.paintComponent(graph);
 			Graphics2D g2 = (Graphics2D) graph;
@@ -301,7 +266,6 @@ public class DesignPanel extends JPanel{
 		/**
 		 * This method is used to arrange the initial and 
 		 * final point values (primarily for rectangle and ellipse).
->>>>>>> Check Style Changes added
 		 * to draw the correct shape regardless of direction drawn
 		 * @param selection the case used to arrange the values of iPoint and fPoint
 		 * @return void

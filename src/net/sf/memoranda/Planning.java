@@ -1,5 +1,6 @@
 package net.sf.memoranda;
 
+import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 
 /**
@@ -12,7 +13,7 @@ public class Planning {
 
   private String programmer;
   private String programTitle;
-  private CurrentDate date;
+  private String date;
 
   /**
    * Creates new Planning process class.
@@ -21,7 +22,7 @@ public class Planning {
    * @param theTitle  the name of the project
    * @param theDate   the date the project was created
    */
-  public Planning(String theAuthor, String theTitle, CurrentDate theDate) {
+  public Planning(String theAuthor, String theTitle, String theDate) {
     programmer = theAuthor;
     date = theDate;
     programTitle = theTitle;
@@ -29,7 +30,7 @@ public class Planning {
 
   public Planning(){}
 
-  public CurrentDate getDate() {
+  public String getDate() {
     return date;
   }
 
@@ -41,7 +42,7 @@ public class Planning {
     return programmer;
   }
 
-  public void setDate(CurrentDate newDate) {
+  public void setDate(String newDate) {
     date = newDate;
   }
 

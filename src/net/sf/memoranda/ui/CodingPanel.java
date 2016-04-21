@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import net.sf.memoranda.Defect;
+import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
 
 import javax.swing.JFrame;
@@ -82,9 +84,10 @@ public class CodingPanel extends JPanel {
     private JPanel newDefectPanel = new JPanel();
     private JPanel defectTablePanel = new JPanel();
     
-    private Vector<Defect> defects = new Vector<Defect>();
+    private PSPProcess pspProcess;
 	
-	public CodingPanel(){
+	public CodingPanel(PSPProcess aPSPProcess){
+		pspProcess = aPSPProcess;
 		this.setPreferredSize(new Dimension(1000, 1000));
 		setupNewDefectPanel();
 		setupDefectTablePanel();
@@ -312,13 +315,13 @@ public class CodingPanel extends JPanel {
 	    temp.setClassName(classTextField.getText());
 	    temp.setDate(dateTextField.getText());
 	    //increment number for the user
-	    if (this.defects.size() < 1) {
+	    if (this.pspProcess.getDefectsSize()< 1) {
 	    	temp.setNumber(1);
         } else {
-	    	temp.setNumber(this.defects.get(this.defects.size() - 1).getNumber() + 1);
+	    	temp.setNumber(this.pspProcess.getAllDefects().get(this.pspProcess.getDefectsSize() - 1).getNumber() + 1);
 	    }
-	    temp.setInject(injectComboBox.getSelectedItem().toString());
-	    temp.setRemove(removeComboBox.getSelectedItem().toString());
+	    temp.setInject(PspStage.values()[injectComboBox.getSelectedIndex()]);
+	    temp.setRemove(PspStage.values()[removeComboBox.getSelectedIndex()]);
 	    try {
 	    	double theTimeValue = Double.parseDouble(fixTimeTextField.getText());
 	    	String theUnits = timeUnitsComboBox.getSelectedItem().toString();
@@ -336,7 +339,7 @@ public class CodingPanel extends JPanel {
 		temp.setStatus(statusComboBox.getSelectedItem().toString());
 		temp.setDefectType(defectComboBox.getSelectedItem().toString());
 		temp.setDescription(descriptionTextPane.getText());
-		defects.addElement(temp);
+		this.pspProcess.addDefect(temp);
 		Object[] theRow = { temp.getNumber(), temp.getClassName(), temp.getDate(), 
 				temp.getDefectType(),temp.getInject(), temp.getRemove(), 
 				decimalFormat.format(temp.getFixTime()), temp.getStatus() };
@@ -358,7 +361,7 @@ public class CodingPanel extends JPanel {
 	private void removeButtonClicked() {
 		int theRowIndex = defectTable.getSelectedRow();
 		if ( theRowIndex >= 0 ) {
-			defects.remove(theRowIndex);
+			this.pspProcess.removeDefect(theRowIndex);
 		    tableModel.removeRow(theRowIndex);
 		}
 	}
@@ -366,7 +369,7 @@ public class CodingPanel extends JPanel {
 	private void tableRowSelected() {
 		if ( defectTable.getSelectedRow() >= 0 ) {
 		    selectedDescrptionLabel.setText(
-		    		defects.get(defectTable.getSelectedRow()).getDescription());
+		    		this.pspProcess.getAllDefects().get(defectTable.getSelectedRow()).getDescription());
 		} else {
 			selectedDescrptionLabel.setText("(Nothing Selected)");
 		}

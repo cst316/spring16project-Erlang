@@ -12,9 +12,9 @@ package net.sf.memoranda.ui.treetable;
  * it only in accordance with the terms of the license agreement
  * you entered into with Sun.
  */
-
-import javax.swing.tree.*;
 import javax.swing.event.*;
+import javax.swing.tree.*;
+
  
 /**
  * @version 1.2 10/27/98
@@ -171,7 +171,9 @@ public abstract class AbstractTreeTableModel implements TreeTableModel {
     // Default impelmentations for methods in the TreeTableModel interface. 
     //
 
-    public Class getColumnClass(int column) { return Object.class; }
+    public Class getColumnClass(int column) { 
+    	return Object.class; 
+    }
 
    /** By default, make the column with the Tree in it the only editable one. 
     *  Making this column editable causes the JTable to forward mouse 

@@ -1,5 +1,7 @@
 package net.sf.memoranda;
 
+import net.sf.memoranda.TimerLog.PspStage;
+
 /**
  * 
  * @author qbecker
@@ -11,8 +13,8 @@ public class Defect {
 	private String className;
 	private String date;
 	private int number;
-	private String inject;
-	private String remove;
+	private PspStage inject;
+	private PspStage remove;
 	private double fixTime; //in minutes
 	private String status;
 	private String defectType;
@@ -20,7 +22,7 @@ public class Defect {
 	
 	public Defect(){}
 	
-	public Defect(String projectName,String date, String inject, String remove,
+	public Defect(String projectName,String date, PspStage inject, PspStage remove,
 			int fixTime, String status, String defectType, int number, String description){
 			this.date = date;
 			this.defectType = defectType;
@@ -60,19 +62,19 @@ public class Defect {
 		
 	}
 	
-	public String getInject() {
+	public PspStage getInject() {
 		return inject;
 	}
 	
-	public void setInject(String inject) {
+	public void setInject(PspStage inject) {
 		this.inject = inject;
 	}
 	
-	public String getRemove() {
+	public PspStage getRemove() {
 		return remove;
 	}
 	
-	public void setRemove(String remove) {
+	public void setRemove(PspStage remove) {
 		this.remove = remove;
 	}
 	

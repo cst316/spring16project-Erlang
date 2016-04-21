@@ -6,7 +6,7 @@ import java.awt.Color;
  * @author Carlos
  *
  */
-interface MemorandaShape{
+interface IMemorandaShape{
 		/**
 		 * This method changes the Color
 		 * @return Color attribute

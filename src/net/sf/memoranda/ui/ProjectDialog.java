@@ -85,7 +85,8 @@ public class ProjectDialog extends JDialog {
         centerPanel.setBorder(new EtchedBorder());
         titleLabel.setText(Local.getString("Title"));
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         gbc.gridwidth = 5;
         gbc.insets = new Insets(5, 10, 5, 10);
         //gbc.anchor = GridBagConstraints.WEST;
@@ -95,7 +96,8 @@ public class ProjectDialog extends JDialog {
         //prTitleField.setPreferredSize(new Dimension(270, 20));
         gbc = new GridBagConstraints();
         gbc.gridwidth = 5;
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0; 
+        gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 5, 0);
         //gbc.anchor = GridBagConstraints.EAST;
@@ -107,7 +109,8 @@ public class ProjectDialog extends JDialog {
         sdLabel.setMinimumSize(new Dimension(70, 20));
         sdLabel.setMaximumSize(new Dimension(70, 20));
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 10, 10, 10);
         centerPanel.add(sdLabel, gbc);
 
@@ -137,7 +140,8 @@ public class ProjectDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridx = 1; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         centerPanel.add(startDate, gbc);
         
@@ -150,7 +154,8 @@ public class ProjectDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 2; gbc.gridy = 2;
+        gbc.gridx = 2; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 25);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(sdButton, gbc);
@@ -163,7 +168,8 @@ public class ProjectDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 3; gbc.gridy = 2;
+        gbc.gridx = 3; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(endDateChB, gbc);
@@ -192,7 +198,8 @@ public class ProjectDialog extends JDialog {
         });
         //((JSpinner.DateEditor) endDate.getEditor()).setLocale(Local.getCurrentLocale());
         gbc = new GridBagConstraints();
-        gbc.gridx = 4; gbc.gridy = 2;
+        gbc.gridx = 4; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 5);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(endDate, gbc);
@@ -208,7 +215,8 @@ public class ProjectDialog extends JDialog {
             }
         });
         gbc = new GridBagConstraints();
-        gbc.gridx = 5; gbc.gridy = 2;
+        gbc.gridx = 5; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
         centerPanel.add(edButton, gbc);
@@ -237,17 +245,20 @@ public class ProjectDialog extends JDialog {
         bottomPanel.add(cancelButton);
         
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         getContentPane().add(topPanel, gbc);
         
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0; 
+        gbc.gridy = 1;
         gbc.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(centerPanel, gbc);
         
         gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0; 
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 0, 5, 5);
         gbc.anchor = GridBagConstraints.EAST;
         getContentPane().add(bottomPanel, gbc);

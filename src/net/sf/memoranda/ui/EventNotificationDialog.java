@@ -12,15 +12,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.File;
+import java.net.URL;
 import javax.swing.border.Border;
 
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Local;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.io.File;
-import java.net.URL;
+
+
+
+
 
 
 /*$Id: EventNotificationDialog.java,v 1.8 2004/10/18 19:08:56 ivanrise Exp $*/

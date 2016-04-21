@@ -40,7 +40,8 @@ public class CalendarDate {
         _month = month;
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, _year);
-        cal.set(Calendar.MONTH, _month);cal.getTime();
+        cal.set(Calendar.MONTH, _month);
+        cal.getTime();
         int dmax = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (day <= dmax)
           _day = day;

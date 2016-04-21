@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 import net.sf.memoranda.Defect;
+import net.sf.memoranda.TimerLog.PspStage;
 
 public class DefectTest extends TestCase {
 	
@@ -60,8 +61,8 @@ public class DefectTest extends TestCase {
 	
 	@Test
 	public void testInject(){
-		defect1.setInject("memoranda test inject");
-		assertTrue(defect1.getInject() == "memoranda test inject" );
+		defect1.setInject(PspStage.COMPILE);
+		assertTrue(defect1.getInject() == PspStage.COMPILE );
 		assertFalse(defect1.getClassName() == "hopfully not");
 	}
 	

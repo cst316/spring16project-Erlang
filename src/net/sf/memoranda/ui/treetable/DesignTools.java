@@ -58,13 +58,6 @@ public enum DesignTools {
 		this.active = active;
 	}
 	/**
-	 * This method gets the title 
-	 * @return assigned title
-	 */
-	public String getTitle() {
-		return title;
-	}
-	/**
 	 * This method sets SELECT as active and in use
 	 */
 	public static void selectSelected(){

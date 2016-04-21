@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
  * @author Carlos
  *
  */
-public class Rectangle extends Double implements MemorandaShape{
+public class Rectangle extends Double implements IMemorandaShape{
 	private Color color;
 	private int stroke;
 	

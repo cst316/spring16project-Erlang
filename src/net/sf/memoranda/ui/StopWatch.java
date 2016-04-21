@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
@@ -68,19 +70,21 @@ public class StopWatch extends JPanel {
 				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
 	 private JComboBox dropDown = new JComboBox(tabs);
 	 private JComboBox dropDownManu = new JComboBox(tabs);
-	Vector<TimerLog> TimelogArray = new Vector<TimerLog>();
 	 
 	 SavedTime savedTime = new SavedTime();
 	 private String[] columnNames = {"Area","Time"};
 	 Object[][] data = {};
+	 PSPProcess pspProcess;
+	 
 	 
 	/**
 	 * Create the panel.
 	 */
-	public StopWatch() {
+	public StopWatch(PSPProcess aPSPProcess) {
+		pspProcess = aPSPProcess;
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = timeToFormattedString(clockTime);
+		timeString = TimeConverter.secondsToFormattedString(clockTime);
 		
 		setLayout(null);
 		
@@ -226,7 +230,7 @@ public class StopWatch extends JPanel {
 			public void actionPerformed(ActionEvent evt) {
 				clockTick++;
 				clockTime = ((double)clockTick)/10.0;
-				timeString = timeToFormattedString(clockTime);
+				timeString = TimeConverter.secondsToFormattedString(clockTime);
 				displayTime.setText(timeString);
 			    }
 			});
@@ -305,19 +309,19 @@ public class StopWatch extends JPanel {
 	}
 	
 	private void addNewTimerLog(TimerLog aTimerLog) {
-		TimelogArray.addElement(aTimerLog);
+		pspProcess.addTimerLog(aTimerLog);
 		String theStage = stageEnumToString(aTimerLog.getcStage());
-		String theFormattedTime = timeToFormattedString(aTimerLog.getTimeValue());
+		String theFormattedTime = TimeConverter.secondsToFormattedString(aTimerLog.getTimeValue());
 		Object[] theRow = { theStage, theFormattedTime };
 		tableModel.addRow(theRow);
 	}
 	
 	private void removeTimerLog(int aIndex) {
-		if(aIndex < 0 || aIndex >= TimelogArray.size()) {
+		if(aIndex < 0 || aIndex >= pspProcess.getTimerLogsSize()) {
 			System.out.println("Trying to remove from ouside of the TimeLog table bounds");
 		}
 		int theRowIndex = timesTable.getSelectedRow();
-		TimelogArray.remove(theRowIndex); 
+		pspProcess.removeTimerLog(theRowIndex); 
 		tableModel.removeRow(theRowIndex);
 	}
 	
@@ -352,7 +356,7 @@ public class StopWatch extends JPanel {
 	private void resetTime() {
 		clockTick = 0;
 		clockTime = ((double)clockTick)/10.0;
-		timeString = timeToFormattedString(clockTime);
+		timeString = TimeConverter.secondsToFormattedString(clockTime);
 		displayTime.setText(timeString);
 	}
 	
@@ -360,30 +364,6 @@ public class StopWatch extends JPanel {
 		customTimeSec.setText("");
 		customTimeMin.setText("");
 		customTimeHrs.setText("");
-	}
-	
-	//convert time to properly formatted string
-	private String timeToFormattedString(double aTimeInSec) {
-		int theMins = (int)aTimeInSec / 60;
-		int theHours = theMins / 60;
-			
-		String theMinsString = Integer.toString( theMins % 60 );
-		String theHoursString = Integer.toString( theHours );
-		String theSecondString = String.format ( "%.1f",( aTimeInSec % 60.0 ) );
-			
-		if( theMinsString.length() < 2 ) {
-			theMinsString = "0" + theMinsString;
-		}
-			
-	    if( theHoursString.length() < 2 ) {
-	        theHoursString = "0" + theHoursString;
-	    }
-	        
-	    if( theSecondString.length() < 4 ) {
-	        theSecondString = "0" + theSecondString;
-	    }
-			
-		return (theHoursString + ":" + theMinsString + ":" + theSecondString);
 	}
 	
 	private void populateTable() {

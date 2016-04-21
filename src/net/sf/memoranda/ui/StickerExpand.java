@@ -27,7 +27,8 @@ import net.sf.memoranda.util.Local;
 
 public class StickerExpand extends JDialog{
 	String txt;
-	Color backGroundColor, foreGroundColor;
+	Color backGroundColor;
+	Color foreGroundColor;
 	public boolean CANCELLED = true;
 	JPanel panel1 = new JPanel();
 	BorderLayout borderLayout1 = new BorderLayout();

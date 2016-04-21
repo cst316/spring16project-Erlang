@@ -58,7 +58,9 @@ public abstract class MergeSort extends Object {
     }
 
     protected void merge(int begin, int middle, int end) {
-	int           firstHalf, secondHalf, count;
+	int firstHalf;
+	int secondHalf;
+	int count;
 
 	firstHalf = count = begin;
 	secondHalf = middle + 1;
