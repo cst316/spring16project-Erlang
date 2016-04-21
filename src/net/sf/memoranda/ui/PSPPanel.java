@@ -32,14 +32,65 @@ public class PSPPanel extends JPanel {
 	JTabbedPane developmentTabPane = new JTabbedPane();
 	JTabbedPane postmortemTabPane = new JTabbedPane(); 
 
-	JPanel planningPanel = new JPanel();
+	JPanel planningPanel = new JPanel(); 
 	JPanel developmentPanel = new JPanel();
 	JPanel postmortemPanel = new JPanel();
 	
 	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel(pspProcess);
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
+//<<<<<<< HEAD
+//=======
+//	EstimationPanel estimationPanel = null;
+//	CodingPanel codingPanel = new CodingPanel(); 
+//	SummaryPanel summaryPanel = new SummaryPanel();
+//	StopWatch watch;
 
+/*	
+	Object rowSummary[][] = { { " "," ", " ", " "," "},
+            {"Summary ", " ", " ", " "," "},
+            {"Minute/LOC ", " ", " ", " "," "}, 
+            {"LOC/Hour ", " ", " ", " "," "},
+            {"Defect/KLOC ", " ", " ", " "," "},
+            {"Yield ", " ", " ", " "," "},
+            {"A/FR ", " ", " ", " "," "},
+            {"Program size (LOC) ", " ", " ", " "," "},
+            {"Total New & Change ", " ", " ", " "," "},
+            {"Maximum Size ", " ", " ", " "," "},
+            {"Minimum Size ", " ", " ", " "," "},
+            {" ", " ", " ", " "," "},
+            {"Timein Phase (min.)","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"Postmortem ", " ", " ", " "," "},
+            {"  Total ", " ", " ", " "," "},
+            {"Maximum Size ", " ", " ", " "," "},
+            {"Minimum Size ", " ", " ", " "," "},
+            {" ", " ", " ", " "," "},
+            {"Defect Injected ","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"  Total", " ", " ", " "," "}, 
+            {" ", " ", " ", " "," "},
+            {"Defect Removed ","Plan", "Actual", "To Date", "To Date %"},
+            {"Planning ", " ", " ", " "," "},
+            {"Design ", " ", " ", " "," "},
+            {"Code ", " ", " ", " "," "},
+            {"Code Review ", " ", " ", " "," "},
+            {"Compile ", " ", " ", " "," "},
+            {"Test ", " ", " ", " "," "},
+            {"  Total ", " ", " ", " "," "}};
+	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
+>>>>>>> master
+*/
 	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel(pspProcess);
 	SummaryPanel summaryPanel = new SummaryPanel(pspProcess);
@@ -98,6 +149,10 @@ public class PSPPanel extends JPanel {
  * @author Carlos 
  * @version 1.0 
 
+ * @author Team Erlang
+
+ * @version 3.0
+
  */
 	private void initializeTabs(){
 		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
@@ -115,7 +170,9 @@ public class PSPPanel extends JPanel {
 		pspTabs.addTab("Planning", planningPanel);		//Planning parent tab
 		pspTabs.addTab("Development", web, developmentPanel, "Create the project"); //Development parent tab
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
-	    
+
+	 //   showSummay();
+
 	    this.add(pspTabs);
 
 	}	
