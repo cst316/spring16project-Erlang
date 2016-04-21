@@ -27,7 +27,7 @@ import net.sf.memoranda.SummaryObject;
 public class PSPPanel extends JPanel {
 	
 	PSPProcess pspProcess = new PSPProcess();
-	
+	 
 	//Tabs for PSP implementation
 	JTabbedPane pspTabs = new JTabbedPane();
 	JTabbedPane planningTabPane = new JTabbedPane();
