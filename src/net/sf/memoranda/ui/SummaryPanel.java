@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import net.sf.memoranda.Defect;
 import net.sf.memoranda.Estimation;
 import net.sf.memoranda.PSPProcess;
+import net.sf.memoranda.SummaryCalculator;
 import net.sf.memoranda.SummaryObject;
 import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.TimerLog;
@@ -195,7 +196,7 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.timeTableModel.setValueAt(theTimeString, i, 1);
 		}
-		estimateTimeTotal = generateTimeTotal(theTimes);
+		estimateTimeTotal = SummaryCalculator.timeTotal(theTimes);
 		String theTotalString = TimeConverter.secondsToFormattedString(estimateTimeTotal);
 		this.timeTableModel.setValueAt(theTotalString, 7, 1);
 	}
@@ -207,7 +208,7 @@ public class SummaryPanel extends JPanel{
 			 String theTimeString = TimeConverter.secondsToFormattedString(theTimes[i]);
 			 this.timeTableModel.setValueAt(theTimeString, i, 2);
 		}
-		timerLogTotal = generateTimeTotal(theTimes);
+		timerLogTotal = SummaryCalculator.timeTotal(theTimes);
 		String theTotalString = TimeConverter.secondsToFormattedString(timerLogTotal);
 		this.timeTableModel.setValueAt(theTotalString, 7, 2);
 	}
@@ -233,13 +234,16 @@ public class SummaryPanel extends JPanel{
 	public void updateProdTable() {
 		updateEstimatedLOCTotal();
 		this.prodTableModel.setValueAt(this.locEstTotal, 0, 1);
-		String theEstLOCPH = String.format ( "%.1f",generateLOCPerHour(this.locEstTotal, this.estimateTimeTotal));
+		String theEstLOCPH = String.format
+				( "%.1f",SummaryCalculator.lOCPerHour(this.locEstTotal, this.estimateTimeTotal));
 		this.prodTableModel.setValueAt(theEstLOCPH, 1, 1);
 		this.prodTableModel.setValueAt("-----", 2, 1);
 		this.prodTableModel.setValueAt(this.locActualTotal, 0, 2);
-		String theActLOCPH = String.format ( "%.1f",generateLOCPerHour(this.locActualTotal, this.timerLogTotal));
+		String theActLOCPH = String.format 
+				( "%.1f",SummaryCalculator.lOCPerHour(this.locActualTotal, this.timerLogTotal));
 		this.prodTableModel.setValueAt(theActLOCPH, 1, 2);
-		String theDfctKLOC = String.format ( "%.1f",generateDefectsPerKLOC(this.defectTotal, this.locActualTotal));
+		String theDfctKLOC = String.format 
+				( "%.1f",SummaryCalculator.defectsPerKLOC(this.defectTotal, this.locActualTotal));
 		this.prodTableModel.setValueAt(theDfctKLOC, 2, 2);
 	}
 
@@ -247,31 +251,6 @@ public class SummaryPanel extends JPanel{
 		System.out.println("testing, testing, 123");
 	}
 		
-	private double generateTimeTotal(double[] aTimeArray) {
-		double theTotal = 0;
-		for(int i = 0; i < aTimeArray.length; i++) {
-			theTotal = theTotal + aTimeArray[i];
-		}
-		return theTotal;
-	}
-	
-	private double generateLOCPerHour(long aLOC, double aTimeInSec) {
-		double theValue = 0.0;
-		if(aTimeInSec > 0) {
-			double theTimeInHrs = aTimeInSec/(60.0*60.0);
-			theValue = aLOC/theTimeInHrs;
-		}
-		return theValue;
-	}
-	
-	private double generateDefectsPerKLOC(long aDefectCount, long aLOC) {
-		double theValue = 0.0;
-		if(aLOC > 0){
-			theValue = (double)aDefectCount/((double)aLOC/1000.0);
-		}
-		return theValue;
-	}
-	
 	private void updateEstimatedLOCTotal() {
 		Vector<Estimation> theEstimations = pspProcess.getAllEstimations();
 		long theTotal = 0;
@@ -280,7 +259,6 @@ public class SummaryPanel extends JPanel{
 		}
 		locEstTotal = theTotal;
 	}
-	
 	
 	public void updateDefectsTable() {
 		System.out.println("updateDefectsTable() called");
