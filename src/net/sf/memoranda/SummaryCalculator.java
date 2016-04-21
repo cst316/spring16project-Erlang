@@ -25,7 +25,7 @@ public class SummaryCalculator {
 	 */
 	public static double lOCPerHour(long aLOC, double aTimeInSec) {
 		double theValue = 0.0;
-		if(aTimeInSec > 0) {
+		if(aTimeInSec > 0 && aLOC > 0) {
 			double theTimeInHrs = aTimeInSec/(60.0*60.0);
 			theValue = aLOC/theTimeInHrs;
 		}
@@ -41,7 +41,7 @@ public class SummaryCalculator {
 	 */
 	public static double defectsPerKLOC(long aDefectCount, long aLOC) {
 		double theValue = 0.0;
-		if(aLOC > 0){
+		if(aLOC > 0 && aDefectCount > 0){
 			theValue = (double)aDefectCount/((double)aLOC/1000.0);
 		}
 		return theValue;
