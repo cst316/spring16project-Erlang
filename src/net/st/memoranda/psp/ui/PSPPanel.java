@@ -111,10 +111,11 @@ public class PSPPanel extends JPanel {
 		
 		JScrollPane planScroller = new JScrollPane(planningPanel);
 		JScrollPane devScroller = new JScrollPane(developmentPanel);
+		JScrollPane postScroller = new JScrollPane(postmortemPanel);
 		
 		pspTabs.add("Planning",planScroller);
 		pspTabs.add("Development",devScroller);
-	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
+		pspTabs.add("Postmortem",postScroller);
 
 	    this.add(pspTabs);
 	}	
