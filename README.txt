@@ -1,24 +1,37 @@
-#Testing
-# spring16project
-This is the initial dump for the cst316 spring 2016 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             Erlang-Memoranda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+README
+ This Document serves as a Readme for the Erlgang-Memoranda PSP
+ Program. It is designed for the Software Engineer or computer Science
+    
+CONTACT
+ If you have any problems, questions, or suggestions for future
+ memoranda releases please contact the release manager at
+ http://memoranda-erlang.ddns.net/mail/
+WEBSITE
+    
+ Visit our website for latest news and information!
+    
+ http://memoranda-erlang.ddns.net
+FEATURES
+ In this Release:
+1) Design : create your own UML Diagrams! WOW!
+2) Code Estimation : Record estimate Lines of Code for planned classes
+3) Planning : Record the user’s information. Accountability!
+4) Coding : Record your defects in code, associated with the phases
+5) Summary : View your data in one spot!
+VERSION
+ Version 2.0.0
+ 
+LAST EDITED
+ April 21, 2016
+RELEASE DATE
+ April 22, 2016
+NOTICE
+ This program is was last edited by Team-Erlang, Spring 2016 for the
+ purpose of learning and implementing Software Best Practices in 
+ Software Enterprise 316 (CST316) Erlang-Memoranda contains pieces of 
+ source code obtained by the Arizona State University’s School of 
+ Computing, Informatics, and Decision Systems Engineering (CIDSE).
 
-The purpose of this project is to enhance the Memoranda application to support Time Management for Software Engineers. In essence, to augment Memoranda with features that support the time management concepts in the Personal Software Process, which you learned some of last year in SER215.
-
-Memoranda is a project that has largely been dormant since 2007, so why are we using it? I have used this codebase in the past, it is of sufficient size and scope to challenge your skills in understanding a complete application (it has somewhere in the neighborhood of 25k lines of code). It also has features that just about anyone who has ever used a calendaring application can understand. Further, I have some documents from a former student project (one of the best ever done in my projects' classes) that we can leverage to help you bootstrap your Agile process.
-
-In the docs directory are a few starting documents that may help you get going on your User Stories. The first is a Project Inception document. This short document describes the vision of the project, and can serve as a guide as you write your Sprint Goals. One is a SRS - Software Requirements Specification - which has 21 use cases that you can readily translate to stories. However you are not constrained to just use these nor are you required to use all of them. 
-
-Also in the docs directory is an initial set of analysis models - class diagrams and sequence diagrams in UML, that a previous team did as part of their solution process. These were included only in the event that you may want to use these as a head start on your design and implementation work. You are absolutely not required to use or implement anything in the analysis document!
-
-Your first steps should be to get your team set up with this code, ensure you can build it and run it. The ant script should work, and you should also be able to run it directly from within Eclipse or the command line or from the .bat/.sh scripts provided.
-
-Enjoy!
-Dr. Gary
-
-
-slack.com -> teamerlangcst316
-CHANGE - rsofiov testing 2
-git status
-git add file.name
-git commit -m "message"
-git push 
