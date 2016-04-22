@@ -431,7 +431,7 @@ public class DesignPanel extends JPanel{
 				//System.out.println("Taking a screenshot");
 				try {
 					this.saveScreenShot(sketch,
-					"src/net/sf/memoranda/ui/resources/SketchImage.png");
+					"../SketchImage.png");
 				} catch (IOException eventIo){
 					eventIo.printStackTrace();
 				}
