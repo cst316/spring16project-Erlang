@@ -41,62 +41,10 @@ public class PSPPanel extends JPanel {
 	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel(pspProcess);
 	PlanningPanel planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
-//<<<<<<< HEAD
-//=======
-//	EstimationPanel estimationPanel = null;
-//	CodingPanel codingPanel = new CodingPanel(); 
-//	SummaryPanel summaryPanel = new SummaryPanel();
-//	StopWatch watch;
 
-/*	
-	Object rowSummary[][] = { { " "," ", " ", " "," "},
-            {"Summary ", " ", " ", " "," "},
-            {"Minute/LOC ", " ", " ", " "," "}, 
-            {"LOC/Hour ", " ", " ", " "," "},
-            {"Defect/KLOC ", " ", " ", " "," "},
-            {"Yield ", " ", " ", " "," "},
-            {"A/FR ", " ", " ", " "," "},
-            {"Program size (LOC) ", " ", " ", " "," "},
-            {"Total New & Change ", " ", " ", " "," "},
-            {"Maximum Size ", " ", " ", " "," "},
-            {"Minimum Size ", " ", " ", " "," "},
-            {" ", " ", " ", " "," "},
-            {"Timein Phase (min.)","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"Postmortem ", " ", " ", " "," "},
-            {"  Total ", " ", " ", " "," "},
-            {"Maximum Size ", " ", " ", " "," "},
-            {"Minimum Size ", " ", " ", " "," "},
-            {" ", " ", " ", " "," "},
-            {"Defect Injected ","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"  Total", " ", " ", " "," "}, 
-            {" ", " ", " ", " "," "},
-            {"Defect Removed ","Plan", "Actual", "To Date", "To Date %"},
-            {"Planning ", " ", " ", " "," "},
-            {"Design ", " ", " ", " "," "},
-            {"Code ", " ", " ", " "," "},
-            {"Code Review ", " ", " ", " "," "},
-            {"Compile ", " ", " ", " "," "},
-            {"Test ", " ", " ", " "," "},
-            {"  Total ", " ", " ", " "," "}};
-	Object columnSummary[] = { " ", "Plan", "Actual", "To Date", "To Date %"};
->>>>>>> master
-*/
 	CodeEstimationPanel codeEstimationPanel = null;
 	CodingPanel codingPanel = new CodingPanel(pspProcess);
 	SummaryPanel summaryPanel = new SummaryPanel(pspProcess);
-
 	StopWatch watch;
 	
 	ImageIcon web = new ImageIcon(
@@ -107,10 +55,6 @@ public class PSPPanel extends JPanel {
 	 * @param parent used to initialize planning panel tab
 	 */
 
-//	public PSPPanel(DailyItemsPanel parent){
-//		planPanel = new PlanningPanel(parent);
-//		codeEstimationPanel = new CodeEstimationPanel();
-//		this.setLayout(new FlowLayout());
 
 	public PSPPanel(WorkPanel _parentPanel){
 		super(new BorderLayout());
@@ -147,14 +91,10 @@ public class PSPPanel extends JPanel {
 	private void initializeTabs(){
 		planningTabPane.addTab("Time Estimation", web, timeEstimationPanel, "Make Time Estimations");
 		planningTabPane.addTab("Planning Notes", web, planPanel,"Edit the plan");	
-
-
-		
 		planningTabPane.addTab("Planning", web, planPanel,"Edit the plan");		//title, icon, panel, hintText
-	//	planningTabPane.addTab("Estimation", web, estimationPanel,"Edit the plan");//title, icon, panel, hintText
 
 		planningPanel.add(planningTabPane);
-		
+	
 		developmentTabPane.addTab("Design", web, designPanel, "Sketch a plan");	//Development/Design
 		developmentTabPane.addTab("Code Estimation", web, codeEstimationPanel,"Edit the plan");//title, icon, panel, hintText
 		developmentTabPane.addTab("Coding", web, codingPanel,"Document your code"); //Development/Coding
@@ -170,16 +110,7 @@ public class PSPPanel extends JPanel {
 		pspTabs.add("Development",devScroller);
 	    pspTabs.addTab("Postmortem", web, postmortemPanel);		// Summary parent Tab
 
-	 //   showSummay();
-
 	    this.add(pspTabs);
-
 	}	
-	
-	
-	/**
-	 * Method creates a table on the summary tab 
-	 */
-
 	
 }
