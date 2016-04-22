@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.st.memoranda.psp;
 
 public class SummaryCalculator {
 	

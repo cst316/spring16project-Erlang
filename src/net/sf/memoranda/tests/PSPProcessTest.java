@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import java.util.Vector;
 
-import net.sf.memoranda.Defect;
-import net.sf.memoranda.Estimation;
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.Planning;
 import net.sf.memoranda.Report;
-import net.sf.memoranda.TimerLog;
 import net.sf.memoranda.ui.ExportedImage;
-import net.sf.memoranda.ui.SummaryPanel;
+import net.st.memoranda.psp.Defect;
+import net.st.memoranda.psp.Estimation;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.Planning;
+import net.st.memoranda.psp.TimerLog;
+import net.st.memoranda.psp.ui.SummaryPanel;
 
 import org.junit.Before;
 import org.junit.Test;

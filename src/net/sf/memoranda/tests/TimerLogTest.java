@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.sf.memoranda.TimerLog;
-import net.sf.memoranda.TimerLog.PspStage;
+import net.st.memoranda.psp.TimerLog;
+import net.st.memoranda.psp.TimerLog.PspStage;
 /**
  * TimerLogTest class is a unit test for the TimeLog class.
  * @author qbecker

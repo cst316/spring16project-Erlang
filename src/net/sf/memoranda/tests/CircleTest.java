@@ -7,8 +7,8 @@ import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.memoranda.ui.Circle;
-import net.sf.memoranda.ui.Rectangle;
+import net.st.memoranda.psp.ui.Circle;
+import net.st.memoranda.psp.ui.Rectangle;
 
 public class CircleTest {
 

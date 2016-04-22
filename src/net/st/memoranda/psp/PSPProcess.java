@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.st.memoranda.psp;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -8,8 +8,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 
 import net.sf.memoranda.ui.ExportedImage;
-import net.sf.memoranda.ui.SummaryObserver;
-import net.sf.memoranda.ui.SummaryPanel;
+import net.st.memoranda.psp.ui.SummaryPanel;
 
 public class PSPProcess extends Observable{
 	Vector<Estimation> estimation;

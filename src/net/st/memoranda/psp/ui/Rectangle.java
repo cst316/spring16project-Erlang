@@ -1,9 +1,11 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D.Double;
 
 import javax.swing.JTextArea;
+
+import net.sf.memoranda.ui.IMemorandaShape;
 /**
  * This Class is used to draw shapes. It contains an assigned Color and Stroke size
  * @author Carlos

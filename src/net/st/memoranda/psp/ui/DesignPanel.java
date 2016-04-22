@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.event.MouseInputListener;
 
+import net.sf.memoranda.ui.TextField;
 import net.sf.memoranda.ui.treetable.DesignTools;
 /**
  * The DesignPanel class' purpose is to represent a scratch sheet of paper to

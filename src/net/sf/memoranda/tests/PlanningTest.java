@@ -1,15 +1,15 @@
-package net.sf.memoranda.tests;
-import net.sf.memoranda.Planning;
+/*package net.sf.memoranda.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import net.sf.memoranda.date.*;
+import net.st.memoranda.psp.Planning;
 
-/**
+*//**
  * PlanningTest class is a unit test for Planning class
  * @author qbecker
  *@version 1.0
- */
+ *//*
 public class PlanningTest {
 
 	Planning plan1 = new Planning();
@@ -33,3 +33,4 @@ public class PlanningTest {
 	}
 
 }
+*/

@@ -9,8 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import junit.framework.TestCase;
-import net.sf.memoranda.Defect;
-import net.sf.memoranda.TimerLog.PspStage;
+import net.st.memoranda.psp.Defect;
+import net.st.memoranda.psp.TimerLog.PspStage;
 
 public class DefectTest extends TestCase {
 	

@@ -7,7 +7,7 @@ import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.memoranda.ui.Rectangle;
+import net.st.memoranda.psp.ui.Rectangle;
 
 public class RectangleTest {
 	Rectangle rect ;

@@ -1,6 +1,6 @@
-package net.sf.memoranda;
+package net.st.memoranda.psp;
 
-import net.sf.memoranda.TimerLog.PspStage;
+import net.st.memoranda.psp.TimerLog.PspStage;
 
 /**
  * 

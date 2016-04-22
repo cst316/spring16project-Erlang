@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;

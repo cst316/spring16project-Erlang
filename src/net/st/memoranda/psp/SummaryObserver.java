@@ -1,7 +1,6 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp;
 
 
-import net.sf.memoranda.PSPProcess;
 
 public abstract class SummaryObserver {
     protected PSPProcess pspProcess;

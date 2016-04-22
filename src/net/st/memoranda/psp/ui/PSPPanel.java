@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 //Testing 
 import java.awt.BorderLayout;
@@ -16,8 +16,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.SummaryObject;
+import net.sf.memoranda.ui.AppFrame;
+import net.sf.memoranda.ui.DailyItemsPanel;
+import net.sf.memoranda.ui.ImportDataTimer;
+import net.sf.memoranda.ui.PlanningPanel;
+import net.sf.memoranda.ui.WorkPanel;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.Planning;
+import net.st.memoranda.psp.SummaryObject;
 
 /**
  * initializes the PSPPanel to display different PSP Panes
@@ -39,7 +45,7 @@ public class PSPPanel extends JPanel {
 	JPanel postmortemPanel = new JPanel();
 	
 	TimeEstimationPanel timeEstimationPanel = new TimeEstimationPanel(pspProcess);
-	PlanningPanel planPanel = null;
+	Planning planPanel = null;
 	DesignPanel designPanel = new DesignPanel();
 
 	CodeEstimationPanel codeEstimationPanel = null;
@@ -63,7 +69,7 @@ public class PSPPanel extends JPanel {
 		pspTabs.setPreferredSize(new Dimension(920,670));
 		watch.setPreferredSize(new Dimension(300,670));
 		DailyItemsPanel dPanel = new DailyItemsPanel(_parentPanel);	
-		planPanel = new PlanningPanel(dPanel, pspProcess);						
+		planPanel = new Planning();						
 		ImportDataTimer testing = new ImportDataTimer();
 //		estimationPanel = new EstimationPanel();
 		codeEstimationPanel = new CodeEstimationPanel(pspProcess);

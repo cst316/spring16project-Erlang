@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.awt.Color;
@@ -9,10 +9,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import net.sf.memoranda.Defect;
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.Defect;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.TimerLog.PspStage;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

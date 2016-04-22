@@ -1,15 +1,16 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.TimeConverter;
-import net.sf.memoranda.TimerLog;
-import net.sf.memoranda.TimerLog.PspStage;
+import net.sf.memoranda.ui.SavedTime;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.TimeConverter;
+import net.st.memoranda.psp.TimerLog;
+import net.st.memoranda.psp.TimerLog.PspStage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

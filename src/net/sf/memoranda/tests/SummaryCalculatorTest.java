@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.sf.memoranda.SummaryCalculator;
+import net.st.memoranda.psp.SummaryCalculator;
 
 public class SummaryCalculatorTest {
 

@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.Dimension;
 import java.util.Observable;
@@ -17,15 +17,15 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import net.sf.memoranda.Defect;
-import net.sf.memoranda.Estimation;
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.SummaryCalculator;
-import net.sf.memoranda.SummaryObject;
-import net.sf.memoranda.TimeConverter;
-import net.sf.memoranda.TimerLog;
-import net.sf.memoranda.TimerLog.PspStage;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.Defect;
+import net.st.memoranda.psp.Estimation;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.SummaryCalculator;
+import net.st.memoranda.psp.SummaryObject;
+import net.st.memoranda.psp.TimeConverter;
+import net.st.memoranda.psp.TimerLog;
+import net.st.memoranda.psp.TimerLog.PspStage;
 
 
 /**

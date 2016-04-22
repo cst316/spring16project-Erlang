@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
-import net.sf.memoranda.ui.Line;
+
+import net.st.memoranda.psp.ui.Line;
 
 public class LineTest {
 	Line line;

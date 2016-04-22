@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,9 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.TimeConverter;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.TimeConverter;
 
 public class TimeEstimationPanel extends JPanel {
 	JPanel inputPanel;

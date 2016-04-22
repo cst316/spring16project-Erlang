@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.ui.PSPPanel;
 
 /**
  * 

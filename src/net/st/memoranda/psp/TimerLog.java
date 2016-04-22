@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.st.memoranda.psp;
 
 /**
  * TimerLog class hold the time value from the Stopwatch class for use in other parts of the PSP process

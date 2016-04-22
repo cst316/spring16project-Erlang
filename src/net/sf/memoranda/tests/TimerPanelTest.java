@@ -8,11 +8,11 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.Report;
-import net.sf.memoranda.TimerLog;
-import net.sf.memoranda.TimerLog.PspStage;
-import net.sf.memoranda.ui.StopWatch;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.TimerLog;
+import net.st.memoranda.psp.TimerLog.PspStage;
+import net.st.memoranda.psp.ui.StopWatch;
 
 /**
  * 

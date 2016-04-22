@@ -1,4 +1,4 @@
-package net.sf.memoranda.ui;
+package net.st.memoranda.psp.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,9 +25,9 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import net.sf.memoranda.Estimation;
-import net.sf.memoranda.PSPProcess;
 import net.sf.memoranda.util.Local;
+import net.st.memoranda.psp.Estimation;
+import net.st.memoranda.psp.PSPProcess;
 
 public class CodeEstimationPanel extends JPanel  {
 	

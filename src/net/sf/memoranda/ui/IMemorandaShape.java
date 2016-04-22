@@ -6,11 +6,12 @@ import java.awt.Color;
  * @author Carlos
  *
  */
-interface IMemorandaShape{
+public interface IMemorandaShape{
 		/**
 		 * This method changes the Color
 		 * @return Color attribute
 		 */
+	
 	 abstract Color getColor();
 	 /**
 	  * This method returns the assigned Color 

@@ -1,4 +1,4 @@
-package net.sf.memoranda;
+package net.st.memoranda.psp;
 
 /**
  * SummaryObject class stores information taken from the summary table in postmortem

@@ -36,7 +36,6 @@ import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
-import net.sf.memoranda.Planning;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.CurrentNote;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
@@ -47,8 +46,8 @@ import net.sf.memoranda.util.HTMLFileExport;
 import net.sf.memoranda.util.HTMLFileImport;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
-import net.sf.memoranda.PSPProcess;
-import net.sf.memoranda.Planning;
+import net.st.memoranda.psp.PSPProcess;
+import net.st.memoranda.psp.Planning;
 
 
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
