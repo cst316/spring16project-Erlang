@@ -167,31 +167,7 @@ public class PSPProcess extends Observable{
 		double[] theTimes = new double[7];
 		for(int i = 0; i < timelogs.size(); i++) {
 			TimerLog theTimerLog = timelogs.get(i);
-			int theIndex = 0;
-			switch(theTimerLog.getcStage())
-			{
-			case PLANNING:
-				theIndex = 0;
-				break;
-			case DESIGN:
-				theIndex = 1;
-				break;
-			case CODE:
-				theIndex = 2;
-				break;
-			case CODEREVIEW:
-				theIndex = 3;
-				break;
-			case COMPILE:
-				theIndex = 4;
-				break;
-			case TEST:
-				theIndex = 5;
-				break;
-			case POSTMORTEM:
-				theIndex = 6;
-				break;
-			}
+			int theIndex = theTimerLog.getcStage().ordinal();
 			theTimes[theIndex] = theTimes[theIndex] + theTimerLog.getTimeValue();
 		}
 		return theTimes;

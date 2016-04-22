@@ -67,8 +67,8 @@ public class StopWatch extends JPanel {
 	private JButton removeButton = new JButton();
 	
 	
-	 private String[] tabs = { " ","PLANNING", "DESIGN", "CODE",
-				"CODEREVIEW", "COMPILE", "TEST","POSTMORTEM"};
+	 private String[] tabs = { " ","Planning", "Design", "Code",
+				"CodeReview", "Compile", "Test","Postmortem"};
 	 private JComboBox dropDown = new JComboBox(tabs);
 	 private JComboBox dropDownManu = new JComboBox(tabs);
 	 
@@ -271,7 +271,6 @@ public class StopWatch extends JPanel {
 		double theHrs = 0.0;
 		PspStage theSelectedStage;
 		try {
-			System.out.println("WHAT'S IN THE BOX: "+customTimeSec.getText());
 			if(!customTimeSec.getText().isEmpty()) {
 			    theSecs = Double.parseDouble(customTimeSec.getText());
 			}
@@ -327,30 +326,7 @@ public class StopWatch extends JPanel {
 	}
 	
 	private String stageEnumToString(PspStage aPspStage) {
-		String theStringValue = "unknown";
-		switch (aPspStage) {
-		    case PLANNING:
-		    	theStringValue = "Planning";
-		    	break;
-		    case DESIGN:
-		    	theStringValue = "Design";
-		    	break;
-		    case CODE:
-		    	theStringValue = "Code";
-		    	break;
-		    case CODEREVIEW:
-		    	theStringValue = "Code Review";
-		    	break;
-		    case COMPILE:
-		    	theStringValue = "Compile";
-		    	break;
-		    case TEST:
-		    	theStringValue = "Test";
-		    	break;
-		    case POSTMORTEM:
-		    	theStringValue = "Postmortem";
-		    	break;
-		}
+		String theStringValue = tabs[aPspStage.ordinal()+1];
 		return theStringValue;
 	}
 
