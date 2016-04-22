@@ -1,0 +1,35 @@
+WHAT IS MEMORANDA?
+
+Memoranda is a personal tool for scheduling and organizing projects.
+
+Memoranda is for users who share work across different projects.
+
+This tool accomplishes the following:
+	
+	- To be able to access multiple projects in one place. Projects
+	  can be browsed, edited, created and removed if they are outdated.
+	  
+	- To be able to look over and edit the project's documentation.
+	
+	- Have check-lists for tasks at a certain duration of time.
+	
+	- Access and add resources that would help the project.
+	
+In the latest version of Memoranda (2.0), an emphasis on making the tool
+more useful to programmers and software developers was needed. To address
+that need, a tab for the Personal Software Process (PSP) was added.
+
+In the PSP tab:
+	
+	- Project descriptions and the parties involved can be declared. 
+	  Time estimates at each phase of the process can also be added.
+	  
+	- Designs for the project can be sketched and exported for future
+	  use. The size of each component of the project can be declared
+	  at the coding phase.
+	  
+	- As a user further progresses during a project, defects found 
+	  along the way can also be declared. 
+	
+	- Finally, once the project is finished, a summary is generated
+	  that displays all the estimates and actual values at each phase.
