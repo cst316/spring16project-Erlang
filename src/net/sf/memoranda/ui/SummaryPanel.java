@@ -30,7 +30,7 @@ import net.sf.memoranda.util.Local;
 
 /**
  * Creates a Summary tab that is used in the PSP icon
- * @author Roy Sofiov
+ * @author Roy Sofiov 
  */
 
 public class SummaryPanel extends JPanel{
